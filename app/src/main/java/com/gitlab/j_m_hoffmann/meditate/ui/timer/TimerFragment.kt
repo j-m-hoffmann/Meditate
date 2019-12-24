@@ -1,12 +1,11 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.gitlab.j_m_hoffmann.meditate.R
 
 class TimerFragment : Fragment() {
