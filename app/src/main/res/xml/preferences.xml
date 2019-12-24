@@ -7,7 +7,7 @@
             app:key="@string/key_use_dark_theme"
             app:title="@string/use_dark_theme" />
 
-        <DropDownPreference
+        <ListPreference
             app:defaultValue="#ffffff"
             app:entries="@array/widget_colors"
             app:entryValues="@array/widget_color_values"
