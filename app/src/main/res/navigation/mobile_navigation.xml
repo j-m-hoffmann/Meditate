@@ -18,8 +18,8 @@
         tools:layout="@layout/timer_fragment" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.gitlab.j_m_hoffmann.meditate.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_progress"
+        android:name="com.gitlab.j_m_hoffmann.meditate.ui.progress.ProgressFragment"
+        android:label="@string/progress"
+        tools:layout="@layout/progress_fragment" />
 </navigation>
