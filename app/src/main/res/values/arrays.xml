@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="widget_colors">
+        <item>@string/color_white</item>
+        <item>@string/color_grey</item>
+        <item>@string/color_black</item>
+    </string-array>
+
+    <string-array name="widget_color_values">
+        <item>#ffffff</item>
+        <item>#dddddd</item>
+        <item>#000000</item>
+    </string-array>
+</resources>

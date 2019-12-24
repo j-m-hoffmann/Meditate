@@ -6,9 +6,9 @@
     app:startDestination="@+id/navigation_timer">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.gitlab.j_m_hoffmann.meditate.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:id="@+id/navigation_settings"
+        android:name="com.gitlab.j_m_hoffmann.meditate.ui.settings.SettingsFragment"
+        android:label="@string/settings"
         tools:layout="@layout/fragment_home" />
 
     <fragment
