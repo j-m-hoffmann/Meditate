@@ -3,9 +3,13 @@
 
     <PreferenceCategory app:title="@string/theme">
 
-        <SwitchPreferenceCompat
-            app:key="@string/key_use_dark_theme"
-            app:title="@string/use_dark_theme" />
+        <ListPreference
+            app:defaultValue="@string/default_theme"
+            app:entries="@array/theme"
+            app:entryValues="@array/theme_values"
+            app:key="@string/key_theme"
+            app:title="@string/theme"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:defaultValue="#ffffff"

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="theme">
+        <item>@string/dark</item>
+        <item>@string/light</item>
+        <item>@string/follow_system</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>2</item> <!-- MODE_NIGHT_YES -->
+        <item>1</item> <!-- MODE_NIGHT_NO -->
+        <item>-1</item> <!-- MODE_NIGHT_FOLLOW_SYSTEM -->
+    </string-array>
+
     <string-array name="widget_colors">
         <item>@string/color_white</item>
         <item>@string/color_grey</item>

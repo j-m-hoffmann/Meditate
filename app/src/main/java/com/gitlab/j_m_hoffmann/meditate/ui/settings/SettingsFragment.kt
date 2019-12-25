@@ -2,38 +2,32 @@ package com.gitlab.j_m_hoffmann.meditate.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.preference.ListPreference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import com.gitlab.j_m_hoffmann.meditate.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    private var nightMode: SwitchPreferenceCompat? = null
+    private var themePreference: ListPreference? = null
 
-    private val nightModeListener = OnPreferenceChangeListener { _, newValue ->
-        if (newValue as Boolean) {
-            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-        }
+    private val themeChangeListener = OnPreferenceChangeListener { _, newTheme ->
+        AppCompatDelegate.setDefaultNightMode((newTheme as String).toInt())
         true
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
+        themePreference = findPreference(getString(R.string.key_theme))
     }
 
     override fun onResume() {
         super.onResume()
-        nightMode = findPreference(getString(R.string.key_use_dark_theme))
-        nightMode?.onPreferenceChangeListener = nightModeListener
+        themePreference?.onPreferenceChangeListener = themeChangeListener
     }
 
     override fun onPause() {
         super.onPause()
-        nightMode?.onPreferenceChangeListener = null
+        themePreference?.onPreferenceChangeListener = null
     }
 }
