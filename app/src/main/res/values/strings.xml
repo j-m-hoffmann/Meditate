@@ -6,6 +6,11 @@
     <string name="settings">Settings</string>
     <string name="timer">Timer</string>
 
+    <string name="meditate">Meditate</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="end">End</string>
+
     <!-- SETTINGS -->
     <string name="theme">Theme</string>
     <string name="use_dark_theme">Use dark theme</string>
