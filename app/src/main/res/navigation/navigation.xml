@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.gitlab.j_m_hoffmann.meditate.ui.settings.SettingsFragment"
-        android:label="@string/settings"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/settings" />
 
     <fragment
         android:id="@+id/navigation_timer"
