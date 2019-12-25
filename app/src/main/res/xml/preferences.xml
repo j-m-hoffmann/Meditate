@@ -12,7 +12,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="#ffffff"
+            app:defaultValue="@string/default_widget_color"
             app:entries="@array/widget_colors"
             app:entryValues="@array/widget_color_values"
             app:key="@string/key_widget_color"

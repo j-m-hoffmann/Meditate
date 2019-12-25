@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Meditate</string>
 
+    <!-- DEFAULT VALUES -->
+    <string name="default_theme" translatable="false">-1</string> <!-- MODE_NIGHT_FOLLOW_SYSTEM -->
+    <string name="default_widget_color" translatable="false">#ffffff</string>
+
+    <!-- KEYS -->
+    <string name="key_theme" translatable="false">key_theme</string>
+    <string name="key_widget_color" translatable="false">key_widget_color</string>
+
     <string name="progress">Progress</string>
     <!--<string name="session">Session</string>-->
     <string name="settings">Settings</string>
@@ -18,11 +26,6 @@
     <string name="follow_system">Follow system settings</string>
 
     <string name="widget_color">Widget color</string>
-
-    <string name="key_use_dark_theme" translatable="false">key_use_dark_theme</string>
-    <string name="key_widget_color" translatable="false">key_widget_color</string>
-
-    <!-- COLORS -->
     <string name="color_white">White</string>
     <string name="color_grey">Grey</string>
     <string name="color_black">Black</string>
