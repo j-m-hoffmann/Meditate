@@ -5,13 +5,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.gitlab.j_m_hoffmann.meditate.R.id
 import com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerFragment.OnSessionChangeListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), OnSessionChangeListener {
 
-    lateinit var navBar: BottomNavigationView
+    private lateinit var navBar: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity(), OnSessionChangeListener {
 
         navBar = findViewById(R.id.nav_bar)
 
-        navBar.setupWithNavController(findNavController(id.nav_host_fragment))
+        navBar.setupWithNavController(findNavController(R.id.nav_host_fragment))
 
     }
 
