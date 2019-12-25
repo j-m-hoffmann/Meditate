@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.databinding.TimerFragmentBinding
 
 class TimerFragment : Fragment() {
+
+    private lateinit var binding: TimerFragmentBinding
+
+    private lateinit var listener: OnSessionChangeListener
 
     private lateinit var viewModel: TimerViewModel
 
@@ -16,13 +20,34 @@ class TimerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.timer_fragment, container, false)
+        binding = TimerFragmentBinding.inflate(inflater)
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TimerViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        listener = requireActivity() as OnSessionChangeListener
+
+        binding.apply {
+            startSession.setOnClickListener { listener.disableNavigation() }
+            stopSession.setOnClickListener { listener.enableNavigation() }
+        }
     }
 
+    interface OnSessionChangeListener {
+        fun disableNavigation()
+        fun enableNavigation()
+    }
+/*
+    fun startSession() {
+        listener.disableNavigation()
+    }
+
+    fun stopSession() {
+        listener.enableNavigation()
+    }
+*/
 }
