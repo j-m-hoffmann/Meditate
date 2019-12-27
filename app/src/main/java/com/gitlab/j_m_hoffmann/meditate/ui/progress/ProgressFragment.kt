@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.gitlab.j_m_hoffmann.meditate.R
 
 class ProgressFragment : Fragment() {
@@ -21,7 +21,7 @@ class ProgressFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ProgressViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProgressViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
