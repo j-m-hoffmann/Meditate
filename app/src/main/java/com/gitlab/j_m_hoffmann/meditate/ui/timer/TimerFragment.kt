@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gitlab.j_m_hoffmann.meditate.databinding.TimerFragmentBinding
 
@@ -29,25 +30,28 @@ class TimerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         timerViewModel = ViewModelProvider(this)[TimerViewModel::class.java]
 
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = timerViewModel
+        }
+
+        //region Observers
         listener = requireActivity() as OnSessionChangeListener
 
-        binding.apply {
-            startSession.setOnClickListener { listener.disableNavigation() }
-            stopSession.setOnClickListener { listener.enableNavigation() }
+        timerViewModel.apply {
+            sessionInProgress.observe(viewLifecycleOwner, Observer { inProgress ->
+                if (inProgress) {
+                    listener.disableNavigation()
+                } else {
+                    listener.enableNavigation()
+                }
+            })
         }
+        //endregion
     }
 
     interface OnSessionChangeListener {
         fun disableNavigation()
         fun enableNavigation()
     }
-/*
-    fun startSession() {
-        listener.disableNavigation()
-    }
-
-    fun stopSession() {
-        listener.enableNavigation()
-    }
-*/
 }
