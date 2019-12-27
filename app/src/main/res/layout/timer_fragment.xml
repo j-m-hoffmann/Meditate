@@ -3,17 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.timer.TimerFragment">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/time_remaining"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/timer"
+            app:formatTime="@{viewModel.timeRemaining}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -23,20 +32,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/navbar_plus_eight"
+            android:onClick="@{() -> viewModel.startSession()}"
             android:text="@string/meditate"
+            android:visibility="@{viewModel.sessionInProgress ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/stop_session" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/stop_session"
+            android:id="@+id/pause_or_resume_session"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/navbar_plus_eight"
-            android:text="@string/end"
+            android:onClick="@{() -> viewModel.pauseOrResumeSession()}"
+            android:text="@{viewModel.sessionPaused ? @string/resume : @string/pause}"
+            android:visibility="@{viewModel.sessionInProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/start_session"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/end_session" />
+
+        <Button
+            android:id="@+id/end_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/navbar_plus_eight"
+            android:onClick="@{() -> viewModel.endSession()}"
+            android:text="@string/end"
+            android:visibility="@{viewModel.sessionInProgress ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pause_or_resume_session"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
