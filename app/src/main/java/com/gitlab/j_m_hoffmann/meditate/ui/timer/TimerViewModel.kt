@@ -2,7 +2,6 @@ package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
 import android.app.Application
 import android.os.CountDownTimer
-import android.os.SystemClock
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +9,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.ui.util.second
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 //const val defaultSessionDelay: Long = 15 * second
 //const val defaultSessionLength: Long = 15 * minute
 // for testing
+//const val defaultSessionDelay: Long = 0 * second
 const val defaultSessionDelay: Long = 5 * second
 const val defaultSessionLength: Long = 5 * second
 
@@ -34,9 +35,18 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
         defaultSessionDelay
     )
 
-    private lateinit var timer: CountDownTimer
+    private var delayTimer: CountDownTimer? = null
+    private var timer: CountDownTimer? = null
 
     private var timeSpentMeditating = 0L
+
+    private val _delayTimeRemaining = MutableLiveData<Long>()
+    val delayTimeRemaining: LiveData<Long>
+        get() = _delayTimeRemaining
+
+    private val _delayTimeVisible = MutableLiveData<Boolean>(false)
+    val delayTimeVisible: LiveData<Boolean>
+        get() = _delayTimeVisible
 
     private val _sessionInProgress = MutableLiveData<Boolean>(false)
     val sessionInProgress: LiveData<Boolean>
@@ -62,47 +72,107 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
         _timeRemaining.value = sessionLength
     }
 
-    private fun startTimer(duration: Long) = viewModelScope.launch {
+    private fun startTimer(duration: Long, delay: Long = 0L) = viewModelScope.launch {
 
-        val sessionEnds = SystemClock.elapsedRealtime() + duration
+        //        _timeRemaining.value = duration
+
+/*
+        val sessionEnds = SystemClock.elapsedRealtime() + duration + delay
 
         timer = object : CountDownTimer(sessionEnds, second) {
-            override fun onFinish() {
-                // saveSession()
-                _sessionInProgress.value = false
-                resetTimer()
-                // sendNotification()
-            }
 
             override fun onTick(millisUntilFinished: Long) {
-                timeSpentMeditating += second
-                _timeRemaining.value = sessionEnds - SystemClock.elapsedRealtime()
-
+                val timeLeft = sessionEnds - SystemClock.elapsedRealtime()
                 // interval?
-                if (_timeRemaining.value!! <= 0) {
+                if (timeLeft >= second) {
+                    _timeRemaining.value = timeLeft
+                    timeSpentMeditating += second
+                } else {
                     onFinish()
                 }
             }
+*/
+
+        timer = object : CountDownTimer(duration, second) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                if (millisUntilFinished >= second) {
+                    _timeRemaining.value = millisUntilFinished
+                    timeSpentMeditating += second
+                } else {
+                    onFinish()
+                }
+            }
+
+            override fun onFinish() {
+                saveSession()
+                cancelTimer()
+            }
+
         }
 
-        timer.start()
+        if (delay > 0L) {
+            _delayTimeRemaining.value = delay
+            _delayTimeVisible.value = true
+
+//            val delayEnds = SystemClock.elapsedRealtime() + delay
+//            delayTimer = object : CountDownTimer(delayEnds, second) {
+            delayTimer = object : CountDownTimer(delay, second) {
+
+                override fun onTick(millisUntilFinished: Long) {
+//                    val remainingDelayTime = delayEnds - SystemClock.elapsedRealtime()
+//                    if (remainingDelayTime >= second) {
+//                        _delayTimeRemaining.value = remainingDelayTime
+                    if (millisUntilFinished >= second) {
+                        _delayTimeRemaining.value = millisUntilFinished
+                    } else {
+                        cancelDelayTimer()
+                    }
+                }
+
+                override fun onFinish() {
+                    cancelDelayTimer()
+                }
+            }
+
+            delayTimer?.start()
+
+            delay(delay)
+        }
+
+        timer?.start()
+    }
+
+    fun cancelDelayTimer() {
+        delayTimer?.cancel()
+        delayTimer = null
+        _delayTimeVisible.value = false
+    }
+
+    fun cancelTimer() {
+        timer?.cancel()
+        timer = null
+        _timeRemaining.value = sessionLength
+    }
+
+    private fun saveSession() {
+        // save session
+        _sessionInProgress.value = false
+        // sendNotification()
     }
 
     fun startSession() {
         _sessionInProgress.value = true
 
-        val sessionPlusDelay = sessionLength + sessionDelay
-
-        _timeRemaining.value = sessionPlusDelay
-
-        startTimer(sessionPlusDelay)
+        startTimer(sessionLength, sessionDelay)
     }
 
     fun pauseOrResumeSession() = if (_sessionPaused.value!!) resumeSession() else pauseSession()
 
     private fun pauseSession() {
         _sessionPaused.value = true
-        timer.cancel()
+        cancelTimer()
+        cancelDelayTimer()
     }
 
     private fun resumeSession() {
@@ -111,14 +181,9 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun endSession() {
+        cancelDelayTimer()
+        cancelTimer()
+
         _sessionInProgress.value = false
-
-        timer.cancel()
-        resetTimer()
     }
-
-    private fun resetTimer() {
-        _timeRemaining.value = sessionLength
-    }
-
 }
