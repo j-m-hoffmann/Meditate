@@ -26,7 +26,8 @@
             app:formatTime="@{viewModel.timeRemaining}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15:00" />
 
         <TextView
             android:id="@+id/delay_time_remaining"
@@ -38,7 +39,8 @@
             app:formatTime="@{viewModel.delayTimeRemaining}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/time_remaining" />
+            app:layout_constraintTop_toBottomOf="@id/time_remaining"
+            tools:text="15" />
 
         <Button
             android:id="@+id/start_session"
