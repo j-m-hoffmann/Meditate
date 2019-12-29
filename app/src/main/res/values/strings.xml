@@ -31,6 +31,8 @@
     <string name="color_white">White</string>
     <string name="color_grey">Grey</string>
     <string name="color_black">Black</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
 
 </resources>
 

@@ -8,16 +8,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.ui.util.minute
 import com.gitlab.j_m_hoffmann.meditate.ui.util.second
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-//const val defaultSessionDelay: Long = 15 * second
-//const val defaultSessionLength: Long = 15 * minute
+const val defaultSessionDelay: Long = 15 * second
+const val defaultSessionLength: Long = 15 * minute
+const val fiveMinutes: Long = 5 * minute
+const val tenMinutes: Long = 10 * minute
 // for testing
 //const val defaultSessionDelay: Long = 0 * second
-const val defaultSessionDelay: Long = 5 * second
-const val defaultSessionLength: Long = 5 * second
+//const val defaultSessionDelay: Long = 5 * second
+//const val defaultSessionLength: Long = 5 * second
 
 const val REQUEST_CODE = 0
 
@@ -47,6 +50,10 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
     //region LiveData
 
+    private val _decrementEnabled = MutableLiveData<Boolean>(true)
+    val decrementEnabled: LiveData<Boolean>
+        get() = _decrementEnabled
+
     private val _delayTimeRemaining = MutableLiveData<Long>()
     val delayTimeRemaining: LiveData<Long>
         get() = _delayTimeRemaining
@@ -75,12 +82,29 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
     //region PublicFunctions
 
+    fun decrementDuration() {
+        sessionLength -= fiveMinutes
+
+        if (sessionLength <= tenMinutes) {
+            sessionLength = tenMinutes
+            _decrementEnabled.value = false
+        }
+
+        _timeRemaining.value = sessionLength
+    }
+
     fun endSession() {
         cancelDelayTimer()
         cancelTimer()
         _timeRemaining.value = sessionLength
 
         _sessionInProgress.value = false
+    }
+
+    fun incrementDuration() {
+        sessionLength += fiveMinutes
+        _decrementEnabled.value = true
+        _timeRemaining.value = sessionLength
     }
 
     fun pauseOrResumeSession() = if (_sessionPaused.value!!) resumeSession() else pauseSession()
