@@ -11,28 +11,32 @@
     <string name="key_theme" translatable="false">key_theme</string>
     <string name="key_widget_color" translatable="false">key_widget_color</string>
 
-    <string name="progress">Progress</string>
-    <!--<string name="session">Session</string>-->
+    <!-- NAVBAR -->
     <string name="settings">Settings</string>
     <string name="timer">Timer</string>
-
-    <string name="meditate">Meditate</string>
-    <string name="pause">Pause</string>
-    <string name="resume">Resume</string>
-    <string name="end">End</string>
+    <string name="progress">Progress</string>
 
     <!-- SETTINGS -->
     <string name="theme">Theme</string>
+
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="set_by_battery_saver">Set by Battery Saver</string>
 
     <string name="widget_color">Widget color</string>
+
     <string name="color_white">White</string>
     <string name="color_grey">Grey</string>
     <string name="color_black">Black</string>
-    <string name="plus">+</string>
+
+    <!-- TIMER -->
     <string name="minus">-</string>
+    <string name="meditate">Meditate</string>
+    <string name="plus">+</string>
+
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="end">End</string>
 
 </resources>
 
