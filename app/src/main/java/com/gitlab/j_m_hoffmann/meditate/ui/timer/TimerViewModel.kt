@@ -112,7 +112,7 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
     private fun resumeSession() {
         _sessionPaused.value = false
-        startTimer(_timeRemaining.value!!)
+        startTimer(_timeRemaining.value!!, _delayTimeRemaining.value ?: 0)
     }
 
     private fun saveSession() {
@@ -174,11 +174,12 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
                     if (millisUntilFinished >= second) {
                         _delayTimeRemaining.value = millisUntilFinished
                     } else {
-                        cancelDelayTimer()
+                        onFinish()
                     }
                 }
 
                 override fun onFinish() {
+                    _delayTimeRemaining.value = 0
                     cancelDelayTimer()
                 }
             }
