@@ -25,20 +25,27 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
-    private var sessionLength = preferences.getLong(
-        app.getString(R.string.key_session_length),
-        defaultSessionLength
-    )
+    //region Variables
+
+    private var delayTimer: CountDownTimer? = null
 
     private var sessionDelay = preferences.getLong(
         app.getString(R.string.key_session_delay),
         defaultSessionDelay
     )
 
-    private var delayTimer: CountDownTimer? = null
+    private var sessionLength = preferences.getLong(
+        app.getString(R.string.key_session_length),
+        defaultSessionLength
+    )
+
     private var timer: CountDownTimer? = null
 
     private var timeSpentMeditating = 0L
+
+    //endregion
+
+    //region LiveData
 
     private val _delayTimeRemaining = MutableLiveData<Long>()
     val delayTimeRemaining: LiveData<Long>
@@ -60,15 +67,65 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
 
+    //endregion
+
     init {
         _timeRemaining.value = sessionLength
     }
 
+    //region PublicFunctions
+
+    fun endSession() {
+        cancelDelayTimer()
+        cancelTimer()
+
+        _sessionInProgress.value = false
+    }
+
+    fun pauseOrResumeSession() = if (_sessionPaused.value!!) resumeSession() else pauseSession()
+
+    fun startSession() {
+        _sessionInProgress.value = true
+
+        startTimer(sessionLength, sessionDelay)
+    }
+    //endregion
+
+    //region PrivateFunctions
+
+    private fun cancelDelayTimer() {
+        delayTimer?.cancel()
+        delayTimer = null
+        _delayTimeVisible.value = false
+    }
+
+    private fun cancelTimer() {
+        timer?.cancel()
+        timer = null
+        _timeRemaining.value = sessionLength
+    }
+
+    private fun pauseSession() {
+        _sessionPaused.value = true
+        cancelTimer()
+        cancelDelayTimer()
+    }
+
+    private fun resumeSession() {
+        _sessionPaused.value = false
+        startTimer(_timeRemaining.value!!)
+    }
+
+    private fun saveSession() {
+        // save session
+        _sessionInProgress.value = false
+        // sendNotification()
+    }
+
     private fun startTimer(duration: Long, delay: Long = 0L) = viewModelScope.launch {
-
-        //        _timeRemaining.value = duration
-
 /*
+        _timeRemaining.value = duration
+
         val sessionEnds = SystemClock.elapsedRealtime() + duration + delay
 
         timer = object : CountDownTimer(sessionEnds, second) {
@@ -134,48 +191,5 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
         timer?.start()
     }
-
-    fun cancelDelayTimer() {
-        delayTimer?.cancel()
-        delayTimer = null
-        _delayTimeVisible.value = false
-    }
-
-    fun cancelTimer() {
-        timer?.cancel()
-        timer = null
-        _timeRemaining.value = sessionLength
-    }
-
-    private fun saveSession() {
-        // save session
-        _sessionInProgress.value = false
-        // sendNotification()
-    }
-
-    fun startSession() {
-        _sessionInProgress.value = true
-
-        startTimer(sessionLength, sessionDelay)
-    }
-
-    fun pauseOrResumeSession() = if (_sessionPaused.value!!) resumeSession() else pauseSession()
-
-    private fun pauseSession() {
-        _sessionPaused.value = true
-        cancelTimer()
-        cancelDelayTimer()
-    }
-
-    private fun resumeSession() {
-        _sessionPaused.value = false
-        startTimer(_timeRemaining.value!!)
-    }
-
-    fun endSession() {
-        cancelDelayTimer()
-        cancelTimer()
-
-        _sessionInProgress.value = false
-    }
+    //endregion
 }
