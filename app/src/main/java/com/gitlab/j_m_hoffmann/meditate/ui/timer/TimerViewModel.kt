@@ -102,7 +102,6 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     private fun cancelTimer() {
         timer?.cancel()
         timer = null
-        _timeRemaining.value = sessionLength
     }
 
     private fun pauseSession() {
