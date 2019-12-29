@@ -58,20 +58,6 @@
 
         <!-- visible when session in progress -->
         <Button
-            android:id="@+id/pause_or_resume_session"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/navbar_plus_eight"
-            android:onClick="@{() -> viewModel.pauseOrResumeSession()}"
-            android:text="@{viewModel.sessionPaused ? @string/resume : @string/pause}"
-            android:visibility="@{viewModel.sessionInProgress ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/end_session"
-            tools:visibility="invisible" />
-
-        <Button
             android:id="@+id/end_session"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,6 +69,20 @@
             app:layout_constraintEnd_toStartOf="@+id/pause_or_resume_session"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="invisible" />
+
+        <Button
+            android:id="@+id/pause_or_resume_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/navbar_plus_eight"
+            android:onClick="@{() -> viewModel.pauseOrResumeSession()}"
+            android:text="@{viewModel.sessionPaused ? @string/resume : @string/pause}"
+            android:visibility="@{viewModel.sessionInProgress ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/end_session"
             tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
