@@ -56,14 +56,6 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     val sessionPaused: LiveData<Boolean>
         get() = _sessionPaused
 
-    private val _hideNavigation = MutableLiveData<Boolean>(false)
-    val hideNavigation: LiveData<Boolean>
-        get() = _hideNavigation
-
-    private val _timeElapsed = MutableLiveData<Long>()
-    val timeElapsed: LiveData<Long>
-        get() = _timeElapsed
-
     private val _timeRemaining = MutableLiveData<Long>()
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
