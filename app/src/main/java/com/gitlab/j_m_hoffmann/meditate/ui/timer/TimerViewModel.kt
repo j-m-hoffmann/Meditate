@@ -9,7 +9,6 @@ import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
-import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.ui.util.minute
 import com.gitlab.j_m_hoffmann.meditate.ui.util.second
 import kotlinx.coroutines.delay
@@ -23,8 +22,6 @@ const val tenMinutes: Long = 10 * minute
 //const val defaultSessionDelay: Long = 0 * second
 //const val defaultSessionDelay: Long = 5 * second
 //const val defaultSessionLength: Long = 5 * second
-
-const val REQUEST_CODE = 0
 
 class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 

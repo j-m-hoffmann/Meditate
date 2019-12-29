@@ -8,4 +8,4 @@ import androidx.room.PrimaryKey
 data class Session(
     @PrimaryKey val date: Long,
     @NonNull val duration: Long
-) {}
+)
