@@ -154,7 +154,7 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
             override fun onFinish() {
                 saveSession()
-                cancelTimer()
+                endSession()
             }
 
         }
