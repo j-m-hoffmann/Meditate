@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_theme" translatable="false">-1</string> <!-- MODE_NIGHT_FOLLOW_SYSTEM -->
+    <string name="follow_system">Follow system settings</string>
+</resources>
