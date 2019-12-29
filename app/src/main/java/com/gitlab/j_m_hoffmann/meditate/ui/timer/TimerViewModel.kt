@@ -122,24 +122,24 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     private fun startTimer(duration: Long, delay: Long = 0L) = viewModelScope.launch {
-/*
-        _timeRemaining.value = duration
+        /*
+                _timeRemaining.value = duration
 
-        val sessionEnds = SystemClock.elapsedRealtime() + duration + delay
+                val sessionEnds = SystemClock.elapsedRealtime() + duration + delay
 
-        timer = object : CountDownTimer(sessionEnds, second) {
+                timer = object : CountDownTimer(sessionEnds, second) {
 
-            override fun onTick(millisUntilFinished: Long) {
-                val timeLeft = sessionEnds - SystemClock.elapsedRealtime()
-                // interval?
-                if (timeLeft >= second) {
-                    _timeRemaining.value = timeLeft
-                    timeSpentMeditating += second
-                } else {
-                    onFinish()
-                }
-            }
-*/
+                    override fun onTick(millisUntilFinished: Long) {
+                        val timeLeft = sessionEnds - SystemClock.elapsedRealtime()
+                        // interval?
+                        if (timeLeft >= second) {
+                            _timeRemaining.value = timeLeft
+                            timeSpentMeditating += second
+                        } else {
+                            onFinish()
+                        }
+                    }
+        */
 
         timer = object : CountDownTimer(duration, second) {
 
