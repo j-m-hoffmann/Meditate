@@ -42,6 +42,7 @@
             app:layout_constraintTop_toBottomOf="@id/time_remaining"
             tools:text="15" />
 
+        <!-- visible before and after session -->
         <Button
             android:id="@+id/start_session"
             android:layout_width="wrap_content"
@@ -55,6 +56,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <!-- visible when session in progress -->
         <Button
             android:id="@+id/pause_or_resume_session"
             android:layout_width="wrap_content"
