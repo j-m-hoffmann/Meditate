@@ -78,6 +78,7 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     fun endSession() {
         cancelDelayTimer()
         cancelTimer()
+        _timeRemaining.value = sessionLength
 
         _sessionInProgress.value = false
     }
@@ -117,7 +118,6 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
 
     private fun saveSession() {
         // save session
-        _sessionInProgress.value = false
         // sendNotification()
     }
 
