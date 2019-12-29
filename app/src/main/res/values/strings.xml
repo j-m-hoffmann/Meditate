@@ -16,6 +16,12 @@
     <string name="timer">Timer</string>
     <string name="progress">Progress</string>
 
+    <!-- PROGRESS -->
+    <string name="total_sessions">Total sessions</string>
+    <string name="duration_average">Average duration</string>
+    <string name="duration_longest">Longest duration</string>
+    <string name="total_time_meditating">Total time spent meditating</string>
+
     <!-- SETTINGS -->
     <string name="theme">Theme</string>
 

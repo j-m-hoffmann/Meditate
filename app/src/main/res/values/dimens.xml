@@ -8,6 +8,9 @@
     <dimen name="navbar_height_plus_default_spacing">72dp</dimen>
 
     <dimen name="spacing_default">16dp</dimen>
+    <dimen name="spacing_double">32dp</dimen>
+    <dimen name="spacing_half">8dp</dimen>
+    <dimen name="spacing_quarter">4dp</dimen>
 
     <dimen name="text_size_timer">64sp</dimen>
     <dimen name="text_size_delay_timer">16sp</dimen>

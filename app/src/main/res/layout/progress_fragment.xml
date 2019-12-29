@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.progress.ProgressFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/progress" />
+        android:id="@+id/header_total_time"
+        style="@style/statistics_header"
+        android:text="@string/total_time_meditating"
+        app:layout_constraintBottom_toTopOf="@id/value_total_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/value_total_time"
+        style="@style/statistics_value"
+        android:text="@string/total_time_meditating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_total_time"
+        tools:text="4:00:00" />
+
+    <TextView
+        android:id="@+id/header_duration_average"
+        style="@style/statistics_header"
+        android:text="@string/duration_average"
+        app:layout_constraintBottom_toTopOf="@+id/value_duration_average"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/value_total_time" />
+
+    <TextView
+        android:id="@+id/value_duration_average"
+        style="@style/statistics_value"
+        android:text="@string/duration_average"
+        app:layout_constraintBottom_toTopOf="@+id/header_duration_longest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_duration_average"
+        tools:text="15:00" />
+
+    <TextView
+        android:id="@+id/header_duration_longest"
+        style="@style/statistics_header"
+        android:text="@string/duration_longest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value_duration_average" />
+
+    <TextView
+        android:id="@+id/value_duration_longest"
+        style="@style/statistics_value"
+        android:text="@string/duration_longest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_duration_longest"
+        tools:text="15:00" />
+
+    <TextView
+        android:id="@+id/header_sessions_total"
+        style="@style/statistics_header"
+        android:text="@string/total_sessions"
+        app:layout_constraintBottom_toTopOf="@+id/value_sessions_total"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/value_duration_longest" />
+
+    <TextView
+        android:id="@+id/value_sessions_total"
+        style="@style/statistics_value"
+        android:text="@string/total_sessions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_sessions_total"
+        tools:text="16" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
