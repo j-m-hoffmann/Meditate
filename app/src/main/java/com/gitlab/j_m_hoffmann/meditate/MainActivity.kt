@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), OnSessionChangeListener {
             getString(string.default_theme)
         )
 
-        AppCompatDelegate.setDefaultNightMode(nightMode?.toInt() ?: -1) // MODE_NIGHT_FOLLOW_SYSTEM
+        AppCompatDelegate.setDefaultNightMode(nightMode!!.toInt())
     }
 
     override fun disableNavigation() {
