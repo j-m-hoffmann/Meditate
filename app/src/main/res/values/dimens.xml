@@ -5,11 +5,11 @@
 
     <dimen name="button_change_session_length">48dp</dimen>
 
+    <dimen name="navbar_height_plus_default_spacing">72dp</dimen>
+
     <dimen name="spacing_default">16dp</dimen>
 
     <dimen name="text_size_timer">64sp</dimen>
     <dimen name="text_size_delay_timer">16sp</dimen>
 
-    <!-- Height of BottomNavigationBar + 8dp -->
-    <dimen name="navbar_plus_eight">64dp</dimen>
 </resources>
