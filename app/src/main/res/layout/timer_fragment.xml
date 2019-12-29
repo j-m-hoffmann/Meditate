@@ -92,7 +92,6 @@
             android:visibility="@{viewModel.sessionInProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pause_or_resume_session"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="invisible" />
 
@@ -106,7 +105,6 @@
             android:visibility="@{viewModel.sessionInProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/end_session"
             tools:visibility="invisible" />
 
