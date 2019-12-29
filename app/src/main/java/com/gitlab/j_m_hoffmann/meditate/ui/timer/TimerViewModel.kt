@@ -112,6 +112,9 @@ class TimerViewModel(val app: Application) : AndroidViewModel(app) {
     fun startSession() {
         _sessionInProgress.value = true
 
+        // TODO save session length
+        // TODO show toast
+
         startTimer(sessionLength, sessionDelay)
     }
     //endregion
