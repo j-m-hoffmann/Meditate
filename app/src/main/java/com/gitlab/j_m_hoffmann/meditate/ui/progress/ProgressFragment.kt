@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.gitlab.j_m_hoffmann.meditate.databinding.ProgressFragmentBinding
+import com.gitlab.j_m_hoffmann.meditate.getViewModelFactory
 
 class ProgressFragment : Fragment() {
 
     private lateinit var binding: ProgressFragmentBinding
 
-    private lateinit var progressViewModel: ProgressViewModel
+    private val progressViewModel by viewModels<ProgressViewModel> { getViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +27,6 @@ class ProgressFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        progressViewModel = ViewModelProvider(this)[ProgressViewModel::class.java]
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

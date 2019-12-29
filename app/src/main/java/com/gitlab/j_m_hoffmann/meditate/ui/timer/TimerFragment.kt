@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.gitlab.j_m_hoffmann.meditate.databinding.TimerFragmentBinding
+import com.gitlab.j_m_hoffmann.meditate.getViewModelFactory
 
 class TimerFragment : Fragment() {
 
@@ -15,7 +16,7 @@ class TimerFragment : Fragment() {
 
     private lateinit var listener: OnSessionChangeListener
 
-    private lateinit var timerViewModel: TimerViewModel
+    private val timerViewModel by viewModels<TimerViewModel> { getViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +29,6 @@ class TimerFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        timerViewModel = ViewModelProvider(this)[TimerViewModel::class.java]
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

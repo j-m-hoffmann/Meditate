@@ -1,13 +1,15 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
-import android.app.Application
 import android.os.CountDownTimer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
+import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.db.Dao
+import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.ui.util.minute
 import com.gitlab.j_m_hoffmann.meditate.ui.util.second
 import kotlinx.coroutines.delay
@@ -24,7 +26,7 @@ const val tenMinutes: Long = 10 * minute
 
 const val REQUEST_CODE = 0
 
-class TimerViewModel(val app: Application) : AndroidViewModel(app) {
+class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
