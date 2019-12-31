@@ -13,13 +13,13 @@ interface Dao {
     @Query("SELECT COUNT(duration) FROM session")
     suspend fun countSessions(): Int
 
-    @Query("SELECT duration FROM session ORDER BY duration DESC LIMIT 1")
-    suspend fun longestSession(): Long
-
     @Query("SELECT AVG(duration) FROM session")
-    suspend fun averageDuration(): Long
+    suspend fun durationAverage(): Long
+
+    @Query("SELECT duration FROM session ORDER BY duration DESC LIMIT 1")
+    suspend fun durationLongest(): Long
 
     @Query("SELECT SUM(duration) FROM session")
-    suspend fun totalDuration(): Long
+    suspend fun durationTotal(): Long
 }
 
