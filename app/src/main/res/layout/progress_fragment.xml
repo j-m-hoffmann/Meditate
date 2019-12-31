@@ -81,7 +81,7 @@
         <TextView
             android:id="@+id/value_count_sessions"
             style="@style/statistics_value"
-            app:formatTime="@{viewModel.countSessions}"
+            android:text="@{viewModel.countSessions.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_count_sessions"
