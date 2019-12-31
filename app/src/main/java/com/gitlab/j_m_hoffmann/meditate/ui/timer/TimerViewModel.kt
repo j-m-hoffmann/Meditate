@@ -124,9 +124,12 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     fun endSession() {
         cancelDelayTimer()
         cancelTimer()
-        showDiscardAndSaveButtons()
 
-        _sessionInProgress.value = false
+        if (_delayTimeRemaining.value == 0L) {
+            showDiscardAndSaveButtons()
+        } else {
+            resetSession()
+        }
     }
 
     fun incrementDuration() {
