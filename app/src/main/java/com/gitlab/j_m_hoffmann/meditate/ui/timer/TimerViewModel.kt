@@ -70,6 +70,18 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
         get() = _sessionPaused
     private val _sessionPaused = MutableLiveData(false)
 
+    val showDiscardAndSave: LiveData<Boolean>
+        get() = _showDiscardAndSave
+    private val _showDiscardAndSave = MutableLiveData(false)
+
+    val showEndAndPause: LiveData<Boolean>
+        get() = _showEndAndPause
+    private val _showEndAndPause = MutableLiveData(false)
+
+    val showStart: LiveData<Boolean>
+        get() = _showStart
+    private val _showStart = MutableLiveData(true)
+
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
     private val _timeRemaining = MutableLiveData(sessionLength)
@@ -112,7 +124,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     fun endSession() {
         cancelDelayTimer()
         cancelTimer()
-        _timeRemaining.value = sessionLength
+        showDiscardAndSaveButtons()
 
         _sessionInProgress.value = false
     }
@@ -125,11 +137,24 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     fun pauseOrResumeSession() = if (_sessionPaused.value!!) resumeSession() else pauseSession()
 
+    fun resetSession() {
+        _timeRemaining.value = sessionLength
+        _sessionInProgress.value = false
+        showStartButton()
+    }
+
+    fun saveSession() {
+        saveInDb()
+        resetSession()
+    }
+
     fun startSession() {
         _sessionInProgress.value = true
 
-        // TODO save session length
-        // TODO show toast
+        // TODO save session length to preferences
+        // TODO show Message
+
+        showEndAndPauseButtons()
 
         startTimer(sessionLength, sessionDelay)
     }
@@ -159,9 +184,27 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
         startTimer(_timeRemaining.value!!, _delayTimeRemaining.value!!)
     }
 
-    private fun saveSession() {
-        // save session
-        // sendNotification()
+    private fun saveInDb() {}
+
+    private fun showDiscardAndSaveButtons() {
+        _showEndAndPause.value = false
+        _showStart.value = false
+
+        _showDiscardAndSave.value = true
+    }
+
+    private fun showEndAndPauseButtons() {
+        _showDiscardAndSave.value = false
+        _showStart.value = false
+
+        _showEndAndPause.value = true
+    }
+
+    private fun showStartButton() {
+        _showDiscardAndSave.value = false
+        _showEndAndPause.value = false
+
+        _showStart.value = true
     }
 
     private fun startTimer(duration: Long, delay: Long = 0L) = viewModelScope.launch {
@@ -196,8 +239,9 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
             }
 
             override fun onFinish() {
-                saveSession()
-                endSession()
+                cancelTimer()
+                saveInDb()
+                resetSession()
             }
 
         }

@@ -44,6 +44,9 @@
     <string name="resume">Resume</string>
     <string name="end">End</string>
 
+    <string name="discard">Discard</string>
+    <string name="save">Save</string>
+
 </resources>
 
 
