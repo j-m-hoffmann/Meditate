@@ -16,21 +16,21 @@
         tools:context=".ui.progress.ProgressFragment">
 
         <TextView
-            android:id="@+id/header_total_time"
+            android:id="@+id/header_duration_total"
             style="@style/statistics_header"
-            android:text="@string/total_time_meditating"
-            app:layout_constraintBottom_toTopOf="@id/value_total_time"
+            android:text="@string/duration_total"
+            app:layout_constraintBottom_toTopOf="@id/value_duration_total"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/value_total_time"
+            android:id="@+id/value_duration_total"
             style="@style/statistics_value"
-            android:text="@string/total_time_meditating"
+            android:text="@string/duration_total"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_total_time"
+            app:layout_constraintTop_toBottomOf="@+id/header_duration_total"
             tools:text="4:00:00" />
 
         <TextView
@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toTopOf="@+id/value_duration_average"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value_total_time" />
+            app:layout_constraintTop_toBottomOf="@id/value_duration_total" />
 
         <TextView
             android:id="@+id/value_duration_average"
@@ -70,21 +70,21 @@
             tools:text="15:00" />
 
         <TextView
-            android:id="@+id/header_sessions_total"
+            android:id="@+id/header_count_sessions"
             style="@style/statistics_header"
-            android:text="@string/total_sessions"
-            app:layout_constraintBottom_toTopOf="@+id/value_sessions_total"
+            android:text="@string/count_sessions"
+            app:layout_constraintBottom_toTopOf="@+id/value_count_sessions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/value_duration_longest" />
 
         <TextView
-            android:id="@+id/value_sessions_total"
+            android:id="@+id/value_count_sessions"
             style="@style/statistics_value"
-            android:text="@string/total_sessions"
+            android:text="@string/count_sessions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_sessions_total"
+            app:layout_constraintTop_toBottomOf="@id/header_count_sessions"
             tools:text="16" />
 
 
