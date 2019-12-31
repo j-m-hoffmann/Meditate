@@ -55,7 +55,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     val delayTimeRemaining: LiveData<Long>
         get() = _delayTimeRemaining
-    private val _delayTimeRemaining = MutableLiveData<Long>()
+    private val _delayTimeRemaining = MutableLiveData(sessionDelay)
 
     val delayTimeVisible: LiveData<Boolean>
         get() = _delayTimeVisible
@@ -71,13 +71,11 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
-    private val _timeRemaining = MutableLiveData<Long>()
+    private val _timeRemaining = MutableLiveData(sessionLength)
 
     //endregion
 
     init {
-        _timeRemaining.value = sessionLength
-
 /*
         // used for testing
         val session1 = Session(System.currentTimeMillis(), tenMinutes)
@@ -157,7 +155,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     private fun resumeSession() {
         _sessionPaused.value = false
-        startTimer(_timeRemaining.value!!, _delayTimeRemaining.value ?: 0)
+        startTimer(_timeRemaining.value!!, _delayTimeRemaining.value!!)
     }
 
     private fun saveSession() {
