@@ -77,6 +77,24 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     init {
         _timeRemaining.value = sessionLength
+
+/*
+        // used for testing
+        val session1 = Session(System.currentTimeMillis(), tenMinutes)
+        viewModelScope.launch {
+            dao.insertSeveral(
+                session1
+                , Session(session1.date - day, fiveMinutes)
+                , Session(session1.date - 2 * day, 15 * minute)
+                , Session(session1.date - 3 * day, 3 * minute)
+                , Session(session1.date - 4 * day, 20 * minute)
+                , Session(session1.date - 5 * day, 20 * second)
+                , Session(session1.date - 6 * day, 1 * hour)
+                , Session(session1.date - 7 * day, 10000 * hour)
+                , Session(session1.date - 8 * day, 1000000 * hour)
+            )
+        }
+*/
     }
 
     //region PublicFunctions

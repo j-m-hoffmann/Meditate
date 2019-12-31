@@ -2,11 +2,16 @@ package com.gitlab.j_m_hoffmann.meditate.db
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
 interface Dao {
+
+/*
+    // used for testing
+    @Insert
+    suspend fun insertSeveral(vararg sessions: Session)
+*/
 
     @Insert
     suspend fun insert(session: Session)
