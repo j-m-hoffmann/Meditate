@@ -49,29 +49,29 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     //region LiveData
 
-    private val _decrementEnabled = MutableLiveData<Boolean>(true)
     val decrementEnabled: LiveData<Boolean>
         get() = _decrementEnabled
+    private val _decrementEnabled = MutableLiveData(true)
 
-    private val _delayTimeRemaining = MutableLiveData<Long>()
     val delayTimeRemaining: LiveData<Long>
         get() = _delayTimeRemaining
+    private val _delayTimeRemaining = MutableLiveData<Long>()
 
-    private val _delayTimeVisible = MutableLiveData<Boolean>(false)
     val delayTimeVisible: LiveData<Boolean>
         get() = _delayTimeVisible
+    private val _delayTimeVisible = MutableLiveData(false)
 
-    private val _sessionInProgress = MutableLiveData<Boolean>(false)
     val sessionInProgress: LiveData<Boolean>
         get() = _sessionInProgress
+    private val _sessionInProgress = MutableLiveData(false)
 
-    private val _sessionPaused = MutableLiveData<Boolean>(false)
     val sessionPaused: LiveData<Boolean>
         get() = _sessionPaused
+    private val _sessionPaused = MutableLiveData(false)
 
-    private val _timeRemaining = MutableLiveData<Long>()
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
+    private val _timeRemaining = MutableLiveData<Long>()
 
     //endregion
 

@@ -9,21 +9,21 @@ import kotlinx.coroutines.launch
 
 class ProgressViewModel(private val dao: Dao) : ViewModel() {
 
-    private val _countSessions = MutableLiveData<Int>(0)
     val countSessions: LiveData<Int>
         get() = _countSessions
+    private val _countSessions = MutableLiveData(0)
 
-    private val _durationAverage = MutableLiveData<Long>(0L)
     val durationAverage: LiveData<Long>
         get() = _durationAverage
+    private val _durationAverage = MutableLiveData(0L)
 
-    private val _durationLongest = MutableLiveData<Long>(0L)
     val durationLongest: LiveData<Long>
         get() = _durationLongest
+    private val _durationLongest = MutableLiveData(0L)
 
-    private val _durationTotal = MutableLiveData<Long>(0L)
     val durationTotal: LiveData<Long>
         get() = _durationTotal
+    private val _durationTotal = MutableLiveData(0L)
 
     init {
         viewModelScope.launch {
