@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
-import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.ui.util.minute
 import com.gitlab.j_m_hoffmann.meditate.ui.util.second
@@ -32,12 +33,12 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     private var delayTimer: CountDownTimer? = null
 
     private var sessionDelay = preferences.getLong(
-        app.getString(R.string.key_session_delay),
+        app.getString(key_session_delay),
         defaultSessionDelay
     )
 
     private var sessionLength = preferences.getLong(
-        app.getString(R.string.key_session_length),
+        app.getString(key_session_length),
         defaultSessionLength
     )
 
