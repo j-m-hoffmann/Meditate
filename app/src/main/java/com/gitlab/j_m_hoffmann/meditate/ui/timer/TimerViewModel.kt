@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 const val defaultSessionDelay: Long = 15 * second
 const val defaultSessionLength: Long = 15 * minute
 const val fiveMinutes: Long = 5 * minute
-const val tenMinutes: Long = 10 * minute
+const val minSessionLength: Long = 10 * minute
 // for testing
 //const val defaultSessionDelay: Long = 0 * second
 //const val defaultSessionDelay: Long = 5 * second
@@ -102,8 +102,8 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     fun decrementDuration() {
         sessionLength -= fiveMinutes
 
-        if (sessionLength <= tenMinutes) {
-            sessionLength = tenMinutes
+        if (sessionLength <= minSessionLength) {
+            sessionLength = minSessionLength
             _decrementEnabled.value = false
         }
 

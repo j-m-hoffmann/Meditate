@@ -8,10 +8,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R.string
-import com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerFragment.OnSessionChangeListener
+import com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerFragment.OnSessionProgressListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), OnSessionChangeListener {
+class MainActivity : AppCompatActivity(), OnSessionProgressListener {
 
     private lateinit var navBar: BottomNavigationView
 

@@ -14,7 +14,7 @@ class TimerFragment : Fragment() {
 
     private lateinit var binding: TimerFragmentBinding
 
-    private lateinit var listener: OnSessionChangeListener
+    private lateinit var progressListener: OnSessionProgressListener
 
     private val timerViewModel by viewModels<TimerViewModel> { getViewModelFactory() }
 
@@ -36,21 +36,21 @@ class TimerFragment : Fragment() {
         }
 
         //region Observers
-        listener = requireActivity() as OnSessionChangeListener
+        progressListener = requireActivity() as OnSessionProgressListener
 
         timerViewModel.apply {
             sessionInProgress.observe(viewLifecycleOwner, Observer { inProgress ->
                 if (inProgress) {
-                    listener.disableNavigation()
+                    progressListener.disableNavigation()
                 } else {
-                    listener.enableNavigation()
+                    progressListener.enableNavigation()
                 }
             })
         }
         //endregion
     }
 
-    interface OnSessionChangeListener {
+    interface OnSessionProgressListener {
         fun disableNavigation()
         fun enableNavigation()
     }
