@@ -1,6 +1,7 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
 import android.os.CountDownTimer
+import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,6 +28,7 @@ const val minSessionLength: Long = 10 * minute
 
 class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
+    private val keySessionLength = app.getString(key_session_length)
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
     //region Variables
@@ -39,7 +41,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     )
 
     private var sessionLength = preferences.getLong(
-        app.getString(key_session_length),
+        keySessionLength,
         defaultSessionLength
     )
 
@@ -153,7 +155,8 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     fun startSession() {
         _sessionInProgress.value = true
 
-        // TODO save session length to preferences
+        preferences.edit { putLong(keySessionLength, sessionLength) }
+
         // TODO show Message
 
         showEndAndPauseButtons()
