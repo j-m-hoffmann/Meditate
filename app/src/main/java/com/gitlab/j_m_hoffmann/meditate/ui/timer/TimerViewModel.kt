@@ -10,6 +10,7 @@ import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
+import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.ui.util.minute
 import com.gitlab.j_m_hoffmann.meditate.ui.util.second
 import kotlinx.coroutines.delay
@@ -43,8 +44,6 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     )
 
     private var timer: CountDownTimer? = null
-
-    private var timeSpentMeditating = 0L
 
     //endregion
 
@@ -147,7 +146,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     }
 
     fun saveSession() {
-        saveInDb()
+        persistSession(sessionLength - timeRemaining.value!!)
         resetSession()
     }
 
@@ -187,7 +186,9 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
         startTimer(_timeRemaining.value!!, _delayTimeRemaining.value!!)
     }
 
-    private fun saveInDb() {}
+    private fun persistSession(length: Long) = viewModelScope.launch {
+        dao.insert(Session(System.currentTimeMillis(), length))
+    }
 
     private fun showDiscardAndSaveButtons() {
         _showEndAndPause.value = false
@@ -235,7 +236,6 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
             override fun onTick(millisUntilFinished: Long) {
                 if (millisUntilFinished >= second) {
                     _timeRemaining.value = millisUntilFinished
-                    timeSpentMeditating += second
                 } else {
                     onFinish()
                 }
@@ -243,7 +243,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
             override fun onFinish() {
                 cancelTimer()
-                saveInDb()
+                persistSession(sessionLength)
                 resetSession()
             }
 
