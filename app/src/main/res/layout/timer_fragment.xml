@@ -109,6 +109,16 @@
             tools:visibility="invisible" />
 
         <!-- visible when session aborted -->
+        <TextView
+            android:id="@+id/discard_or_save_question"
+            style="@style/statistics_header"
+            android:layout_marginBottom="@dimen/spacing_double"
+            android:text="@string/discard_or_save_question"
+            android:visibility="@{viewModel.showDiscardAndSave ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/discard_session"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/discard_session"
             android:layout_width="wrap_content"
