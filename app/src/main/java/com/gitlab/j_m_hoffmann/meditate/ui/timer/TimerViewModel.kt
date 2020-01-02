@@ -12,15 +12,15 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
-import com.gitlab.j_m_hoffmann.meditate.ui.util.minute
-import com.gitlab.j_m_hoffmann.meditate.ui.util.second
+import com.gitlab.j_m_hoffmann.meditate.ui.util.MINUTE
+import com.gitlab.j_m_hoffmann.meditate.ui.util.SECOND
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val defaultSessionDelay: Long = 15 * second
-const val defaultSessionLength: Long = 15 * minute
-const val fiveMinutes: Long = 5 * minute
-const val minSessionLength: Long = 10 * minute
+const val DEFAULT_SESSION_DELAY: Long = 15 * SECOND
+const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
+const val FIVE_MINUTES: Long = 5 * MINUTE
+const val MIN_SESSION_LENGTH: Long = 10 * MINUTE
 // for testing
 //const val defaultSessionDelay: Long = 0 * second
 //const val defaultSessionDelay: Long = 5 * second
@@ -37,12 +37,12 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     private var sessionDelay = preferences.getLong(
         app.getString(key_session_delay),
-        defaultSessionDelay
+        DEFAULT_SESSION_DELAY
     )
 
     private var sessionLength = preferences.getLong(
         keySessionLength,
-        defaultSessionLength
+        DEFAULT_SESSION_LENGTH
     )
 
     private var timer: CountDownTimer? = null
@@ -92,18 +92,18 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     init {
 /*
         // used for testing
-        val session1 = Session(System.currentTimeMillis(), tenMinutes)
+        val session1 = Session(System.currentTimeMillis(), 10 * MINUTE)
         viewModelScope.launch {
             dao.insertSeveral(
                 session1
-                , Session(session1.date - day, fiveMinutes)
-                , Session(session1.date - 2 * day, 15 * minute)
-                , Session(session1.date - 3 * day, 3 * minute)
-                , Session(session1.date - 4 * day, 20 * minute)
-                , Session(session1.date - 5 * day, 20 * second)
-                , Session(session1.date - 6 * day, 1 * hour)
-                , Session(session1.date - 7 * day, 10000 * hour)
-                , Session(session1.date - 8 * day, 1000000 * hour)
+                , Session(session1.date - DAY, FIVE_MINUTES)
+                , Session(session1.date - 2 * DAY, 15 * MINUTE)
+                , Session(session1.date - 3 * DAY, 3 * MINUTE)
+                , Session(session1.date - 4 * DAY, 20 * MINUTE)
+                , Session(session1.date - 5 * DAY, 20 * SECOND)
+                , Session(session1.date - 6 * DAY, 1 * HOUR)
+                , Session(session1.date - 7 * DAY, 10000 * HOUR)
+                , Session(session1.date - 8 * DAY, 1000000 * HOUR)
             )
         }
 */
@@ -112,10 +112,10 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     //region PublicFunctions
 
     fun decrementDuration() {
-        sessionLength -= fiveMinutes
+        sessionLength -= FIVE_MINUTES
 
-        if (sessionLength <= minSessionLength) {
-            sessionLength = minSessionLength
+        if (sessionLength <= MIN_SESSION_LENGTH) {
+            sessionLength = MIN_SESSION_LENGTH
             _decrementEnabled.value = false
         }
 
@@ -134,7 +134,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     }
 
     fun incrementDuration() {
-        sessionLength += fiveMinutes
+        sessionLength += FIVE_MINUTES
         _decrementEnabled.value = true
         _timeRemaining.value = sessionLength
     }
@@ -234,10 +234,10 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
                     }
         */
 
-        timer = object : CountDownTimer(duration, second) {
+        timer = object : CountDownTimer(duration, SECOND) {
 
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished >= second) {
+                if (millisUntilFinished >= SECOND) {
                     _timeRemaining.value = millisUntilFinished
                 } else {
                     onFinish()
@@ -258,13 +258,13 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
 //            val delayEnds = SystemClock.elapsedRealtime() + delay
 //            delayTimer = object : CountDownTimer(delayEnds, second) {
-            delayTimer = object : CountDownTimer(delay, second) {
+            delayTimer = object : CountDownTimer(delay, SECOND) {
 
                 override fun onTick(millisUntilFinished: Long) {
 //                    val remainingDelayTime = delayEnds - SystemClock.elapsedRealtime()
 //                    if (remainingDelayTime >= second) {
 //                        _delayTimeRemaining.value = remainingDelayTime
-                    if (millisUntilFinished >= second) {
+                    if (millisUntilFinished >= SECOND) {
                         _delayTimeRemaining.value = millisUntilFinished
                     } else {
                         onFinish()

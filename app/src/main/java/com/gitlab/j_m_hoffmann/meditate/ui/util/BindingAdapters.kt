@@ -6,6 +6,6 @@ import androidx.databinding.BindingAdapter
 
 @BindingAdapter("formatTime")
 fun TextView.formatTime(milliseconds: Long) {
-    val seconds = milliseconds / second
+    val seconds = milliseconds / SECOND
     text = if (seconds > 60) DateUtils.formatElapsedTime(seconds) else seconds.toString()
 }
