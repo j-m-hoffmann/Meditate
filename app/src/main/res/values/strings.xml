@@ -16,6 +16,10 @@
     <string name="timer">Timer</string>
     <string name="progress">Progress</string>
 
+    <!-- NOTIFICATION -->
+    <string name="notification_message">Session ended</string>
+    <string name="notification_title">Meditate</string>
+
     <!-- PROGRESS -->
     <string name="count_sessions">Total sessions</string>
     <string name="duration_average">Average duration</string>

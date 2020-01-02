@@ -1,6 +1,12 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.CountDownTimer
+import android.os.SystemClock
+import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +18,9 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
+import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.ui.util.MINUTE
+import com.gitlab.j_m_hoffmann.meditate.ui.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.SECOND
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,7 +36,19 @@ const val MIN_SESSION_LENGTH: Long = 10 * MINUTE
 
 class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
+    private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
     private val keySessionLength = app.getString(key_session_length)
+
+    private val notificationIntent = Intent(app, SessionEndedReceiver::class.java)
+
+    private val notificationPendingIntent = PendingIntent.getBroadcast(
+        app,
+        REQUEST_CODE,
+        notificationIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
+
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
     //region Variables
@@ -123,6 +143,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     }
 
     fun endSession() {
+        cancelAlarm()
         cancelDelayTimer()
         cancelTimer()
 
@@ -166,6 +187,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     //endregion
 
     //region PrivateFunctions
+    private fun cancelAlarm() = alarmManager.cancel(notificationPendingIntent)
 
     private fun cancelDelayTimer() {
         delayTimer?.cancel()
@@ -180,6 +202,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     private fun pauseSession() {
         _sessionPaused.value = true
+        cancelAlarm()
         cancelTimer()
         cancelDelayTimer()
     }
@@ -283,6 +306,13 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
         }
 
         timer?.start()
+
+        AlarmManagerCompat.setExactAndAllowWhileIdle(
+            alarmManager,
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + duration,
+            notificationPendingIntent
+        )
     }
     //endregion
 }
