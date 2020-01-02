@@ -44,6 +44,7 @@ class SessionEndedReceiver : BroadcastReceiver() {
             .setContentTitle(context.getString(notification_title))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setSmallIcon(R.drawable.ic_timer_black_24dp)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
         notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
