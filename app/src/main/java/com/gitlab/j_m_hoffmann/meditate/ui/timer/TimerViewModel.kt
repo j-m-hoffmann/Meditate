@@ -89,8 +89,8 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     //endregion
 
+    /*
     init {
-/*
         // used for testing
         val session1 = Session(System.currentTimeMillis(), 10 * MINUTE)
         viewModelScope.launch {
@@ -106,8 +106,8 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
                 , Session(session1.date - 8 * DAY, 1000000 * HOUR)
             )
         }
-*/
     }
+    */
 
     //region PublicFunctions
 
