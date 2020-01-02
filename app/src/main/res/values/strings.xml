@@ -17,6 +17,8 @@
     <string name="progress">Progress</string>
 
     <!-- NOTIFICATION -->
+    <string name="notification_channel_id" translatable="false">meditate_channel</string>
+    <string name="notification_channel_name">Meditate</string>
     <string name="notification_message">Session ended</string>
     <string name="notification_title">Meditate</string>
 
