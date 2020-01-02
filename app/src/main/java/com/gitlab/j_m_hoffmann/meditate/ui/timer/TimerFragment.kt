@@ -41,9 +41,9 @@ class TimerFragment : Fragment() {
         timerViewModel.apply {
             sessionInProgress.observe(viewLifecycleOwner, Observer { inProgress ->
                 if (inProgress) {
-                    progressListener.disableNavigation()
+                    progressListener.hideNavigation()
                 } else {
-                    progressListener.enableNavigation()
+                    progressListener.showNavigation()
                 }
             })
         }
@@ -51,7 +51,7 @@ class TimerFragment : Fragment() {
     }
 
     interface OnSessionProgressListener {
-        fun disableNavigation()
-        fun enableNavigation()
+        fun hideNavigation()
+        fun showNavigation()
     }
 }

@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity(), OnSessionProgressListener {
         AppCompatDelegate.setDefaultNightMode(nightMode!!.toInt())
     }
 
-    override fun disableNavigation() {
+    override fun hideNavigation() {
         navBar.visibility = View.GONE
     }
 
-    override fun enableNavigation() {
+    override fun showNavigation() {
         navBar.visibility = View.VISIBLE
     }
 }
