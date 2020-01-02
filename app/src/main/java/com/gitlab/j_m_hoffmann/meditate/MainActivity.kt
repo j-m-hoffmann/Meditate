@@ -2,6 +2,9 @@ package com.gitlab.j_m_hoffmann.meditate
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentResolver
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -42,12 +45,22 @@ class MainActivity : AppCompatActivity(), OnSessionProgressListener {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+            val sound = Uri.parse(
+                "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${packageName}/${R.raw.metal_gong_by_dianakc}"
+            )
+
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+
             val channel = NotificationChannel(
                 getString(notification_channel_id),
                 getString(notification_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 setShowBadge(false)
+                setSound(sound, audioAttributes)
             }
 
             val notificationManager = getSystemService(NotificationManager::class.java) as NotificationManager
