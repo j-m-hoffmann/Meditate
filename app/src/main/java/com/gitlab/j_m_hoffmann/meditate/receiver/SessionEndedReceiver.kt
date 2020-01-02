@@ -38,6 +38,7 @@ class SessionEndedReceiver : BroadcastReceiver() {
 
         builder
             .setAutoCancel(true)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setContentIntent(contentPendingIntent)
             .setContentText(context.getString(notification_message))
             .setContentTitle(context.getString(notification_title))
