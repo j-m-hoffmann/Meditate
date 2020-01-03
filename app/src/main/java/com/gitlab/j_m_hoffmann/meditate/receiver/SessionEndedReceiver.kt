@@ -3,7 +3,7 @@ package com.gitlab.j_m_hoffmann.meditate.receiver
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
-import android.content.ContentResolver
+import android.content.ContentResolver.SCHEME_ANDROID_RESOURCE
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.gitlab.j_m_hoffmann.meditate.MainActivity
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.R.raw.metal_gong_by_dianakc
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_message
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_title
@@ -38,9 +39,7 @@ class SessionEndedReceiver : BroadcastReceiver() {
             context.getString(notification_channel_id)
         )
 
-        val sound = Uri.parse(
-            "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.packageName}/${R.raw.metal_gong_by_dianakc}"
-        )
+        val sound = Uri.parse("$SCHEME_ANDROID_RESOURCE://${context.packageName}/$metal_gong_by_dianakc")
 
         builder
             .setAutoCancel(true)
