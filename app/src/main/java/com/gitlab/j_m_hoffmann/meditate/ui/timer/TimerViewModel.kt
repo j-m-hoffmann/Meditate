@@ -29,10 +29,6 @@ const val DEFAULT_SESSION_DELAY: Long = 15 * SECOND
 const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val MIN_SESSION_LENGTH: Long = 10 * MINUTE
-// for testing
-//const val defaultSessionDelay: Long = 0 * second
-//const val defaultSessionDelay: Long = 5 * second
-//const val defaultSessionLength: Long = 5 * second
 
 class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
