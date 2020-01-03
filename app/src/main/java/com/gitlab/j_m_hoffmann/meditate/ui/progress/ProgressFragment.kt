@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gitlab.j_m_hoffmann.meditate.databinding.ProgressFragmentBinding
-import com.gitlab.j_m_hoffmann.meditate.getViewModelFactory
+import com.gitlab.j_m_hoffmann.meditate.ui.util.getViewModelFactory
 
 class ProgressFragment : Fragment() {
 

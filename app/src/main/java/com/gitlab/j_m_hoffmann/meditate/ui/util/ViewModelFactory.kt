@@ -1,8 +1,9 @@
-package com.gitlab.j_m_hoffmann.meditate
+package com.gitlab.j_m_hoffmann.meditate.ui.util
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.ui.progress.ProgressViewModel
 import com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerViewModel
 
