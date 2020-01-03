@@ -10,11 +10,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R.raw.metal_gong_by_dianakc
 import com.gitlab.j_m_hoffmann.meditate.R.string.default_theme
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_name
@@ -33,12 +36,17 @@ class MainActivity : AppCompatActivity(), OnSessionProgressListener {
 
         navBar.setupWithNavController(findNavController(R.id.nav_host_fragment))
 
-        val nightMode = PreferenceManager.getDefaultSharedPreferences(this).getString(
-            getString(key_theme),
-            getString(default_theme)
-        )
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val nightMode = preferences.getString(getString(key_theme), getString(default_theme))
 
         AppCompatDelegate.setDefaultNightMode(nightMode!!.toInt())
+
+        val streakExpires = preferences.getLong(getString(key_streak_expires), Long.MAX_VALUE)
+
+        if (streakExpires < System.currentTimeMillis()) {
+            preferences.edit { putInt(getString(key_streak_value), 0) }
+        }
 
         createNotificationChannel()
     }
