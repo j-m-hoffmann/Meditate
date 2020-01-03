@@ -70,13 +70,30 @@
             tools:text="15:00" />
 
         <TextView
+            android:id="@+id/header_streak_longest"
+            style="@style/statistics_header"
+            android:text="@string/streak_longest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/value_duration_longest" />
+
+        <TextView
+            android:id="@+id/value_streak_longest"
+            style="@style/statistics_value"
+            app:formatStreak="@{viewModel.streak}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header_streak_longest"
+            tools:text="15:00" />
+
+        <TextView
             android:id="@+id/header_count_sessions"
             style="@style/statistics_header"
             android:text="@string/count_sessions"
             app:layout_constraintBottom_toTopOf="@+id/value_count_sessions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value_duration_longest" />
+            app:layout_constraintTop_toBottomOf="@id/value_streak_longest" />
 
         <TextView
             android:id="@+id/value_count_sessions"

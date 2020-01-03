@@ -14,7 +14,7 @@ class ViewModelFactory(private val app: MeditateApplication) : ViewModelProvider
         return with(modelClass) {
             val dao = app.database.dao
             when {
-                isAssignableFrom(ProgressViewModel::class.java) -> ProgressViewModel(dao)
+                isAssignableFrom(ProgressViewModel::class.java) -> ProgressViewModel(app, dao)
                 isAssignableFrom(TimerViewModel::class.java) -> TimerViewModel(app, dao)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

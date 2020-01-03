@@ -4,10 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
+import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
+import com.gitlab.j_m_hoffmann.meditate.R.string
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import kotlinx.coroutines.launch
 
-class ProgressViewModel(private val dao: Dao) : ViewModel() {
+class ProgressViewModel(private val app: MeditateApplication, private val dao: Dao) : ViewModel() {
+
+    private val keyStreakValue = app.getString(string.key_streak_value)
+
+    private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
     val countSessions: LiveData<Int>
         get() = _countSessions
@@ -24,6 +31,10 @@ class ProgressViewModel(private val dao: Dao) : ViewModel() {
     val durationTotal: LiveData<Long>
         get() = _durationTotal
     private val _durationTotal = MutableLiveData(0L)
+
+    val streak: LiveData<Int>
+        get() = _streak
+    private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
     init {
         viewModelScope.launch {
