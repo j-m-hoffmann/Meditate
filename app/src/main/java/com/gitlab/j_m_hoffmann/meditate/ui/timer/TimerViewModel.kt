@@ -51,15 +51,9 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     private var delayTimer: CountDownTimer? = null
 
-    private var sessionDelay = preferences.getLong(
-        app.getString(key_session_delay),
-        DEFAULT_SESSION_DELAY
-    )
+    private var sessionDelay = preferences.getLong(app.getString(key_session_delay), DEFAULT_SESSION_DELAY)
 
-    private var sessionLength = preferences.getLong(
-        keySessionLength,
-        DEFAULT_SESSION_LENGTH
-    )
+    private var sessionLength = preferences.getLong(keySessionLength, DEFAULT_SESSION_LENGTH)
 
     private var timer: CountDownTimer? = null
 
