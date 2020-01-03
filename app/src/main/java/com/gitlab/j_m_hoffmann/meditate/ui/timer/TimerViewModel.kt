@@ -16,12 +16,16 @@ import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_longest
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.ui.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.SECOND
+import com.gitlab.j_m_hoffmann.meditate.util.midnight
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,6 +39,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     private val keySessionLength = app.getString(key_session_length)
+    private val keyStreakValue = app.getString(key_streak_value)
 
     private val notificationIntent = Intent(app, SessionEndedReceiver::class.java)
 
@@ -92,6 +97,10 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     val showStart: LiveData<Boolean>
         get() = _showStart
     private val _showStart = MutableLiveData(true)
+
+    val streak: LiveData<Int>
+        get() = _streak
+    private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
@@ -159,6 +168,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
     }
 
     fun saveSession() {
+        updateMeditationStreak()
         persistSession(sessionLength - timeRemaining.value!!)
         resetSession()
     }
@@ -259,6 +269,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
             override fun onFinish() {
                 cancelTimer()
+                updateMeditationStreak()
                 persistSession(sessionLength)
                 resetSession()
             }
@@ -303,6 +314,37 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
             SystemClock.elapsedRealtime() + duration,
             notificationPendingIntent
         )
+    }
+
+    private fun updateMeditationStreak() = viewModelScope.launch {
+
+        val lastSessionDate = dao.lastSessionDate() ?: 0L // no session saved
+
+        val midnight = midnight()
+
+        if (lastSessionDate < midnight) { // no session saved for today
+
+            var streak = _streak.value!!
+
+            streak += 1
+
+            val midnightTomorrow = midnight(2)
+
+            preferences.edit {
+                putInt(keyStreakValue, streak)
+                putLong(app.getString(key_streak_expires), midnightTomorrow)
+            }
+
+            _streak.value = streak
+
+            val keyLongestStreak = app.getString(key_streak_longest)
+
+            val longestStreak = preferences.getInt(keyLongestStreak, 0)
+
+            if (streak > longestStreak) {
+                preferences.edit { putInt(keyLongestStreak, streak) }
+            }
+        }
     }
     //endregion
 }

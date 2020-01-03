@@ -27,5 +27,8 @@ interface Dao {
 
     @Query("SELECT SUM(duration) FROM session")
     suspend fun durationTotal(): Long
+
+    @Query("SELECT MAX(date) FROM session")
+    suspend fun lastSessionDate(): Long?
 }
 

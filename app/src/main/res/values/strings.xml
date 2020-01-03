@@ -8,6 +8,9 @@
     <!-- KEYS -->
     <string name="key_session_delay" translatable="false">key_session_delay</string>
     <string name="key_session_length" translatable="false">key_session_length</string>
+    <string name="key_streak_expires" translatable="false">key_streak_expires</string>
+    <string name="key_streak_longest" translatable="false">key_streak_longest</string>
+    <string name="key_streak_value" translatable="false">key_streak_value</string>
     <string name="key_theme" translatable="false">key_theme</string>
     <string name="key_widget_color" translatable="false">key_widget_color</string>
 
