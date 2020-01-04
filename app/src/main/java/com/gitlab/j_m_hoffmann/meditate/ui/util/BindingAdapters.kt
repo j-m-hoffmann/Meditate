@@ -9,12 +9,3 @@ fun TextView.formatTime(milliseconds: Long) {
     val seconds = milliseconds / SECOND
     text = if (seconds > 60) DateUtils.formatElapsedTime(seconds) else seconds.toString()
 }
-
-@BindingAdapter("formatStreak")
-fun TextView.formatStreak(days: Int) {
-    text = when (days) {
-        0 -> ""
-        1 -> "$days day of meditation"
-        else -> "$days days of meditation"
-    }
-}

@@ -25,6 +25,16 @@
     <string name="notification_message">Session ended</string>
     <string name="notification_title">Meditate</string>
 
+    <!-- PLURALS -->
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="days_of_meditation">
+        <item quantity="one">%d day of meditation</item>
+        <item quantity="other">%d days of meditation</item>
+    </plurals>
+
     <!-- PROGRESS -->
     <string name="count_sessions">Total sessions</string>
     <string name="duration_average">Average duration</string>

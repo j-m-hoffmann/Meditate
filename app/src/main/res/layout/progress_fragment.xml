@@ -80,7 +80,7 @@
         <TextView
             android:id="@+id/value_streak_longest"
             style="@style/statistics_value"
-            app:formatStreak="@{viewModel.streak}"
+            android:text="@{viewModel.streak}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_streak_longest"

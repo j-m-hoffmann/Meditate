@@ -10,10 +10,12 @@ import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
+import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
@@ -22,6 +24,8 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
+import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.ui.util.DAY
 import com.gitlab.j_m_hoffmann.meditate.ui.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.SECOND
@@ -98,9 +102,18 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
         get() = _showStart
     private val _showStart = MutableLiveData(true)
 
-    val streak: LiveData<Int>
-        get() = _streak
     private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
+
+    val streak = Transformations.map(_streak) { days ->
+        when (days) {
+            0 -> ""
+            else -> {
+                val quantityString = app.resources.getQuantityString(R.plurals.days_of_meditation, days, days)
+
+                String.format(quantityString, app.integerFormat().format(days))
+            }
+        }
+    }
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
