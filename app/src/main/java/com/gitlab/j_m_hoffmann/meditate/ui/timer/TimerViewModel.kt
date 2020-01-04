@@ -2,8 +2,6 @@ package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
@@ -17,9 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
-import com.gitlab.j_m_hoffmann.meditate.MeditateWidget
 import com.gitlab.j_m_hoffmann.meditate.R
-import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_longest
@@ -33,6 +29,7 @@ import com.gitlab.j_m_hoffmann.meditate.ui.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.ui.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
+import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -358,22 +355,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
             _streak.value = newStreak
 
-            updateWidget()
-        }
-    }
-
-    private fun updateWidget() {
-        val widgetManager = AppWidgetManager.getInstance(app)
-        val componentName = ComponentName(app, MeditateWidget::class.java)
-        val ids = widgetManager.getAppWidgetIds(componentName)
-
-        if (ids.isNotEmpty()) {
-            val updateIntent = Intent(app, MeditateWidget::class.java).apply {
-                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-            }
-
-            app.sendBroadcast(updateIntent)
+            updateWidget(app)
         }
     }
     //endregion
