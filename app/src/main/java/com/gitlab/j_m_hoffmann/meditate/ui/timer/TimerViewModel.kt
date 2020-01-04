@@ -331,7 +331,7 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
     private fun updateMeditationStreak() = viewModelScope.launch {
 
-        val lastSessionDate = dao.lastSessionDate() ?: 0L // no session saved
+        val lastSessionDate = dao.lastSessionDate() ?: Long.MIN_VALUE // no session saved
 
         val midnight = midnight()
 
