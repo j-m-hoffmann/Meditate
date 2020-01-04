@@ -1,13 +1,13 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.extensions
 
-import android.app.Application
+import android.content.Context
 import android.os.Build.VERSION
 import java.text.NumberFormat
 import java.util.Locale
 
-fun Application.integerFormat(): NumberFormat = NumberFormat.getIntegerInstance(locale())
+fun Context.integerFormat(): NumberFormat = NumberFormat.getIntegerInstance(locale())
 
-fun Application.locale(): Locale {
+fun Context.locale(): Locale {
     return if (VERSION.SDK_INT >= 24) {
         resources.configuration.locales[0]
     } else {

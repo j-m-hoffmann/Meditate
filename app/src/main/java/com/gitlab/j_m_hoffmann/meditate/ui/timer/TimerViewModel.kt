@@ -2,6 +2,7 @@ package com.gitlab.j_m_hoffmann.meditate.ui.timer
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
@@ -349,6 +350,9 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
             }
 
             _streak.value = streak
+
+            val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+            app.applicationContext.sendBroadcast(updateIntent)
 
             val keyLongestStreak = app.getString(key_streak_longest)
 

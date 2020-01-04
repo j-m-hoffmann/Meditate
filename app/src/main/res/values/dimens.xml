@@ -12,4 +12,6 @@
     <dimen name="text_size_timer">64sp</dimen>
     <dimen name="text_size_delay_timer">16sp</dimen>
 
+    <dimen name="widget_margin">0dp</dimen>
+
 </resources>
