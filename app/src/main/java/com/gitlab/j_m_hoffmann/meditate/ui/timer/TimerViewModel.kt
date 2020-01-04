@@ -3,6 +3,7 @@ package com.gitlab.j_m_hoffmann.meditate.ui.timer
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
+import com.gitlab.j_m_hoffmann.meditate.MeditateWidget
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
@@ -338,29 +340,40 @@ class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewM
 
         if (lastSessionDate < midnight) { // no session saved for today
 
-            var streak = _streak.value!!
+            val newStreak = _streak.value!! + 1
 
-            streak += 1
+            val keyStreakLongest = app.getString(key_streak_longest)
 
-            val midnightTomorrow = midnight(2)
+            val longestStreak = preferences.getInt(keyStreakLongest, 0)
 
             preferences.edit {
-                putInt(keyStreakValue, streak)
-                putLong(app.getString(key_streak_expires), midnightTomorrow)
+                putInt(keyStreakValue, newStreak)
+
+                putLong(app.getString(key_streak_expires), midnight + 2 * DAY)
+
+                if (newStreak > longestStreak) {
+                    putInt(keyStreakLongest, newStreak)
+                }
             }
 
-            _streak.value = streak
+            _streak.value = newStreak
 
-            val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-            app.applicationContext.sendBroadcast(updateIntent)
+            updateWidget()
+        }
+    }
 
-            val keyLongestStreak = app.getString(key_streak_longest)
+    private fun updateWidget() {
+        val widgetManager = AppWidgetManager.getInstance(app)
+        val componentName = ComponentName(app, MeditateWidget::class.java)
+        val ids = widgetManager.getAppWidgetIds(componentName)
 
-            val longestStreak = preferences.getInt(keyLongestStreak, 0)
-
-            if (streak > longestStreak) {
-                preferences.edit { putInt(keyLongestStreak, streak) }
+        if (ids.isNotEmpty()) {
+            val updateIntent = Intent(app, MeditateWidget::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
             }
+
+            app.sendBroadcast(updateIntent)
         }
     }
     //endregion
