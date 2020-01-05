@@ -11,7 +11,9 @@ import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.ui.extensions.locale
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 
 class ProgressViewModel(private val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
@@ -35,6 +37,15 @@ class ProgressViewModel(private val app: MeditateApplication, private val dao: D
         get() = _durationTotal
     private val _durationTotal = MutableLiveData(0L)
 
+    private val _lastSessionDate = MutableLiveData(0L)
+
+    val lastSessionDate = Transformations.map(_lastSessionDate) { date ->
+        when (date) {
+            0L -> ""
+            else -> DateFormat.getDateInstance(DateFormat.FULL, app.locale()).format(date)
+        }
+    }
+
     private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
     val streak = Transformations.map(_streak) { days ->
@@ -54,6 +65,7 @@ class ProgressViewModel(private val app: MeditateApplication, private val dao: D
             _durationAverage.value = dao.durationAverage()
             _durationLongest.value = dao.durationLongest()
             _durationTotal.value = dao.durationTotal()
+            _lastSessionDate.value = dao.lastSessionDate() ?: 0L
         }
     }
 }

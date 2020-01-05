@@ -19,6 +19,7 @@
             android:id="@+id/header_duration_total"
             style="@style/statistics_header"
             android:text="@string/duration_total"
+            android:layout_marginTop="0dp"
             app:layout_constraintBottom_toTopOf="@id/value_duration_total"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +105,23 @@
             app:layout_constraintTop_toBottomOf="@id/header_count_sessions"
             tools:text="16" />
 
+        <TextView
+            android:id="@+id/header_last_session"
+            style="@style/statistics_header"
+            android:text="@string/last_session"
+            app:layout_constraintBottom_toTopOf="@+id/value_last_session"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/value_count_sessions" />
+
+        <TextView
+            android:id="@+id/value_last_session"
+            style="@style/statistics_value"
+            android:text="@{viewModel.lastSessionDate}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_last_session"
+            tools:text="16" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
