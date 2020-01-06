@@ -40,7 +40,8 @@
     <string name="widget_color">Widget color</string>
 
     <string name="color_white">Weiß</string>
-    <string name="color_grey">Grau</string>
+    <string name="color_light_grey">Helles Grau</string>
+    <string name="color_dark_grey">Dunkles Grau</string>
     <string name="color_black">Schwarz</string>
 
     <!-- TIMER -->

@@ -54,7 +54,8 @@
     <string name="widget_color">Widget color</string>
 
     <string name="color_white">White</string>
-    <string name="color_grey">Grey</string>
+    <string name="color_light_grey">Light grey</string>
+    <string name="color_dark_grey">Dark grey</string>
     <string name="color_black">Black</string>
 
     <!-- TIMER -->
