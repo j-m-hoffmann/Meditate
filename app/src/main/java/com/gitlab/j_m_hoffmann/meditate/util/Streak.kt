@@ -1,8 +1,8 @@
 package com.gitlab.j_m_hoffmann.meditate.util
 
-import android.app.Application
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import com.gitlab.j_m_hoffmann.meditate.MeditateWidget
 import java.util.Calendar
@@ -25,17 +25,17 @@ fun midnight(shift: Int = 0): Long {
     return midnight.timeInMillis
 }
 
-fun updateWidget(app: Application) {
-    val widgetManager = AppWidgetManager.getInstance(app)
-    val componentName = ComponentName(app, MeditateWidget::class.java)
+fun updateWidget(context: Context) {
+    val widgetManager = AppWidgetManager.getInstance(context)
+    val componentName = ComponentName(context, MeditateWidget::class.java)
     val ids = widgetManager.getAppWidgetIds(componentName)
 
     if (ids.isNotEmpty()) {
-        val updateIntent = Intent(app, MeditateWidget::class.java).apply {
+        val updateIntent = Intent(context, MeditateWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         }
 
-        app.sendBroadcast(updateIntent)
+        context.sendBroadcast(updateIntent)
     }
 }

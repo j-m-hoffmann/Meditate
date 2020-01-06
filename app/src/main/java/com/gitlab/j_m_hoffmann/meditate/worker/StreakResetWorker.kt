@@ -1,6 +1,5 @@
 package com.gitlab.j_m_hoffmann.meditate.worker
 
-import android.app.Application
 import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -21,7 +20,7 @@ class StreakResetWorker(val context: Context, parameters: WorkerParameters) : Wo
         if (streakExpires < System.currentTimeMillis()) {
             preferences.edit(commit = true) { putInt(context.getString(key_streak_value), 0) }
 
-            updateWidget((context as Application))
+            updateWidget(context)
         }
 
         return Result.success()
