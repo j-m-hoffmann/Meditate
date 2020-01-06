@@ -10,8 +10,8 @@ import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
-import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
-import com.gitlab.j_m_hoffmann.meditate.ui.extensions.locale
+import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 

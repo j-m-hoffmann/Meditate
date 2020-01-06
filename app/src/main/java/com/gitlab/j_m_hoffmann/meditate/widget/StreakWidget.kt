@@ -16,7 +16,7 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.default_widget_color
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
 import com.gitlab.j_m_hoffmann.meditate.R.string.widget_text_default
-import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
 
 class StreakWidget : AppWidgetProvider() {
 

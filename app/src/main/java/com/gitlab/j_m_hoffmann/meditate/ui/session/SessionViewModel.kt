@@ -22,8 +22,8 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_longest
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
+import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
-import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
 import com.gitlab.j_m_hoffmann.meditate.util.DAY
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
@@ -33,7 +33,7 @@ import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val DEFAULT_SESSION_DELAY: Long = 15 * SECOND
+const val DEFAULT_SESSION_DELAY: Long = 0 * SECOND
 const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val MIN_SESSION_LENGTH: Long = 10 * MINUTE

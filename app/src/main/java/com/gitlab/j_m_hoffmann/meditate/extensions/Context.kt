@@ -1,4 +1,4 @@
-package com.gitlab.j_m_hoffmann.meditate.ui.extensions
+package com.gitlab.j_m_hoffmann.meditate.extensions
 
 import android.content.Context
 import android.os.Build.VERSION
