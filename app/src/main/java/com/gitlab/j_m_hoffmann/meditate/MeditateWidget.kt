@@ -5,8 +5,11 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.widget.RemoteViews
 import androidx.preference.PreferenceManager
+import com.gitlab.j_m_hoffmann.meditate.R.string.default_widget_color
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
 import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
 
 class MeditateWidget : AppWidgetProvider() {
@@ -45,7 +48,10 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
         PendingIntent.getActivity(context, 0, intent, 0)
     }
 
+    val color = preferences.getString(context.getString(key_widget_color), context.getString(default_widget_color))
+
     val views = RemoteViews(context.packageName, R.layout.widget).apply {
+        setTextColor(R.id.widget_text, Color.parseColor(color))
         setTextViewText(R.id.widget_text, widgetText)
         setOnClickPendingIntent(R.id.widget_text, pendingIntent)
     }
