@@ -8,4 +8,4 @@ const val DAY: Long = 24 * HOUR
 const val NOTIFICATION_ID = 0
 const val REQUEST_CODE = 0
 
-const val STREAK_RESET_WORKER = "STREAK_RESET_WORKER"
+const val STREAK_RESET_WORKER = "com.gitlab.j_m_hoffmann.meditate.streak_reset_worker"
