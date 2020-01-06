@@ -7,7 +7,8 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
-import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
+import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
+import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 
 class StreakResetWorker(val context: Context, parameters: WorkerParameters) : Worker(context, parameters) {
 
@@ -20,7 +21,7 @@ class StreakResetWorker(val context: Context, parameters: WorkerParameters) : Wo
         if (streakExpires < System.currentTimeMillis()) {
             preferences.edit(commit = true) { putInt(context.getString(key_streak_value), 0) }
 
-            updateWidget(context)
+            context.updateWidget<StreakWidget>()
         }
 
         return Result.success()

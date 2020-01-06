@@ -8,7 +8,8 @@ import androidx.preference.PreferenceFragmentCompat
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
-import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
+import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
+import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -22,7 +23,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var widgetColorPreference: ListPreference? = null
 
     private val widgetColorChangeListener = OnPreferenceChangeListener { _, _ ->
-        updateWidget(activity!!.applicationContext)
+        activity!!.applicationContext.updateWidget<StreakWidget>()
         true
     }
 

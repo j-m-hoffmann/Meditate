@@ -23,13 +23,14 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.util.DAY
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
-import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
+import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -357,7 +358,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
             _streak.value = newStreak
 
-            updateWidget(app)
+            app.updateWidget<StreakWidget>()
         }
     }
     //endregion
