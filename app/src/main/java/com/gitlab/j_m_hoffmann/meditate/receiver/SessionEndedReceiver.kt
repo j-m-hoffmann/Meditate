@@ -48,7 +48,7 @@ class SessionEndedReceiver : BroadcastReceiver() {
             .setContentText(context.getString(notification_message))
             .setContentTitle(context.getString(notification_title))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setSmallIcon(R.drawable.ic_timer_black_24dp)
+            .setSmallIcon(R.drawable.ic_logo_meditate_black)
             .setSound(sound)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
