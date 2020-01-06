@@ -10,118 +10,79 @@
             type="com.gitlab.j_m_hoffmann.meditate.ui.progress.ProgressViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         tools:context=".ui.progress.ProgressFragment">
 
         <TextView
             android:id="@+id/header_duration_total"
             style="@style/statistics_header"
-            android:text="@string/duration_total"
             android:layout_marginTop="0dp"
-            app:layout_constraintBottom_toTopOf="@id/value_duration_total"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/duration_total" />
 
         <TextView
             android:id="@+id/value_duration_total"
             style="@style/statistics_value"
             app:formatTime="@{viewModel.durationTotal}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_duration_total"
             tools:text="4:00:00" />
 
         <TextView
             android:id="@+id/header_duration_average"
             style="@style/statistics_header"
-            android:text="@string/duration_average"
-            app:layout_constraintBottom_toTopOf="@+id/value_duration_average"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value_duration_total" />
+            android:text="@string/duration_average" />
 
         <TextView
             android:id="@+id/value_duration_average"
             style="@style/statistics_value"
             app:formatTime="@{viewModel.durationAverage}"
-            app:layout_constraintBottom_toTopOf="@+id/header_duration_longest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_duration_average"
             tools:text="15:00" />
 
         <TextView
             android:id="@+id/header_duration_longest"
             style="@style/statistics_header"
-            android:text="@string/duration_longest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value_duration_average" />
+            android:text="@string/duration_longest" />
 
         <TextView
             android:id="@+id/value_duration_longest"
             style="@style/statistics_value"
             app:formatTime="@{viewModel.durationLongest}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_duration_longest"
             tools:text="15:00" />
 
         <TextView
             android:id="@+id/header_streak_longest"
             style="@style/statistics_header"
-            android:text="@string/streak_longest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value_duration_longest" />
+            android:text="@string/streak_longest" />
 
         <TextView
             android:id="@+id/value_streak_longest"
             style="@style/statistics_value"
             android:text="@{viewModel.streak}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_streak_longest"
             tools:text="15:00" />
 
         <TextView
             android:id="@+id/header_count_sessions"
             style="@style/statistics_header"
-            android:text="@string/count_sessions"
-            app:layout_constraintBottom_toTopOf="@+id/value_count_sessions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value_streak_longest" />
+            android:text="@string/count_sessions" />
 
         <TextView
             android:id="@+id/value_count_sessions"
             style="@style/statistics_value"
             android:text="@{viewModel.countSessions.toString()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_count_sessions"
             tools:text="16" />
 
         <TextView
             android:id="@+id/header_last_session"
             style="@style/statistics_header"
-            android:text="@string/last_session"
-            app:layout_constraintBottom_toTopOf="@+id/value_last_session"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value_count_sessions" />
+            android:text="@string/last_session" />
 
         <TextView
             android:id="@+id/value_last_session"
             style="@style/statistics_value"
             android:text="@{viewModel.lastSessionDate}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_last_session"
             tools:text="05.01.2020" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
