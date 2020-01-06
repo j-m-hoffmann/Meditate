@@ -10,79 +10,85 @@
             type="com.gitlab.j_m_hoffmann.meditate.ui.progress.ProgressViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:context=".ui.progress.ProgressFragment">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/header_duration_total"
-            style="@style/statistics_header"
-            android:layout_marginTop="0dp"
-            android:text="@string/duration_total" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".ui.progress.ProgressFragment">
 
-        <TextView
-            android:id="@+id/value_duration_total"
-            style="@style/statistics_value"
-            app:formatTime="@{viewModel.durationTotal}"
-            tools:text="4:00:00" />
+            <TextView
+                android:id="@+id/header_duration_total"
+                style="@style/statistics_header"
+                android:layout_marginTop="0dp"
+                android:text="@string/duration_total" />
 
-        <TextView
-            android:id="@+id/header_duration_average"
-            style="@style/statistics_header"
-            android:text="@string/duration_average" />
+            <TextView
+                android:id="@+id/value_duration_total"
+                style="@style/statistics_value"
+                app:formatTime="@{viewModel.durationTotal}"
+                tools:text="4:00:00" />
 
-        <TextView
-            android:id="@+id/value_duration_average"
-            style="@style/statistics_value"
-            app:formatTime="@{viewModel.durationAverage}"
-            tools:text="15:00" />
+            <TextView
+                android:id="@+id/header_duration_average"
+                style="@style/statistics_header"
+                android:text="@string/duration_average" />
 
-        <TextView
-            android:id="@+id/header_duration_longest"
-            style="@style/statistics_header"
-            android:text="@string/duration_longest" />
+            <TextView
+                android:id="@+id/value_duration_average"
+                style="@style/statistics_value"
+                app:formatTime="@{viewModel.durationAverage}"
+                tools:text="15:00" />
 
-        <TextView
-            android:id="@+id/value_duration_longest"
-            style="@style/statistics_value"
-            app:formatTime="@{viewModel.durationLongest}"
-            tools:text="15:00" />
+            <TextView
+                android:id="@+id/header_duration_longest"
+                style="@style/statistics_header"
+                android:text="@string/duration_longest" />
 
-        <TextView
-            android:id="@+id/header_streak_longest"
-            style="@style/statistics_header"
-            android:text="@string/streak_longest" />
+            <TextView
+                android:id="@+id/value_duration_longest"
+                style="@style/statistics_value"
+                app:formatTime="@{viewModel.durationLongest}"
+                tools:text="15:00" />
 
-        <TextView
-            android:id="@+id/value_streak_longest"
-            style="@style/statistics_value"
-            android:text="@{viewModel.streak}"
-            tools:text="15:00" />
+            <TextView
+                android:id="@+id/header_streak_longest"
+                style="@style/statistics_header"
+                android:text="@string/streak_longest" />
 
-        <TextView
-            android:id="@+id/header_count_sessions"
-            style="@style/statistics_header"
-            android:text="@string/count_sessions" />
+            <TextView
+                android:id="@+id/value_streak_longest"
+                style="@style/statistics_value"
+                android:text="@{viewModel.streak}"
+                tools:text="15:00" />
 
-        <TextView
-            android:id="@+id/value_count_sessions"
-            style="@style/statistics_value"
-            android:text="@{viewModel.countSessions.toString()}"
-            tools:text="16" />
+            <TextView
+                android:id="@+id/header_count_sessions"
+                style="@style/statistics_header"
+                android:text="@string/count_sessions" />
 
-        <TextView
-            android:id="@+id/header_last_session"
-            style="@style/statistics_header"
-            android:text="@string/last_session" />
+            <TextView
+                android:id="@+id/value_count_sessions"
+                style="@style/statistics_value"
+                android:text="@{viewModel.countSessions.toString()}"
+                tools:text="16" />
 
-        <TextView
-            android:id="@+id/value_last_session"
-            style="@style/statistics_value"
-            android:text="@{viewModel.lastSessionDate}"
-            tools:text="05.01.2020" />
+            <TextView
+                android:id="@+id/header_last_session"
+                style="@style/statistics_header"
+                android:text="@string/last_session" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/value_last_session"
+                style="@style/statistics_value"
+                android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
+                android:text="@{viewModel.lastSessionDate}"
+                tools:text="05.01.2020" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>
