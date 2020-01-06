@@ -1,4 +1,4 @@
-package com.gitlab.j_m_hoffmann.meditate
+package com.gitlab.j_m_hoffmann.meditate.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -8,14 +8,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.widget.RemoteViews
 import androidx.preference.PreferenceManager
+import com.gitlab.j_m_hoffmann.meditate.MainActivity
 import com.gitlab.j_m_hoffmann.meditate.R.id.widget_text
+import com.gitlab.j_m_hoffmann.meditate.R.layout
+import com.gitlab.j_m_hoffmann.meditate.R.plurals
 import com.gitlab.j_m_hoffmann.meditate.R.string.default_widget_color
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
 import com.gitlab.j_m_hoffmann.meditate.R.string.widget_text_default
 import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
 
-class MeditateWidget : AppWidgetProvider() {
+class StreakWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (id in appWidgetIds) {
@@ -41,7 +44,7 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
     val widgetText = when (days) {
         0 -> context.getString(widget_text_default)
         else -> {
-            val quantityString = context.resources.getQuantityString(R.plurals.days_of_meditation, days, days)
+            val quantityString = context.resources.getQuantityString(plurals.days_of_meditation, days, days)
 
             String.format(quantityString, context.integerFormat().format(days))
         }
@@ -53,7 +56,7 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
 
     val color = preferences.getString(context.getString(key_widget_color), context.getString(default_widget_color))
 
-    val views = RemoteViews(context.packageName, R.layout.widget).apply {
+    val views = RemoteViews(context.packageName, layout.widget).apply {
         setTextColor(widget_text, Color.parseColor(color))
         setTextViewText(widget_text, widgetText)
         setOnClickPendingIntent(widget_text, pendingIntent)
