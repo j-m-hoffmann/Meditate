@@ -33,7 +33,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/meditate_widget_info" />
+                android:resource="@xml/streak_widget_info" />
         </receiver>
     </application>
 
