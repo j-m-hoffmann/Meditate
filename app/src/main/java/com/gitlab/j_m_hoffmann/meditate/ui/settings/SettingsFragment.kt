@@ -6,6 +6,8 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceFragmentCompat
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
 import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -26,8 +28,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-        themePreference = findPreference(getString(R.string.key_theme))
-        widgetColorPreference = findPreference(getString(R.string.key_widget_color))
+        themePreference = findPreference(getString(key_theme))
+        widgetColorPreference = findPreference(getString(key_widget_color))
     }
 
     override fun onResume() {

@@ -21,11 +21,4 @@
 
     </PreferenceCategory>
 
-    <!--
-        <PreferenceCategory app:title="@string/session">
-
-            <SwitchPreferenceCompat app:key=""/>
-        </PreferenceCategory>
-    -->
-
 </PreferenceScreen>
