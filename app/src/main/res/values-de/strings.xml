@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meditieren</string>
+
+    <!-- NAVBAR -->
+    <string name="settings">Einstellungen</string>
+    <string name="timer">Timer</string>
+    <string name="progress">Fortschritt</string>
+
+    <!-- NOTIFICATION -->
+    <string name="notification_channel_name">Meditieren</string>
+    <string name="notification_message">Sitzung beendet</string>
+    <string name="notification_title">Meditieren</string>
+
+    <!-- PLURALS -->
+    <plurals name="days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
+    <plurals name="days_of_meditation">
+        <item quantity="one">%d Tag meditiert</item>
+        <item quantity="other">%d Tage meditiert</item>
+    </plurals>
+
+    <!-- PROGRESS -->
+    <string name="count_sessions">Sitzungen insgesamt</string>
+    <string name="duration_average">Durchschnittliche Sitzungslänge</string>
+    <string name="duration_longest">Längste Sitzung</string>
+    <string name="duration_total">Meditationsdauer insgesamt</string>
+    <string name="last_session">Letzte Sitzung</string>
+    <string name="streak_longest">Längste Serie</string>
+
+    <!-- SETTINGS -->
+    <string name="theme">Design</string>
+
+    <string name="dark">Dunkel</string>
+    <string name="light">Hell</string>
+    <string name="set_by_battery_saver">Abhängig vom Energiesparmodus</string>
+
+    <string name="widget_color">Widget color</string>
+
+    <string name="color_white">Weiß</string>
+    <string name="color_grey">Grau</string>
+    <string name="color_black">Schwarz</string>
+
+    <!-- TIMER -->
+    <string name="meditate">Meditieren</string>
+
+    <string name="pause">Pausieren</string>
+    <string name="resume">Fortsetzen</string>
+    <string name="end">Beenden</string>
+
+    <string name="discard">Verwerfen</string>
+    <string name="discard_or_save_question">Sitzung verwerfen oder speichern?</string>
+    <string name="save">Speichern</string>
+
+    <!-- WIDGET -->
+    <string name="widget_description">Dieses Widget fragt ob Sie Zeit zum meditieren haben oder es zeigt die aktuelle Serie an</string>
+    <string name="widget_text_default">Zeit zu meditieren?</string>
+
+</resources>
