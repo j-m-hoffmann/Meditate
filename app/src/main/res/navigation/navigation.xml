@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_timer">
+    app:startDestination="@+id/navigation_session">
 
     <fragment
         android:id="@+id/navigation_settings"
@@ -11,10 +11,10 @@
         android:label="@string/settings" />
 
     <fragment
-        android:id="@+id/navigation_timer"
-        android:name="com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerFragment"
-        android:label="@string/timer"
-        tools:layout="@layout/timer_fragment" />
+        android:id="@+id/navigation_session"
+        android:name="com.gitlab.j_m_hoffmann.meditate.ui.session.SessionFragment"
+        android:label="@string/session"
+        tools:layout="@layout/session_fragment" />
 
     <fragment
         android:id="@+id/navigation_progress"

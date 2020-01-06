@@ -18,7 +18,7 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.default_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_name
-import com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerFragment.OnSessionProgressListener
+import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionFragment.OnSessionProgressListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), OnSessionProgressListener {

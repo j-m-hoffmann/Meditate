@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.ui.progress.ProgressViewModel
-import com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerViewModel
+import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val app: MeditateApplication) : ViewModelProvider.NewInstanceFactory() {
@@ -15,7 +15,7 @@ class ViewModelFactory(private val app: MeditateApplication) : ViewModelProvider
             val dao = app.database.dao
             when {
                 isAssignableFrom(ProgressViewModel::class.java) -> ProgressViewModel(app, dao)
-                isAssignableFrom(TimerViewModel::class.java) -> TimerViewModel(app, dao)
+                isAssignableFrom(SessionViewModel::class.java) -> SessionViewModel(app, dao)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

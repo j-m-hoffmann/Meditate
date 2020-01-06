@@ -9,13 +9,13 @@
 
         <variable
             name="viewModel"
-            type="com.gitlab.j_m_hoffmann.meditate.ui.timer.TimerViewModel" />
+            type="com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.timer.TimerFragment">
+        tools:context=".ui.session.SessionFragment">
 
         <TextView
             android:id="@+id/time_remaining"

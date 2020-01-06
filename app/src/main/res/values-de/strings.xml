@@ -4,7 +4,7 @@
 
     <!-- NAVBAR -->
     <string name="settings">Einstellungen</string>
-    <string name="timer">Timer</string>
+    <string name="session">Sitzung</string>
     <string name="progress">Fortschritt</string>
 
     <!-- NOTIFICATION -->

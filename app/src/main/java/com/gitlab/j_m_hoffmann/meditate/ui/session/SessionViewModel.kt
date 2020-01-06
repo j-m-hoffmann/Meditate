@@ -1,4 +1,4 @@
-package com.gitlab.j_m_hoffmann.meditate.ui.timer
+package com.gitlab.j_m_hoffmann.meditate.ui.session
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -38,7 +38,7 @@ const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val MIN_SESSION_LENGTH: Long = 10 * MINUTE
 
-class TimerViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
+class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

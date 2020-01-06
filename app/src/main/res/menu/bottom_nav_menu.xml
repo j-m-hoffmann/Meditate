@@ -7,9 +7,9 @@
         android:title="@string/settings" />
 
     <item
-        android:id="@+id/navigation_timer"
+        android:id="@+id/navigation_session"
         android:icon="@drawable/ic_logo_meditate_black"
-        android:title="@string/timer" />
+        android:title="@string/session" />
 
     <item
         android:id="@+id/navigation_progress"
