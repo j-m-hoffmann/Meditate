@@ -24,10 +24,10 @@ import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.ui.extensions.integerFormat
-import com.gitlab.j_m_hoffmann.meditate.ui.util.DAY
-import com.gitlab.j_m_hoffmann.meditate.ui.util.MINUTE
-import com.gitlab.j_m_hoffmann.meditate.ui.util.REQUEST_CODE
-import com.gitlab.j_m_hoffmann.meditate.ui.util.SECOND
+import com.gitlab.j_m_hoffmann.meditate.util.DAY
+import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
+import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
+import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
 import com.gitlab.j_m_hoffmann.meditate.util.updateWidget
 import kotlinx.coroutines.delay

@@ -6,7 +6,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.gitlab.j_m_hoffmann.meditate.db.Db
 import com.gitlab.j_m_hoffmann.meditate.db.getDatabase
-import com.gitlab.j_m_hoffmann.meditate.ui.util.STREAK_RESET_WORKER
+import com.gitlab.j_m_hoffmann.meditate.util.STREAK_RESET_WORKER
 import com.gitlab.j_m_hoffmann.meditate.worker.StreakResetWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
