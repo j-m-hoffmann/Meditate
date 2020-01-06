@@ -29,12 +29,12 @@ class MeditateApplication : Application() {
 
     private fun setupStreakReset() {
 
-        val workRequest = PeriodicWorkRequestBuilder<StreakResetWorker>(1, DAYS).build()
+        val periodicWork = PeriodicWorkRequestBuilder<StreakResetWorker>(1, DAYS).build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             STREAK_RESET_WORKER,
             KEEP,
-            workRequest
+            periodicWork
         )
     }
 }
