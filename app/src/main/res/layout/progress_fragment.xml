@@ -121,7 +121,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_last_session"
-            tools:text="16" />
+            tools:text="05.01.2020" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
