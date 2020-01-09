@@ -37,9 +37,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
 const val FIVE_MINUTES: Long = 5 * MINUTE
-const val MIN_SESSION_LENGTH: Long = 10 * MINUTE
 
 class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
 
@@ -68,7 +66,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
         app.getString(default_delay)
     )!!.toLong()
 
-    private var sessionLength = preferences.getLong(keySessionLength, DEFAULT_SESSION_LENGTH)
+    private var sessionLength = preferences.getLong(keySessionLength, FIVE_MINUTES)
 
     private var timer: CountDownTimer? = null
 
@@ -152,8 +150,8 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
     fun decrementDuration() {
         sessionLength -= FIVE_MINUTES
 
-        if (sessionLength <= MIN_SESSION_LENGTH) {
-            sessionLength = MIN_SESSION_LENGTH
+        if (sessionLength <= FIVE_MINUTES) {
+            sessionLength = FIVE_MINUTES
             _decrementEnabled.value = false
         }
 
