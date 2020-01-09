@@ -8,5 +8,5 @@ import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 @BindingAdapter("formatTime")
 fun TextView.formatTime(milliseconds: Long) {
     val seconds = milliseconds / SECOND
-    text = if (seconds > 60) DateUtils.formatElapsedTime(seconds) else seconds.toString()
+    text = if (seconds > 59) DateUtils.formatElapsedTime(seconds) else seconds.toString()
 }
