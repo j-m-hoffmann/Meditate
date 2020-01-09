@@ -33,7 +33,8 @@ import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
 import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
@@ -230,7 +231,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
         startTimer(_timeRemaining.value!!, _delayTimeRemaining.value!!)
     }
 
-    private fun persistSession(length: Long) = viewModelScope.launch {
+    private fun persistSession(length: Long) = CoroutineScope(Dispatchers.Default).launch {
         dao.insert(Session(System.currentTimeMillis(), length))
     }
 
