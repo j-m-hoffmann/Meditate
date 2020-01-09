@@ -12,7 +12,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
@@ -199,7 +198,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
         showEndAndPauseButtons()
 
-        startTimer(sessionLength, sessionDelay)
+        startTimers(sessionLength, sessionDelay)
     }
     //endregion
 
@@ -226,7 +225,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
     private fun resumeSession() {
         _sessionPaused.value = false
-        startTimer(_timeRemaining.value!!, _delayTimeRemaining.value!!)
+        startTimers(_timeRemaining.value!!, _delayTimeRemaining.value!!)
     }
 
     private fun persistSession(length: Long) = CoroutineScope(Dispatchers.Default).launch {
@@ -254,25 +253,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
         _showStart.value = true
     }
 
-    private fun startTimer(duration: Long, delay: Long = 0L) = viewModelScope.launch {
-        /*
-                _timeRemaining.value = duration
-
-                val sessionEnds = SystemClock.elapsedRealtime() + duration + delay
-
-                timer = object : CountDownTimer(sessionEnds, second) {
-
-                    override fun onTick(millisUntilFinished: Long) {
-                        val timeLeft = sessionEnds - SystemClock.elapsedRealtime()
-                        // interval?
-                        if (timeLeft >= second) {
-                            _timeRemaining.value = timeLeft
-                            timeSpentMeditating += second
-                        } else {
-                            onFinish()
-                        }
-                    }
-        */
+    private fun startTimers(duration: Long, delay: Long) {
 
         timer = object : CountDownTimer(duration, SECOND) {
 
@@ -310,15 +291,17 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
                 override fun onFinish() {
                     _delayTimeRemaining.value = 0
                     cancelDelayTimer()
+                    startTimer(duration)
                 }
             }
 
             delayTimer?.start()
-
-            delay(delay)
+        } else {
+            startTimer(duration)
         }
+    }
 
-        timer?.start()
+    private fun startTimer(duration: Long) {
 
         AlarmManagerCompat.setExactAndAllowWhileIdle(
             alarmManager,
@@ -326,6 +309,8 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
             SystemClock.elapsedRealtime() + duration,
             notificationPendingIntent
         )
+
+        timer?.start()
     }
 
     private fun updateMeditationStreak() {
