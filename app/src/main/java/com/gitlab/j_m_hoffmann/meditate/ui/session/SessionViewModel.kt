@@ -28,7 +28,6 @@ import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
-import com.gitlab.j_m_hoffmann.meditate.util.DAY
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
@@ -298,14 +297,9 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
             _delayTimeRemaining.value = delay
             _delayTimeVisible.value = true
 
-//            val delayEnds = SystemClock.elapsedRealtime() + delay
-//            delayTimer = object : CountDownTimer(delayEnds, second) {
             delayTimer = object : CountDownTimer(delay, SECOND) {
 
                 override fun onTick(millisUntilFinished: Long) {
-//                    val remainingDelayTime = delayEnds - SystemClock.elapsedRealtime()
-//                    if (remainingDelayTime >= second) {
-//                        _delayTimeRemaining.value = remainingDelayTime
                     if (millisUntilFinished >= SECOND) {
                         _delayTimeRemaining.value = millisUntilFinished
                     } else {
