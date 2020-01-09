@@ -17,6 +17,7 @@ import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.default_delay
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_last_session
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
@@ -333,9 +334,11 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
         )
     }
 
-    private fun updateMeditationStreak() = viewModelScope.launch {
+    private fun updateMeditationStreak() {
 
-        val lastSessionDate = dao.lastSessionDate() ?: Long.MIN_VALUE // no session saved
+        val keyLastSession = app.getString(key_last_session)
+
+        val lastSessionDate = preferences.getLong(keyLastSession, Long.MIN_VALUE) // no session saved
 
         val midnight = midnight()
 
@@ -350,7 +353,9 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
             preferences.edit {
                 putInt(keyStreakValue, newStreak)
 
-                putLong(app.getString(key_streak_expires), midnight + 2 * DAY)
+                putLong(keyLastSession, System.currentTimeMillis())
+
+                putLong(app.getString(key_streak_expires), midnight(2))
 
                 if (newStreak > longestStreak) {
                     putInt(keyStreakLongest, newStreak)
