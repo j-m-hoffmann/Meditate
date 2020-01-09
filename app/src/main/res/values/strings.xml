@@ -3,6 +3,7 @@
     <string name="app_name">Meditate</string>
 
     <!-- DEFAULT VALUES -->
+    <string name="default_delay" translatable="false">30000</string>
     <string name="default_theme" translatable="false">3</string> <!-- MODE_NIGHT_AUTO_BATTERY -->
     <string name="default_widget_color" translatable="false">#ffffff</string>
 
@@ -45,6 +46,12 @@
     <string name="streak_longest">Longest streak</string>
 
     <!-- SETTINGS -->
+    <string name="delay">Delay</string>
+    <string name="delay_none">None</string>
+    <string name="delay_15">15 Seconds</string>
+    <string name="delay_30">30 Seconds</string>
+    <string name="delay_45">45 Seconds</string>
+
     <string name="theme">Theme</string>
 
     <string name="dark">Dark</string>

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="delay">
+        <item>@string/delay_none</item>
+        <item>@string/delay_15</item>
+        <item>@string/delay_30</item>
+        <item>@string/delay_45</item>
+    </string-array>
+
+    <string-array name="delay_values">
+        <item>0</item>
+        <item>15000</item>
+        <item>30000</item>
+        <item>45000</item>
+    </string-array>
+
     <string-array name="theme">
         <item>@string/dark</item>
         <item>@string/light</item>

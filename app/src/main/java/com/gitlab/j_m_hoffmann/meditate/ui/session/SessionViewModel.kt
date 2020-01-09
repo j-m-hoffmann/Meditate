@@ -16,6 +16,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.R.string.default_delay
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_longest
@@ -34,7 +36,6 @@ import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val DEFAULT_SESSION_DELAY: Long = 15 * SECOND
 const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val MIN_SESSION_LENGTH: Long = 10 * MINUTE
@@ -61,9 +62,10 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
     private var delayTimer: CountDownTimer? = null
 
-    private var sessionDelay = DEFAULT_SESSION_DELAY
-    //preferences.getLong(app.getString(R.string.key_session_delay), DEFAULT_SESSION_DELAY)
-    // Changing delay time is not yet implemented
+    private val sessionDelay = preferences.getString(
+        app.getString(key_session_delay),
+        app.getString(default_delay)
+    )!!.toLong()
 
     private var sessionLength = preferences.getLong(keySessionLength, DEFAULT_SESSION_LENGTH)
 

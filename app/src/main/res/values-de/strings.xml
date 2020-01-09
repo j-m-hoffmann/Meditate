@@ -31,6 +31,12 @@
     <string name="streak_longest">Längste Serie</string>
 
     <!-- SETTINGS -->
+    <string name="delay">Verzögerung</string>
+    <string name="delay_none">Keine</string>
+    <string name="delay_15">15 Sekunden</string>
+    <string name="delay_30">30 Sekunden</string>
+    <string name="delay_45">45 Sekunden</string>
+
     <string name="theme">Design</string>
 
     <string name="dark">Dunkel</string>
