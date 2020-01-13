@@ -10,8 +10,8 @@ import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
-import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
 import com.gitlab.j_m_hoffmann.meditate.extensions.locale
+import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 
@@ -48,16 +48,7 @@ class ProgressViewModel(private val app: MeditateApplication, private val dao: D
 
     private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
-    val streak = Transformations.map(_streak) { days ->
-        when (days) {
-            0 -> ""
-            else -> {
-                val quantityString = app.resources.getQuantityString(R.plurals.days, days, days)
-
-                String.format(quantityString, app.integerFormat().format(days))
-            }
-        }
-    }
+    val streak = Transformations.map(_streak) { it.toPlural(R.plurals.days, R.string.empty, app) }
 
     init {
         viewModelScope.launch {

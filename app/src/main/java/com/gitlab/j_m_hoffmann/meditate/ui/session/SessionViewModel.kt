@@ -24,7 +24,7 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_longest
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.db.Session
-import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
@@ -107,16 +107,7 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
     private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
-    val streak = Transformations.map(_streak) { days ->
-        when (days) {
-            0 -> ""
-            else -> {
-                val quantityString = app.resources.getQuantityString(R.plurals.days_of_meditation, days, days)
-
-                String.format(quantityString, app.integerFormat().format(days))
-            }
-        }
-    }
+    val streak = Transformations.map(_streak) { it.toPlural(R.plurals.days_of_meditation, R.string.empty, app) }
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining

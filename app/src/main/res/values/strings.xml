@@ -17,6 +17,8 @@
     <string name="key_theme" translatable="false">key_theme</string>
     <string name="key_widget_color" translatable="false">key_widget_color</string>
 
+    <string name="empty" translatable="false" />
+
     <!-- NAVBAR -->
     <string name="settings">Settings</string>
     <string name="session">Session</string>

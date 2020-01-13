@@ -14,8 +14,7 @@ import com.gitlab.j_m_hoffmann.meditate.R.id.widget_text
 import com.gitlab.j_m_hoffmann.meditate.R.string.default_widget_color
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
-import com.gitlab.j_m_hoffmann.meditate.R.string.widget_text_default
-import com.gitlab.j_m_hoffmann.meditate.extensions.integerFormat
+import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 
 class StreakWidget : AppWidgetProvider() {
 
@@ -25,14 +24,7 @@ class StreakWidget : AppWidgetProvider() {
 
             val days = preferences.getInt(context.getString(key_streak_value), 0)
 
-            val widgetText = when (days) {
-                0 -> context.getString(widget_text_default)
-                else -> {
-                    val quantityString = context.resources.getQuantityString(R.plurals.days_of_meditation, days, days)
-
-                    String.format(quantityString, context.integerFormat().format(days))
-                }
-            }
+            val widgetText = days.toPlural(R.plurals.days_of_meditation, R.string.widget_text_default, context)
 
             val pendingIntent = Intent(context, MainActivity::class.java).let { intent ->
                 PendingIntent.getActivity(context, 0, intent, 0)
