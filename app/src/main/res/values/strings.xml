@@ -68,7 +68,7 @@
     <string name="color_dark_grey">Dark grey</string>
     <string name="color_black">Black</string>
 
-    <!-- TIMER -->
+    <!-- SESSION -->
     <string name="minus" translatable="false">-</string>
     <string name="meditate">Meditate</string>
     <string name="plus" translatable="false">+</string>

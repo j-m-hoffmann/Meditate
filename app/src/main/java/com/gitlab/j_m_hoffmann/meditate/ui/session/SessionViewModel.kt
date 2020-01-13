@@ -185,8 +185,6 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
         preferences.edit { putLong(keySessionLength, sessionLength) }
 
-        // TODO show Message
-
         showEndAndPauseButtons()
 
         startTimers(sessionLength, sessionDelay)
