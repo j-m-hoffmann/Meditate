@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
-import com.gitlab.j_m_hoffmann.meditate.R.string
+import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
@@ -16,8 +16,6 @@ import kotlinx.coroutines.launch
 import java.text.DateFormat
 
 class ProgressViewModel(private val app: MeditateApplication, private val dao: Dao) : ViewModel() {
-
-    private val keyStreakValue = app.getString(string.key_streak_value)
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
@@ -46,7 +44,7 @@ class ProgressViewModel(private val app: MeditateApplication, private val dao: D
         }
     }
 
-    private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
+    private val _streak = MutableLiveData(preferences.getInt(app.getString(key_streak_value), 0))
 
     val streak = Transformations.map(_streak) { it.toPlural(R.plurals.days, R.string.empty, app) }
 
