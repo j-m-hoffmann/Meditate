@@ -61,6 +61,8 @@
     <string name="discard_or_save_question">Sitzung verwerfen oder speichern?</string>
     <string name="save">Speichern</string>
 
+    <string name="concentrate">Konzentriere dich auf deinen Atem</string>
+
     <!-- WIDGET -->
     <string name="widget_description">Dieses Widget fragt ob Sie Zeit zum meditieren haben oder es zeigt die aktuelle Serie an</string>
     <string name="widget_text_default">Zeit zu meditieren?</string>

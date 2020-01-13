@@ -79,6 +79,8 @@
     <string name="discard_or_save_question">Discard or save session?</string>
     <string name="save">Save</string>
 
+    <string name="concentrate">Concentrate on your breath</string>
+
     <!-- WIDGET -->
     <string name="widget_description">This widget asks if you have time to meditate or displays your current meditation streak</string>
     <string name="widget_text_default">Time to meditate?</string>
