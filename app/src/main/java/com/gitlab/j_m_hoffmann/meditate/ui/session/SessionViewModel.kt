@@ -314,25 +314,27 @@ class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : Vie
 
             val newStreak = _streak.value!! + 1
 
-            val keyStreakLongest = app.getString(key_streak_longest)
-
-            val longestStreak = preferences.getInt(keyStreakLongest, 0)
-
-            preferences.edit {
-                putInt(keyStreakValue, newStreak)
-
-                putLong(keyLastSession, System.currentTimeMillis())
-
-                putLong(app.getString(key_streak_expires), midnight(2))
-
-                if (newStreak > longestStreak) {
-                    putInt(keyStreakLongest, newStreak)
-                }
-            }
-
             _streak.value = newStreak
 
-            app.updateWidget<StreakWidget>()
+            CoroutineScope(Dispatchers.IO).launch {
+                val keyStreakLongest = app.getString(key_streak_longest)
+
+                val longestStreak = preferences.getInt(keyStreakLongest, 0)
+
+                preferences.edit {
+                    putInt(keyStreakValue, newStreak)
+
+                    putLong(keyLastSession, System.currentTimeMillis())
+
+                    putLong(app.getString(key_streak_expires), midnight(2))
+
+                    if (newStreak > longestStreak) {
+                        putInt(keyStreakLongest, newStreak)
+                    }
+                }
+
+                app.updateWidget<StreakWidget>()
+            }
         }
     }
     //endregion
