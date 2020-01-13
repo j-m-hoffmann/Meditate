@@ -15,26 +15,21 @@ import java.util.concurrent.TimeUnit.DAYS
 
 class MeditateApplication : Application() {
 
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
-
     val database: Db
         get() = getDatabase(this)
 
     override fun onCreate() {
         super.onCreate()
-        applicationScope.launch {
-            setupStreakReset()
-        }
+        setupStreakReset()
     }
 
-    private fun setupStreakReset() {
+    private fun setupStreakReset() = CoroutineScope(Dispatchers.Default).launch {
 
-        val periodicWork = PeriodicWorkRequestBuilder<StreakResetWorker>(1, DAYS).build()
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            STREAK_RESET_WORKER,
-            KEEP,
-            periodicWork
-        )
+        WorkManager.getInstance(applicationContext)
+            .enqueueUniquePeriodicWork(
+                STREAK_RESET_WORKER,
+                KEEP,
+                PeriodicWorkRequestBuilder<StreakResetWorker>(1, DAYS).build()
+            )
     }
 }
