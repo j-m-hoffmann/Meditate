@@ -28,7 +28,7 @@
             app:entries="@array/widget_colors"
             app:entryValues="@array/widget_color_values"
             app:key="@string/key_widget_color"
-            app:title="@string/widget_color"
+            app:title="@string/widget_text_color"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>

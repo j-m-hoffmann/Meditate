@@ -61,7 +61,7 @@
     <string name="light">Light</string>
     <string name="set_by_battery_saver">Set by Battery Saver</string>
 
-    <string name="widget_color">Widget color</string>
+    <string name="widget_text_color">Widget text color</string>
 
     <string name="color_white">White</string>
     <string name="color_light_grey">Light grey</string>
