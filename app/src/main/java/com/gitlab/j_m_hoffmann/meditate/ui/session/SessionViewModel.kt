@@ -8,10 +8,10 @@ import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.edit
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
@@ -38,7 +38,9 @@ import kotlinx.coroutines.launch
 
 const val FIVE_MINUTES: Long = 5 * MINUTE
 
-class SessionViewModel(val app: MeditateApplication, private val dao: Dao) : ViewModel() {
+class SessionViewModel(application: MeditateApplication, private val dao: Dao) : AndroidViewModel(application) {
+
+    private val app = getApplication<MeditateApplication>()
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

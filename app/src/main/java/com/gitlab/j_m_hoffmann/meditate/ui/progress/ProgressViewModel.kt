@@ -1,9 +1,9 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.progress
 
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
@@ -15,7 +15,9 @@ import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 
-class ProgressViewModel(private val app: MeditateApplication, private val dao: Dao) : ViewModel() {
+class ProgressViewModel(application: MeditateApplication, private val dao: Dao) : AndroidViewModel(application) {
+
+    private val app = getApplication<MeditateApplication>()
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
