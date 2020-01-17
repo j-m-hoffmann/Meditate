@@ -1,6 +1,6 @@
 package com.gitlab.j_m_hoffmann.meditate.repository
 
-import com.gitlab.j_m_hoffmann.meditate.db.Session
+import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 
 interface SessionRepository {
     suspend fun insert(session: Session)

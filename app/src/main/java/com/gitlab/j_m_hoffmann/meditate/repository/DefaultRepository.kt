@@ -1,7 +1,7 @@
 package com.gitlab.j_m_hoffmann.meditate.repository
 
-import com.gitlab.j_m_hoffmann.meditate.db.Dao
-import com.gitlab.j_m_hoffmann.meditate.db.Session
+import com.gitlab.j_m_hoffmann.meditate.repository.db.Dao
+import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(val dao: Dao) : SessionRepository {

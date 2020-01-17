@@ -2,8 +2,8 @@ package com.gitlab.j_m_hoffmann.meditate.di
 
 import android.content.Context
 import androidx.room.Room
-import com.gitlab.j_m_hoffmann.meditate.db.Dao
-import com.gitlab.j_m_hoffmann.meditate.db.Db
+import com.gitlab.j_m_hoffmann.meditate.repository.db.Dao
+import com.gitlab.j_m_hoffmann.meditate.repository.db.Db
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

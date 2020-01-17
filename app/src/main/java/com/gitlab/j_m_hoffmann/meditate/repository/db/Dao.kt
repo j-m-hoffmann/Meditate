@@ -1,4 +1,4 @@
-package com.gitlab.j_m_hoffmann.meditate.db
+package com.gitlab.j_m_hoffmann.meditate.repository.db
 
 import androidx.room.Dao
 import androidx.room.Insert
