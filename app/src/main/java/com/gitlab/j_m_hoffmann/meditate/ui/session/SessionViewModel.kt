@@ -64,11 +64,6 @@ class SessionViewModel @Inject constructor(
 
     private var delayTimer: CountDownTimer? = null
 
-    private val sessionDelay = preferences.getString(
-        app.getString(key_session_delay),
-        app.getString(default_delay)
-    )!!.toLong()
-
     private var sessionLength = preferences.getLong(keySessionLength, FIVE_MINUTES)
 
     private var timer: CountDownTimer? = null
@@ -83,7 +78,7 @@ class SessionViewModel @Inject constructor(
 
     val delayTimeRemaining: LiveData<Long>
         get() = _delayTimeRemaining
-    private val _delayTimeRemaining = MutableLiveData(sessionDelay)
+    private val _delayTimeRemaining = MutableLiveData(0L)
 
     val delayTimeVisible: LiveData<Boolean>
         get() = _delayTimeVisible
@@ -190,6 +185,11 @@ class SessionViewModel @Inject constructor(
         preferences.edit { putLong(keySessionLength, sessionLength) }
 
         showEndAndPauseButtons()
+
+        val sessionDelay = preferences.getString(
+            app.getString(key_session_delay),
+            app.getString(default_delay)
+        )!!.toLong()
 
         startTimers(sessionLength, sessionDelay)
     }
