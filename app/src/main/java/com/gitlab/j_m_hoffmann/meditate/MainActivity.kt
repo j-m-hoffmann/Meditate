@@ -8,8 +8,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
@@ -18,12 +20,20 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.default_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_name
-import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionFragment.OnSessionProgressListener
+import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), OnSessionProgressListener {
+class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var navBar: BottomNavigationView
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val sessionViewModel by viewModels<SessionViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +48,15 @@ class MainActivity : AppCompatActivity(), OnSessionProgressListener {
         val nightMode = preferences.getString(getString(key_theme), getString(default_theme))
 
         AppCompatDelegate.setDefaultNightMode(nightMode!!.toInt())
+
+        sessionViewModel.sessionInProgress.observe(this, Observer { inProgress ->
+            if (inProgress) {
+                navBar.visibility = View.GONE
+                Snackbar.make(navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
+            } else {
+                navBar.visibility = View.VISIBLE
+            }
+        })
 
         createNotificationChannel()
     }
@@ -65,13 +84,5 @@ class MainActivity : AppCompatActivity(), OnSessionProgressListener {
 
             notificationManager.createNotificationChannel(channel)
         }
-    }
-
-    override fun hideNavigation() {
-        navBar.visibility = View.GONE
-    }
-
-    override fun showNavigation() {
-        navBar.visibility = View.VISIBLE
     }
 }
