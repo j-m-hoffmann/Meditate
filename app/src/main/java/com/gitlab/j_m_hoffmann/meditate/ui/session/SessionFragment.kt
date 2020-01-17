@@ -4,26 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.databinding.SessionFragmentBinding
-import com.gitlab.j_m_hoffmann.meditate.ui.util.getViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class SessionFragment : Fragment() {
+class SessionFragment : DaggerFragment() {
 
     private lateinit var binding: SessionFragmentBinding
 
     private lateinit var progressListener: OnSessionProgressListener
 
-    private val sessionViewModel by viewModels<SessionViewModel> { getViewModelFactory() }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val sessionViewModel by viewModels<SessionViewModel> { viewModelFactory }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = SessionFragmentBinding.inflate(inflater)
 
         return binding.root

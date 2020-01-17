@@ -8,12 +8,11 @@ import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.edit
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
-import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.default_delay
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_last_session
@@ -22,11 +21,11 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_session_length
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_expires
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_longest
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
-import com.gitlab.j_m_hoffmann.meditate.db.Dao
-import com.gitlab.j_m_hoffmann.meditate.db.Session
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
+import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
+import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
@@ -35,12 +34,15 @@ import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 const val FIVE_MINUTES: Long = 5 * MINUTE
 
-class SessionViewModel(application: MeditateApplication, private val dao: Dao) : AndroidViewModel(application) {
-
-    private val app = getApplication<MeditateApplication>()
+class SessionViewModel @Inject constructor(
+    private val app: Context,
+    private val repository: SessionRepository
+) :
+    ViewModel() {
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -220,7 +222,7 @@ class SessionViewModel(application: MeditateApplication, private val dao: Dao) :
     }
 
     private fun persistSession(length: Long) = CoroutineScope(Dispatchers.Default).launch {
-        dao.insert(Session(System.currentTimeMillis(), length))
+        repository.insert(Session(System.currentTimeMillis(), length))
     }
 
     private fun showDiscardAndSaveButtons() {

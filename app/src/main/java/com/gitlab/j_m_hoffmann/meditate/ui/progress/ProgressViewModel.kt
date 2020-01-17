@@ -1,23 +1,22 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.progress
 
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
-import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
-import com.gitlab.j_m_hoffmann.meditate.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
+import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import kotlinx.coroutines.launch
 import java.text.DateFormat
+import javax.inject.Inject
 
-class ProgressViewModel(application: MeditateApplication, private val dao: Dao) : AndroidViewModel(application) {
-
-    private val app = getApplication<MeditateApplication>()
+class ProgressViewModel @Inject constructor(app: Context, repository: SessionRepository) : ViewModel() {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
@@ -52,11 +51,11 @@ class ProgressViewModel(application: MeditateApplication, private val dao: Dao) 
 
     init {
         viewModelScope.launch {
-            _countSessions.value = dao.countSessions()
-            _durationAverage.value = dao.durationAverage()
-            _durationLongest.value = dao.durationLongest()
-            _durationTotal.value = dao.durationTotal()
-            _lastSessionDate.value = dao.lastSessionDate() ?: 0L
+            _countSessions.value = repository.countSessions()
+            _durationAverage.value = repository.durationAverage()
+            _durationLongest.value = repository.durationLongest()
+            _durationTotal.value = repository.durationTotal()
+            _lastSessionDate.value = repository.lastSessionDate() ?: 0L
         }
     }
 }
