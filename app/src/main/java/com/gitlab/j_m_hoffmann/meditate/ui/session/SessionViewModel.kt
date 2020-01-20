@@ -46,7 +46,13 @@ class SessionViewModel @Inject constructor(
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+    private val defaultDelay = app.getString(default_delay)
+
+    private val keyLastSession = app.getString(key_last_session)
+    private val keySessionDelay = app.getString(key_session_delay)
     private val keySessionLength = app.getString(key_session_length)
+    private val keyStreakExpires = app.getString(key_streak_expires)
+    private val keyStreakLongest = app.getString(key_streak_longest)
     private val keyStreakValue = app.getString(key_streak_value)
 
     private val notificationIntent = Intent(app, SessionEndedReceiver::class.java)
@@ -186,10 +192,7 @@ class SessionViewModel @Inject constructor(
 
         showEndAndPauseButtons()
 
-        val sessionDelay = preferences.getString(
-            app.getString(key_session_delay),
-            app.getString(default_delay)
-        )!!.toLong()
+        val sessionDelay = preferences.getString(keySessionDelay, defaultDelay)!!.toLong()
 
         startTimers(sessionLength, sessionDelay)
     }
@@ -308,8 +311,6 @@ class SessionViewModel @Inject constructor(
 
     private fun updateMeditationStreak() {
 
-        val keyLastSession = app.getString(key_last_session)
-
         val lastSessionDate = preferences.getLong(keyLastSession, Long.MIN_VALUE) // no session saved
 
         val midnight = midnight()
@@ -321,8 +322,6 @@ class SessionViewModel @Inject constructor(
             _streak.value = newStreak
 
             CoroutineScope(Dispatchers.IO).launch {
-                val keyStreakLongest = app.getString(key_streak_longest)
-
                 val longestStreak = preferences.getInt(keyStreakLongest, 0)
 
                 preferences.edit {
@@ -330,7 +329,7 @@ class SessionViewModel @Inject constructor(
 
                     putLong(keyLastSession, System.currentTimeMillis())
 
-                    putLong(app.getString(key_streak_expires), midnight(2))
+                    putLong(keyStreakExpires, midnight(2))
 
                     if (newStreak > longestStreak) {
                         putInt(keyStreakLongest, newStreak)
