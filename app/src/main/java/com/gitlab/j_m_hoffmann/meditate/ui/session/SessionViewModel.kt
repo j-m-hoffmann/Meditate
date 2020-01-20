@@ -27,7 +27,7 @@ import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
-import com.gitlab.j_m_hoffmann.meditate.util.REQUEST_CODE
+import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
 import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
@@ -59,7 +59,7 @@ class SessionViewModel @Inject constructor(
 
     private val notificationPendingIntent = PendingIntent.getBroadcast(
         app,
-        REQUEST_CODE,
+        NOTIFICATION_REQUEST_CODE,
         notificationIntent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
