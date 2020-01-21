@@ -28,7 +28,7 @@ class StreakWidget : AppWidgetProvider() {
             val widgetText = days.toPlural(R.plurals.days_of_meditation, R.string.widget_text_default, context)
 
             val pendingIntent = Intent(context, MainActivity::class.java).let { intent ->
-                PendingIntent.getActivity(context, WIDGET_REQUEST_CODE, intent, 0)
+                PendingIntent.getActivity(context, WIDGET_REQUEST_CODE + id, intent, 0)
             }
 
             val color =
