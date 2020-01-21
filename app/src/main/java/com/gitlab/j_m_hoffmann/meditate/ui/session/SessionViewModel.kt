@@ -287,17 +287,17 @@ class SessionViewModel @Inject constructor(
                 override fun onFinish() {
                     _delayTimeRemaining.value = 0
                     cancelDelayTimer()
-                    startTimer(duration)
+                    startSessionTimer(duration)
                 }
             }
 
             delayTimer?.start()
         } else {
-            startTimer(duration)
+            startSessionTimer(duration)
         }
     }
 
-    private fun startTimer(duration: Long) {
+    private fun startSessionTimer(duration: Long) {
 
         AlarmManagerCompat.setExactAndAllowWhileIdle(
             alarmManager,
