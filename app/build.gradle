@@ -98,7 +98,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:2.2.0"
 
     implementation "androidx.vectordrawable:vectordrawable:1.1.0"
-    implementation "com.google.android.material:material:1.1.0-beta02"
+    implementation "com.google.android.material:material:1.1.0-rc02"
 
     // Dagger
     def dagger_version = "2.25.4"
