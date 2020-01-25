@@ -1,18 +1,15 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.progress
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.liveData
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
-import kotlinx.coroutines.launch
 import java.text.DateFormat
 import javax.inject.Inject
 
@@ -20,23 +17,15 @@ class ProgressViewModel @Inject constructor(app: Context, repository: SessionRep
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
 
-    val countSessions: LiveData<Int>
-        get() = _countSessions
-    private val _countSessions = MutableLiveData(0)
+    val countSessions = liveData { emit(repository.countSessions()) }
 
-    val durationAverage: LiveData<Long>
-        get() = _durationAverage
-    private val _durationAverage = MutableLiveData(0L)
+    val durationAverage = liveData { emit(repository.durationAverage()) }
 
-    val durationLongest: LiveData<Long>
-        get() = _durationLongest
-    private val _durationLongest = MutableLiveData(0L)
+    val durationLongest = liveData { emit(repository.durationLongest()) }
 
-    val durationTotal: LiveData<Long>
-        get() = _durationTotal
-    private val _durationTotal = MutableLiveData(0L)
+    val durationTotal = liveData { emit(repository.durationTotal()) }
 
-    private val _lastSessionDate = MutableLiveData(0L)
+    private val _lastSessionDate = liveData { emit(repository.lastSessionDate()) }
 
     val lastSessionDate = Transformations.map(_lastSessionDate) { date ->
         when (date) {
@@ -45,17 +34,7 @@ class ProgressViewModel @Inject constructor(app: Context, repository: SessionRep
         }
     }
 
-    private val _streak = MutableLiveData(preferences.getInt(app.getString(key_streak_value), 0))
+    private val _longestStreak = liveData { emit(preferences.getInt(app.getString(key_streak_value), 0)) }
 
-    val streak = Transformations.map(_streak) { it.toPlural(R.plurals.days, R.string.empty, app) }
-
-    init {
-        viewModelScope.launch {
-            _countSessions.value = repository.countSessions()
-            _durationAverage.value = repository.durationAverage()
-            _durationLongest.value = repository.durationLongest()
-            _durationTotal.value = repository.durationTotal()
-            _lastSessionDate.value = repository.lastSessionDate() ?: 0L
-        }
-    }
+    val longestStreak = Transformations.map(_longestStreak) { it.toPlural(R.plurals.days, R.string.empty, app) }
 }

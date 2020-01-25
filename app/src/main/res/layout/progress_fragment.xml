@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/value_streak_longest"
                 style="@style/statistics_value"
-                android:text="@{viewModel.streak}"
+                android:text="@{viewModel.longestStreak}"
                 tools:text="15:00" />
 
             <TextView

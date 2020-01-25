@@ -13,6 +13,6 @@ interface SessionRepository {
 
     suspend fun durationTotal(): Long
 
-    suspend fun lastSessionDate(): Long?
+    suspend fun lastSessionDate(): Long
 }
 

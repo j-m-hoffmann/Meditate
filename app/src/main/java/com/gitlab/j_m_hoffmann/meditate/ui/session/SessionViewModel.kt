@@ -110,9 +110,10 @@ class SessionViewModel @Inject constructor(
         get() = _showStart
     private val _showStart = MutableLiveData(true)
 
-    private val _streak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
+    private val _currentStreak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
-    val streak = Transformations.map(_streak) { it.toPlural(R.plurals.days_of_meditation, R.string.empty, app) }
+    val currentStreak =
+        Transformations.map(_currentStreak) { it.toPlural(R.plurals.days_of_meditation, R.string.empty, app) }
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
@@ -317,9 +318,9 @@ class SessionViewModel @Inject constructor(
 
         if (lastSessionDate < midnight) { // no session saved for today
 
-            val newStreak = _streak.value!! + 1
+            val newStreak = _currentStreak.value!! + 1
 
-            _streak.value = newStreak
+            _currentStreak.value = newStreak
 
             CoroutineScope(Dispatchers.IO).launch {
                 val longestStreak = preferences.getInt(keyStreakLongest, 0)
