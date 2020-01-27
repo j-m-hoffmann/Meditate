@@ -1,5 +1,9 @@
 # Meditate
-Reimplementation of ideas from the App Meditation Assistant by Trevor Slocum in Kotlin using Architecture Components, Material Design and Dagger
+Reimplementation of ideas from the App Meditation Assistant by Trevor Slocum in Kotlin using Architecture Components, Material Design and Dependency Injection.
+
+Dependency Injection is done via Koin in the koin branch and Dagger in the others.
+
+The Branch migrate_room contains a tested database migration.
 
 ### Attribution
 The Logo was created by Henrik Lehmann
