@@ -121,26 +121,6 @@ class SessionViewModel @Inject constructor(
 
     //endregion
 
-    /*
-    init {
-        // used for testing
-        val session1 = Session(System.currentTimeMillis(), 10 * MINUTE)
-        viewModelScope.launch {
-            dao.insertSeveral(
-                session1
-                , Session(session1.date - DAY, FIVE_MINUTES)
-                , Session(session1.date - 2 * DAY, 15 * MINUTE)
-                , Session(session1.date - 3 * DAY, 3 * MINUTE)
-                , Session(session1.date - 4 * DAY, 20 * MINUTE)
-                , Session(session1.date - 5 * DAY, 20 * SECOND)
-                , Session(session1.date - 6 * DAY, 1 * HOUR)
-                , Session(session1.date - 7 * DAY, 10000 * HOUR)
-                , Session(session1.date - 8 * DAY, 1000000 * HOUR)
-            )
-        }
-    }
-    */
-
     //region PublicFunctions
 
     fun decrementDuration() {

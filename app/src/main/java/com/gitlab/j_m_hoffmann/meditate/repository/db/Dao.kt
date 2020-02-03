@@ -7,12 +7,6 @@ import androidx.room.Query
 @Dao
 interface Dao {
 
-/*
-    // used for testing
-    @Insert
-    suspend fun insertSeveral(vararg sessions: Session)
-*/
-
     @Insert
     suspend fun insert(session: Session)
 
