@@ -10,11 +10,11 @@ class DefaultRepository @Inject constructor(val dao: Dao) : SessionRepository {
 
     override suspend fun countSessions(): Int = dao.countSessions()
 
-    override suspend fun durationAverage(): Long = dao.durationAverage()
+    override suspend fun durationAverage(): Long = dao.durationAverage() ?: 0
 
-    override suspend fun durationLongest(): Long = dao.durationLongest()
+    override suspend fun durationLongest(): Long = dao.durationLongest() ?: 0
 
-    override suspend fun durationTotal(): Long = dao.durationTotal()
+    override suspend fun durationTotal(): Long = dao.durationTotal() ?: 0
 
     override suspend fun lastSessionDate(): Long = dao.lastSessionDate() ?: 0
 }
