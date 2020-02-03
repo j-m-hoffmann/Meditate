@@ -8,7 +8,6 @@ The branch migrate_room contains a tested database migration.
 The branch sqldelight uses SqlDelight instead of Room, which enables testing the database directly on the JVM without instrumentation.
 
 ### Attribution
-### Attribution
 The Logo was created by Henrik Lehmann
 
 The sound file used is from [soundbible.com](http://soundbible.com/2062-Metal-Gong-1.html).
