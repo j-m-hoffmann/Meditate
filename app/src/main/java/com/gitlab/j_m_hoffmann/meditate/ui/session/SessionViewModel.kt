@@ -26,6 +26,9 @@ import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
+import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Aborted
+import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
+import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
@@ -90,25 +93,13 @@ class SessionViewModel @Inject constructor(
         get() = _delayTimeVisible
     private val _delayTimeVisible = MutableLiveData(false)
 
-    val sessionInProgress: LiveData<Boolean>
-        get() = _sessionInProgress
-    private val _sessionInProgress = MutableLiveData(false)
+    val state: LiveData<State>
+        get() = _state
+    private val _state = MutableLiveData(Ended)
 
     val sessionPaused: LiveData<Boolean>
         get() = _sessionPaused
     private val _sessionPaused = MutableLiveData(false)
-
-    val showDiscardAndSave: LiveData<Boolean>
-        get() = _showDiscardAndSave
-    private val _showDiscardAndSave = MutableLiveData(false)
-
-    val showEndAndPause: LiveData<Boolean>
-        get() = _showEndAndPause
-    private val _showEndAndPause = MutableLiveData(false)
-
-    val showStart: LiveData<Boolean>
-        get() = _showStart
-    private val _showStart = MutableLiveData(true)
 
     private val _currentStreak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
@@ -139,10 +130,10 @@ class SessionViewModel @Inject constructor(
         cancelDelayTimer()
         cancelTimer()
 
-        if (_delayTimeRemaining.value == 0L) {
-            showDiscardAndSaveButtons()
-        } else {
+        if (_delayTimeRemaining.value!! > 0L) {
             resetSession()
+        } else {
+            _state.value = Aborted
         }
     }
 
@@ -155,9 +146,8 @@ class SessionViewModel @Inject constructor(
     fun pauseOrResumeSession() = if (_sessionPaused.value!!) resumeSession() else pauseSession()
 
     fun resetSession() {
+        _state.value = Ended
         _timeRemaining.value = sessionLength
-        _sessionInProgress.value = false
-        showStartButton()
     }
 
     fun saveSession() {
@@ -167,11 +157,9 @@ class SessionViewModel @Inject constructor(
     }
 
     fun startSession() {
-        _sessionInProgress.value = true
+        _state.value = InProgress
 
         preferences.edit { putLong(keySessionLength, sessionLength) }
-
-        showEndAndPauseButtons()
 
         val sessionDelay = preferences.getString(keySessionDelay, defaultDelay)!!.toLong()
 
@@ -207,27 +195,6 @@ class SessionViewModel @Inject constructor(
 
     private fun persistSession(length: Long) = CoroutineScope(Dispatchers.Default).launch {
         repository.insert(Session(System.currentTimeMillis(), length))
-    }
-
-    private fun showDiscardAndSaveButtons() {
-        _showEndAndPause.value = false
-        _showStart.value = false
-
-        _showDiscardAndSave.value = true
-    }
-
-    private fun showEndAndPauseButtons() {
-        _showDiscardAndSave.value = false
-        _showStart.value = false
-
-        _showEndAndPause.value = true
-    }
-
-    private fun showStartButton() {
-        _showDiscardAndSave.value = false
-        _showEndAndPause.value = false
-
-        _showStart.value = true
     }
 
     private fun startTimers(duration: Long, delay: Long) {

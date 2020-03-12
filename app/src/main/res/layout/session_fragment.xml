@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.gitlab.j_m_hoffmann.meditate.ui.session.State" />
+
         <variable
             name="viewModel"
             type="com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel" />
@@ -63,7 +65,7 @@
             android:enabled="@{viewModel.decrementEnabled ? true : false}"
             android:onClick="@{() -> viewModel.decrementDuration()}"
             android:text="@string/minus"
-            android:visibility="@{viewModel.showStart ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.Ended ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/start_session"
             app:layout_constraintHorizontal_bias="0.5"
@@ -76,7 +78,7 @@
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
             android:onClick="@{() -> viewModel.startSession()}"
             android:text="@string/meditate"
-            android:visibility="@{viewModel.showStart ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.Ended ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/increment_duration"
             app:layout_constraintStart_toEndOf="@id/decrement_duration" />
@@ -88,7 +90,7 @@
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
             android:onClick="@{() -> viewModel.incrementDuration()}"
             android:text="@string/plus"
-            android:visibility="@{viewModel.showStart ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.Ended ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/start_session" />
@@ -101,7 +103,7 @@
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
             android:onClick="@{() -> viewModel.endSession()}"
             android:text="@string/end"
-            android:visibility="@{viewModel.showEndAndPause ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.InProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pause_or_resume_session"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +116,7 @@
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
             android:onClick="@{() -> viewModel.pauseOrResumeSession()}"
             android:text="@{viewModel.sessionPaused ? @string/resume : @string/pause}"
-            android:visibility="@{viewModel.showEndAndPause ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.InProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/end_session"
@@ -126,7 +128,7 @@
             style="@style/statistics_header"
             android:layout_marginBottom="@dimen/spacing_double"
             android:text="@string/discard_or_save_question"
-            android:visibility="@{viewModel.showDiscardAndSave ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.Aborted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/discard_session"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -138,7 +140,7 @@
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
             android:onClick="@{() -> viewModel.resetSession()}"
             android:text="@string/discard"
-            android:visibility="@{viewModel.showDiscardAndSave ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.Aborted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/save_session"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +153,7 @@
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
             android:onClick="@{() -> viewModel.saveSession()}"
             android:text="@string/save"
-            android:visibility="@{viewModel.showDiscardAndSave ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.state == State.Aborted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/discard_session"

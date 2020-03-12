@@ -21,6 +21,7 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_name
 import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
+import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
@@ -49,8 +50,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(nightMode!!.toInt())
 
-        sessionViewModel.sessionInProgress.observe(this, Observer { inProgress ->
-            if (inProgress) {
+        sessionViewModel.state.observe(this, Observer { state ->
+            if (state == InProgress) {
                 navBar.visibility = View.GONE
                 Snackbar.make(navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
             } else {
