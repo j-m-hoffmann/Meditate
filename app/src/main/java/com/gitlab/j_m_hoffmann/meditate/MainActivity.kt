@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -81,9 +82,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 setSound(sound, audioAttributes)
             }
 
-            val notificationManager = getSystemService(NotificationManager::class.java) as NotificationManager
-
-            notificationManager.createNotificationChannel(channel)
+            getSystemService<NotificationManager>()?.createNotificationChannel(channel)
         }
     }
 }

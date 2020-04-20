@@ -6,6 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION
+import androidx.core.content.getSystemService
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -20,17 +21,18 @@ fun Context.locale(): Locale {
     }
 }
 
-inline fun <reified W> Context.updateWidget() where W : AppWidgetProvider {
-    val widgetManager = AppWidgetManager.getInstance(this)
-    val componentName = ComponentName(this, W::class.java)
-    val ids = widgetManager.getAppWidgetIds(componentName)
+inline fun <reified AWP : AppWidgetProvider> Context.updateWidget() {
+    getSystemService<AppWidgetManager>()?.let { widgetManager ->
+        val componentName = ComponentName(this, AWP::class.java)
+        val ids = widgetManager.getAppWidgetIds(componentName)
 
-    if (ids.isNotEmpty()) {
-        val updateIntent = Intent(this, W::class.java).apply {
-            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        if (ids.isNotEmpty()) {
+            val updateIntent = Intent(this, AWP::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+            }
+
+            this.sendBroadcast(updateIntent)
         }
-
-        this.sendBroadcast(updateIntent)
     }
 }

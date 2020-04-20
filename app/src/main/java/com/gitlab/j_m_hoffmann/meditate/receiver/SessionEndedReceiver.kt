@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import com.gitlab.j_m_hoffmann.meditate.MainActivity
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.R.raw.metal_gong_by_dianakc
@@ -29,19 +29,10 @@ class SessionEndedReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_ONE_SHOT
         )
 
-        val notificationManager = ContextCompat.getSystemService(
-            context,
-            NotificationManager::class.java
-        ) as NotificationManager
-
-        val builder = NotificationCompat.Builder(
-            context,
-            context.getString(notification_channel_id)
-        )
-
         val sound = Uri.parse("$SCHEME_ANDROID_RESOURCE://${context.packageName}/$metal_gong_by_dianakc")
 
-        builder
+        val notification = NotificationCompat
+            .Builder(context, context.getString(notification_channel_id))
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setContentIntent(contentPendingIntent)
@@ -51,7 +42,8 @@ class SessionEndedReceiver : BroadcastReceiver() {
             .setSmallIcon(R.drawable.ic_logo_meditate_black)
             .setSound(sound)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .build()
 
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        context.getSystemService<NotificationManager>()?.notify(NOTIFICATION_ID, notification)
     }
 }

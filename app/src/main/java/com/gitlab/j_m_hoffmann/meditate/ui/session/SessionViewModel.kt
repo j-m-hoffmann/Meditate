@@ -8,6 +8,7 @@ import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -47,7 +48,7 @@ class SessionViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val alarmManager = app.getSystemService<AlarmManager>()
 
     private val defaultDelay = app.getString(default_delay)
 
@@ -168,7 +169,7 @@ class SessionViewModel @Inject constructor(
     //endregion
 
     //region PrivateFunctions
-    private fun cancelAlarm() = alarmManager.cancel(notificationPendingIntent)
+    private fun cancelAlarm() = alarmManager?.cancel(notificationPendingIntent)
 
     private fun cancelDelayTimer() {
         delayTimer?.cancel()
@@ -247,12 +248,14 @@ class SessionViewModel @Inject constructor(
 
     private fun startSessionTimer(duration: Long) {
 
-        AlarmManagerCompat.setExactAndAllowWhileIdle(
-            alarmManager,
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + duration,
-            notificationPendingIntent
-        )
+        alarmManager?.let {
+            AlarmManagerCompat.setExactAndAllowWhileIdle(
+                it,
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + duration,
+                notificationPendingIntent
+            )
+        }
 
         timer?.start()
     }
