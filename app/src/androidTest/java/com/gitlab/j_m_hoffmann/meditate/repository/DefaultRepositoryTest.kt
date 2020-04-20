@@ -44,26 +44,26 @@ class DefaultRepositoryTest {
 
     @Test
     fun countSessionsReturnsZeroWhenRepositoryIsEmpty() = runBlocking {
-        val count = repository.countSessions()
+        val countSessions = repository.countSessions()
 
-        assertThat(count).isEqualTo(0)
+        assertThat(countSessions).isEqualTo(0)
     }
 
     @Test
     fun countSessionsReturnsTheCorrectNumberOfSessions() = runBlocking {
         insertSessions()
 
-        val count = repository.countSessions()
+        val countSessions = repository.countSessions()
 
-        assertThat(count).isEqualTo(3)
+        assertThat(countSessions).isEqualTo(3)
     }
 
 
     @Test
     fun durationAverageReturnsZeroWhenRepositoryIsEmpty() = runBlocking {
-        val average = repository.durationAverage()
+        val durationAverage = repository.durationAverage()
 
-        assertThat(average).isEqualTo(0)
+        assertThat(durationAverage).isEqualTo(0)
     }
 
     @Test
@@ -71,41 +71,41 @@ class DefaultRepositoryTest {
     fun durationAverageReturnsTheCorrectAverage() = runBlocking {
         insertSessions()
 
-        val average = repository.durationAverage()
+        val durationAverage = repository.durationAverage()
 
-        assertThat(average).isEqualTo(10 * MINUTE)
+        assertThat(durationAverage).isEqualTo(10 * MINUTE)
     }
 
     @Test
     fun durationLongestReturnsZeroWhenRepositoryIsEmpty() = runBlocking {
-        val longest = repository.durationLongest()
+        val durationLongest = repository.durationLongest()
 
-        assertThat(longest).isEqualTo(0)
+        assertThat(durationLongest).isEqualTo(0)
     }
 
     @Test
     fun durationLongestReturnsTheLongestSession() = runBlocking {
         insertSessions()
 
-        val longest = repository.durationLongest()
+        val durationLongest = repository.durationLongest()
 
-        assertThat(longest).isEqualTo(15 * MINUTE)
+        assertThat(durationLongest).isEqualTo(15 * MINUTE)
     }
 
     @Test
     fun durationTotalReturnsZeroWhenRepositoryIsEmpty() = runBlocking {
-        val total = repository.durationTotal()
+        val durationTotal = repository.durationTotal()
 
-        assertThat(total).isEqualTo(0)
+        assertThat(durationTotal).isEqualTo(0)
     }
 
     @Test
     fun durationTotalReturnsTheSumOfAllSessions() = runBlocking {
         insertSessions()
 
-        val total = repository.durationTotal()
+        val durationTotal = repository.durationTotal()
 
-        assertThat(total).isEqualTo(30 * MINUTE)
+        assertThat(durationTotal).isEqualTo(30 * MINUTE)
     }
 
     @Test
