@@ -11,5 +11,5 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindRepository(repository: DefaultRepository): SessionRepository
+    abstract fun repository(repository: DefaultRepository): SessionRepository
 }

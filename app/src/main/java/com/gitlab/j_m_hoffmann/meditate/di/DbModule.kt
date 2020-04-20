@@ -13,14 +13,11 @@ object DbModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(context: Context): Db {
-        return Room.databaseBuilder(
-            context,
-            Db::class.java,
-            "sessions"
-        )
-            .build()
-    }
+    fun provideDatabase(context: Context): Db = Room.databaseBuilder(
+        context,
+        Db::class.java,
+        "sessions"
+    ).build()
 
     @Singleton
     @Provides
