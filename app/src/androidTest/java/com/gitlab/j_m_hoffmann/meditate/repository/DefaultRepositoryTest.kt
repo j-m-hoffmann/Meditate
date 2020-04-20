@@ -110,9 +110,9 @@ class DefaultRepositoryTest {
 
     @Test
     fun lastSessionDateReturnsZeroWhenRepositoryIsEmpty() = runBlocking {
-        val total = repository.lastSessionDate()
+        val lastSessionDate = repository.lastSessionDate()
 
-        assertThat(total).isEqualTo(0)
+        assertThat(lastSessionDate).isEqualTo(0)
     }
 
 
@@ -120,8 +120,8 @@ class DefaultRepositoryTest {
     fun lastSessionDateReturnsTheLatestSession() = runBlocking {
         insertSessions()
 
-        val total = repository.lastSessionDate()
+        val lastSessionDate = repository.lastSessionDate()
 
-        assertThat(total).isEqualTo(now)
+        assertThat(lastSessionDate).isEqualTo(now)
     }
 }
