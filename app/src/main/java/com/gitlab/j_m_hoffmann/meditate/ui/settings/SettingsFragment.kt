@@ -23,7 +23,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var widgetColorPreference: ListPreference? = null
 
     private val widgetColorChangeListener = OnPreferenceChangeListener { _, _ ->
-        activity!!.applicationContext.updateWidget<StreakWidget>()
+        requireActivity().applicationContext.updateWidget<StreakWidget>()
         true
     }
 
