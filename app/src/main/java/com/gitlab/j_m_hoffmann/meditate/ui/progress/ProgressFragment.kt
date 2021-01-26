@@ -12,26 +12,19 @@ import javax.inject.Inject
 
 class ProgressFragment : DaggerFragment() {
 
-    private lateinit var binding: ProgressFragmentBinding
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val progressViewModel by viewModels<ProgressViewModel> { viewModelFactory }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = ProgressFragmentBinding.inflate(inflater)
-
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val binding = ProgressFragmentBinding.inflate(inflater)
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = progressViewModel
         }
-    }
 
+        return binding.root
+    }
 }
