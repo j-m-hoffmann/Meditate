@@ -20,12 +20,10 @@ import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_ID
 class SessionEndedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
 
-        val contentIntent = Intent(context, MainActivity::class.java)
-
-        val contentPendingIntent = PendingIntent.getActivity(
+        val openAppIntent = PendingIntent.getActivity(
             context,
             NOTIFICATION_ID,
-            contentIntent,
+            Intent(context, MainActivity::class.java),
             PendingIntent.FLAG_ONE_SHOT
         )
 
@@ -35,7 +33,7 @@ class SessionEndedReceiver : BroadcastReceiver() {
             .Builder(context, context.getString(notification_channel_id))
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
-            .setContentIntent(contentPendingIntent)
+            .setContentIntent(openAppIntent)
             .setContentText(context.getString(notification_message))
             .setContentTitle(context.getString(notification_title))
             .setPriority(NotificationCompat.PRIORITY_HIGH)

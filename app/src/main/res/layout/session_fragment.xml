@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
-
         <import type="com.gitlab.j_m_hoffmann.meditate.ui.session.State" />
 
         <variable
@@ -151,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
-            android:onClick="@{() -> viewModel.saveSession()}"
+            android:onClick="@{() -> viewModel.saveAndReset()}"
             android:text="@string/save"
             android:visibility="@{viewModel.state == State.Aborted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -13,9 +13,7 @@ import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import java.text.DateFormat
 import javax.inject.Inject
 
-class ProgressViewModel @Inject constructor(app: Context, repository: SessionRepository) : ViewModel() {
-
-    private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
+class ProgressViewModel @Inject constructor(context: Context, repository: SessionRepository) : ViewModel() {
 
     val countSessions = liveData { emit(repository.countSessions()) }
 
@@ -30,11 +28,17 @@ class ProgressViewModel @Inject constructor(app: Context, repository: SessionRep
     val lastSessionDate = Transformations.map(_lastSessionDate) { date ->
         when (date) {
             0L -> ""
-            else -> DateFormat.getDateInstance(DateFormat.FULL, app.locale()).format(date)
+            else -> DateFormat.getDateInstance(DateFormat.FULL, context.locale()).format(date)
         }
     }
 
-    private val _longestStreak = liveData { emit(preferences.getInt(app.getString(key_streak_value), 0)) }
+    private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    val longestStreak = Transformations.map(_longestStreak) { it.toPlural(R.plurals.days, R.string.empty, app) }
+    private val _longestStreak = liveData {
+        emit(sharedPreferences.getInt(context.getString(key_streak_value), 0))
+    }
+
+    val longestStreak = Transformations.map(_longestStreak) { days ->
+        days.toPlural(R.plurals.days, R.string.empty, context)
+    }
 }

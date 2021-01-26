@@ -43,32 +43,30 @@ import javax.inject.Inject
 const val FIVE_MINUTES: Long = 5 * MINUTE
 
 class SessionViewModel @Inject constructor(
-    private val app: Context,
+    private val context: Context,
     private val repository: SessionRepository
 ) :
     ViewModel() {
 
-    private val alarmManager = app.getSystemService<AlarmManager>()
+    private val alarmManager = context.getSystemService<AlarmManager>()
 
-    private val defaultDelay = app.getString(default_delay)
+    private val defaultDelay = context.getString(default_delay)
 
-    private val keyLastSession = app.getString(key_last_session)
-    private val keySessionDelay = app.getString(key_session_delay)
-    private val keySessionLength = app.getString(key_session_length)
-    private val keyStreakExpires = app.getString(key_streak_expires)
-    private val keyStreakLongest = app.getString(key_streak_longest)
-    private val keyStreakValue = app.getString(key_streak_value)
+    private val keyLastSession = context.getString(key_last_session)
+    private val keySessionDelay = context.getString(key_session_delay)
+    private val keySessionLength = context.getString(key_session_length)
+    private val keyStreakExpires = context.getString(key_streak_expires)
+    private val keyStreakLongest = context.getString(key_streak_longest)
+    private val keyStreakValue = context.getString(key_streak_value)
 
-    private val notificationIntent = Intent(app, SessionEndedReceiver::class.java)
-
-    private val notificationPendingIntent = PendingIntent.getBroadcast(
-        app,
+    private val sessionEndedIntent = PendingIntent.getBroadcast(
+        context,
         NOTIFICATION_REQUEST_CODE,
-        notificationIntent,
+        Intent(context, SessionEndedReceiver::class.java),
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
-    private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
+    private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     //region Variables
 
@@ -104,8 +102,9 @@ class SessionViewModel @Inject constructor(
 
     private val _currentStreak = MutableLiveData(preferences.getInt(keyStreakValue, 0))
 
-    val currentStreak =
-        Transformations.map(_currentStreak) { it.toPlural(R.plurals.days_of_meditation, R.string.empty, app) }
+    val currentStreak = Transformations.map(_currentStreak) { days ->
+        days.toPlural(R.plurals.days_of_meditation, R.string.empty, context)
+    }
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
@@ -151,7 +150,7 @@ class SessionViewModel @Inject constructor(
         _timeRemaining.value = sessionLength
     }
 
-    fun saveSession() {
+    fun saveAndReset() {
         updateMeditationStreak()
         persistSession(sessionLength - timeRemaining.value!!)
         resetSession()
@@ -169,7 +168,7 @@ class SessionViewModel @Inject constructor(
     //endregion
 
     //region PrivateFunctions
-    private fun cancelAlarm() = alarmManager?.cancel(notificationPendingIntent)
+    private fun cancelAlarm() = alarmManager?.cancel(sessionEndedIntent)
 
     private fun cancelDelayTimer() {
         delayTimer?.cancel()
@@ -212,11 +211,8 @@ class SessionViewModel @Inject constructor(
 
             override fun onFinish() {
                 cancelTimer()
-                updateMeditationStreak()
-                persistSession(sessionLength)
-                resetSession()
+                saveAndReset()
             }
-
         }
 
         if (delay > 0L) {
@@ -253,7 +249,7 @@ class SessionViewModel @Inject constructor(
                 it,
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + duration,
-                notificationPendingIntent
+                sessionEndedIntent
             )
         }
 
@@ -287,7 +283,7 @@ class SessionViewModel @Inject constructor(
                     }
                 }
 
-                app.updateWidget<StreakWidget>()
+                context.updateWidget<StreakWidget>()
             }
         }
     }
