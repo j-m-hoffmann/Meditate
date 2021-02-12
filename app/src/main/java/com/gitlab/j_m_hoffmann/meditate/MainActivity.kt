@@ -5,10 +5,12 @@ import android.app.NotificationManager
 import android.content.ContentResolver.SCHEME_ANDROID_RESOURCE
 import android.media.AudioAttributes
 import android.net.Uri
-import android.os.Build
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
 import androidx.lifecycle.Observer
@@ -57,29 +59,27 @@ class MainActivity : DaggerAppCompatActivity() {
             }
         })
 
-        createNotificationChannel()
+        if (VERSION.SDK_INT >= VERSION_CODES.O) createNotificationChannel()
     }
 
+    @RequiresApi(VERSION_CODES.O)
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val sound = Uri.parse("$SCHEME_ANDROID_RESOURCE://${packageName}/$metal_gong_by_dianakc")
 
-            val sound = Uri.parse("$SCHEME_ANDROID_RESOURCE://${packageName}/$metal_gong_by_dianakc")
+        val audioAttributes = AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributes.USAGE_ALARM)
+            .build()
 
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build()
-
-            val channel = NotificationChannel(
-                getString(notification_channel_id),
-                getString(notification_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                setShowBadge(false)
-                setSound(sound, audioAttributes)
-            }
-
-            getSystemService<NotificationManager>()?.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            getString(notification_channel_id),
+            getString(notification_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            setShowBadge(false)
+            setSound(sound, audioAttributes)
         }
+
+        getSystemService<NotificationManager>()?.createNotificationChannel(channel)
     }
 }
