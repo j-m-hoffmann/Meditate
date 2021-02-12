@@ -21,16 +21,14 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.default_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_name
+import com.gitlab.j_m_hoffmann.meditate.databinding.ActivityMainBinding
 import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-
-    private lateinit var navBar: BottomNavigationView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -39,11 +37,10 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        navBar = findViewById(R.id.nav_bar)
-
-        navBar.setupWithNavController(findNavController(R.id.nav_host_fragment))
+        binding.navBar.setupWithNavController(findNavController(R.id.nav_host_fragment))
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -53,10 +50,10 @@ class MainActivity : DaggerAppCompatActivity() {
 
         sessionViewModel.state.observe(this, Observer { state ->
             if (state == InProgress) {
-                navBar.visibility = View.GONE
-                Snackbar.make(navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
+                binding.navBar.visibility = View.GONE
+                Snackbar.make(binding.navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
             } else {
-                navBar.visibility = View.VISIBLE
+                binding.navBar.visibility = View.VISIBLE
             }
         })
 
