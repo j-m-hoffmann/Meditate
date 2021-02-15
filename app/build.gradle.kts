@@ -68,55 +68,43 @@ android {
 dependencies {
 //    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.1")
 //    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.core.ktx)
+    implementation(AndroidX.fragmentKtx)
 
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.fragment:fragment-ktx:1.2.5")
-//    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation(AndroidX.lifecycle.commonJava8)
+    implementation(AndroidX.lifecycle.liveDataKtx)
+    implementation(AndroidX.lifecycle.viewModelKtx)
 
-    // Lifecycle
-    val lifecycle_version = "2.2.0"
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation(AndroidX.navigation.fragmentKtx)
+    implementation(AndroidX.navigation.uiKtx)
 
-    // Navigation
-    val navigation_version = "2.3.3"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigation_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigation_version")
+    implementation(AndroidX.preferenceKtx)
 
-    implementation("androidx.preference:preference-ktx:1.1.1")
+    implementation(AndroidX.room.ktx)
+    kapt(AndroidX.room.compiler)
 
-    // Room
-    val room_version = "2.2.6"
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    implementation(AndroidX.vectorDrawable)
 
-    // WorkManager
-    implementation("androidx.work:work-runtime-ktx:2.4.0")
+    implementation(AndroidX.work.runtimeKtx) // WorkManager
 
-    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
-    implementation("com.google.android.material:material:1.2.1")
+    implementation(Google.dagger)
+    implementation(Google.dagger.android)
+    implementation(Google.dagger.android.support)
+    kapt(Google.dagger.compiler)
+    kapt(Google.dagger.android.processor)
 
-    // Dagger
-    val dagger_version = "2.26"
-    implementation("com.google.dagger:dagger:$dagger_version")
-    kapt("com.google.dagger:dagger-compiler:$dagger_version")
-    implementation("com.google.dagger:dagger-android:$dagger_version")
-    implementation("com.google.dagger:dagger-android-support:$dagger_version")
-    kapt("com.google.dagger:dagger-android-processor:$dagger_version")
+    implementation(Google.android.material)
 
-    // Tests
-    testImplementation("junit:junit:4.13.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-    androidTestImplementation("androidx.test:runner:1.3.0")
-    androidTestImplementation("androidx.test:rules:1.3.0")
-    androidTestImplementation("com.google.truth:truth:1.0.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    implementation(Kotlin.stdlib.jdk8)
+
+    androidTestImplementation("com.google.truth:truth:_")
+    androidTestImplementation(AndroidX.archCore.testing)
+    androidTestImplementation(AndroidX.test.espresso.core)
+    androidTestImplementation(AndroidX.test.ext.junitKtx)
+    androidTestImplementation(AndroidX.test.rules)
+    androidTestImplementation(AndroidX.test.runner)
+    testImplementation(Testing.junit4)
 }
 
 afterEvaluate {
