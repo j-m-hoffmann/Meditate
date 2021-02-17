@@ -11,7 +11,7 @@ import dagger.android.DaggerApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit.DAYS
+import java.util.concurrent.TimeUnit.HOURS
 
 open class MeditateApplication : DaggerApplication() {
 
@@ -30,7 +30,7 @@ open class MeditateApplication : DaggerApplication() {
             .enqueueUniquePeriodicWork(
                 STREAK_RESET_WORKER,
                 KEEP,
-                PeriodicWorkRequestBuilder<StreakResetWorker>(1, DAYS).build()
+                PeriodicWorkRequestBuilder<StreakResetWorker>(12, HOURS).build()
             )
     }
 }
