@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
-import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
@@ -34,7 +33,6 @@ import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
-import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,7 +41,7 @@ import javax.inject.Inject
 const val FIVE_MINUTES: Long = 5 * MINUTE
 
 class SessionViewModel @Inject constructor(
-    private val context: Context,
+    context: Context,
     private val repository: SessionRepository
 ) : ViewModel() {
 
@@ -63,6 +61,8 @@ class SessionViewModel @Inject constructor(
     private var delayTimer: CountDownTimer? = null
 
     private var sessionLength = preferences.getLong(KEY_SESSION_LENGTH, FIVE_MINUTES)
+
+    private var sessionBegin = 0L
 
     private var sessionTimer: CountDownTimer? = null
 
@@ -155,13 +155,15 @@ class SessionViewModel @Inject constructor(
 
         CoroutineScope(Dispatchers.Default).launch {
             repository.insert(
-                Session(System.currentTimeMillis(), sessionLength - timeRemaining.value!!)
+                Session(sessionBegin, sessionLength - timeRemaining.value!!)
             )
         }
         resetSession()
     }
 
     fun startSession() {
+        sessionBegin = System.currentTimeMillis()
+
         _state.value = InProgress
 
         preferences.edit { putLong(KEY_SESSION_LENGTH, sessionLength) }
@@ -258,7 +260,7 @@ class SessionViewModel @Inject constructor(
                 preferences.edit(commit = true) {
                     putInt(KEY_STREAK_VALUE, newStreak)
 
-                    putLong(KEY_LAST_SESSION, System.currentTimeMillis())
+                    putLong(KEY_LAST_SESSION, sessionBegin)
 
                     putLong(KEY_STREAK_EXPIRES, midnight(2))
 
@@ -266,8 +268,6 @@ class SessionViewModel @Inject constructor(
                         putInt(KEY_STREAK_LONGEST, newStreak)
                     }
                 }
-
-                context.updateWidget<StreakWidget>()
             }
         }
     }

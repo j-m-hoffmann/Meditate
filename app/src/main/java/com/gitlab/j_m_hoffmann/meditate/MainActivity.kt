@@ -24,8 +24,11 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_name
 import com.gitlab.j_m_hoffmann.meditate.databinding.ActivityMainBinding
+import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
+import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
+import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -51,11 +54,16 @@ class MainActivity : DaggerAppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(nightMode!!.toInt())
 
         sessionViewModel.state.observe(this, Observer { state ->
-            if (state == InProgress) {
-                binding.navBar.visibility = View.GONE
-                Snackbar.make(binding.navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
-            } else {
-                binding.navBar.visibility = View.VISIBLE
+            when (state) {
+                InProgress -> {
+                    binding.navBar.visibility = View.GONE
+                    Snackbar.make(binding.navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
+                }
+                Ended -> {
+                    binding.navBar.visibility = View.VISIBLE
+                    applicationContext.updateWidget<StreakWidget>()
+                }
+                else -> binding.navBar.visibility = View.VISIBLE
             }
         })
 
