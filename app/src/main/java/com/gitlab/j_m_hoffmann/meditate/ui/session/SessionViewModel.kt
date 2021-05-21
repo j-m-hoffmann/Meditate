@@ -23,12 +23,6 @@ import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Aborted
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.gitlab.j_m_hoffmann.meditate.util.DEFAULT_DELAY
-import com.gitlab.j_m_hoffmann.meditate.util.KEY_LAST_SESSION
-import com.gitlab.j_m_hoffmann.meditate.util.KEY_SESSION_DELAY
-import com.gitlab.j_m_hoffmann.meditate.util.KEY_SESSION_LENGTH
-import com.gitlab.j_m_hoffmann.meditate.util.KEY_STREAK_EXPIRES
-import com.gitlab.j_m_hoffmann.meditate.util.KEY_STREAK_LONGEST
-import com.gitlab.j_m_hoffmann.meditate.util.KEY_STREAK_VALUE
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
@@ -44,6 +38,13 @@ class SessionViewModel @Inject constructor(
     context: Context,
     private val repository: SessionRepository
 ) : ViewModel() {
+
+    private val KEY_STREAK_EXPIRES = context.getString(R.string.key_streak_expires)
+    private val KEY_STREAK_VALUE = context.getString(R.string.key_streak_value)
+    private val KEY_LAST_SESSION = context.getString(R.string.key_last_session)
+    private val KEY_SESSION_DELAY = context.getString(R.string.key_session_delay)
+    private val KEY_SESSION_LENGTH = context.getString(R.string.key_session_length)
+    private val KEY_STREAK_LONGEST = context.getString(R.string.key_streak_longest)
 
     private val alarmManager = context.getSystemService<AlarmManager>()
 
