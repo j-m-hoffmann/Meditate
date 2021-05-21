@@ -33,7 +33,7 @@ class StreakWidget : AppWidgetProvider() {
 
         for (id in appWidgetIds) {
             val pendingIntent = Intent(context, MainActivity::class.java).let { intent ->
-                PendingIntent.getActivity(context, WIDGET_REQUEST_CODE + id, intent, 0)
+                PendingIntent.getActivity(context, WIDGET_REQUEST_CODE, intent, 0)
             }
 
             val views = RemoteViews(context.packageName, R.layout.widget).apply {
