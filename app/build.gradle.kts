@@ -11,8 +11,8 @@ val keystoreProperties = File(
     "${System.getenv("HOME")}/Android/keystore/",
     "meditate.properties"
 ).inputStream()
-    .use {
-        Properties().apply { load(it) }
+    .use { fileStream ->
+        Properties().apply { load(fileStream) }
     }
 
 android {
