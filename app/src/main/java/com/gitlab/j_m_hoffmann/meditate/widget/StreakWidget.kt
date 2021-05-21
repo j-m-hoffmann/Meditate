@@ -15,7 +15,8 @@ import com.gitlab.j_m_hoffmann.meditate.R.string.default_widget_color
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.R.string.key_widget_color
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
-import com.gitlab.j_m_hoffmann.meditate.util.WIDGET_REQUEST_CODE
+
+const val WIDGET_REQUEST_CODE = 2
 
 class StreakWidget : AppWidgetProvider() {
 

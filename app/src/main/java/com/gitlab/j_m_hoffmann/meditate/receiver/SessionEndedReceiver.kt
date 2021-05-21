@@ -15,7 +15,9 @@ import com.gitlab.j_m_hoffmann.meditate.R.raw.metal_gong_by_dianakc
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_channel_id
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_message
 import com.gitlab.j_m_hoffmann.meditate.R.string.notification_title
-import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_ID
+import com.gitlab.j_m_hoffmann.meditate.util.SECOND
+
+const val NOTIFICATION_ID = 0
 
 class SessionEndedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {

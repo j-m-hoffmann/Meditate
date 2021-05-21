@@ -22,9 +22,7 @@ import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Aborted
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
-import com.gitlab.j_m_hoffmann.meditate.util.DEFAULT_DELAY
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
-import com.gitlab.j_m_hoffmann.meditate.util.NOTIFICATION_REQUEST_CODE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import com.gitlab.j_m_hoffmann.meditate.util.midnight
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +30,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+const val DEFAULT_DELAY = 30 * SECOND
 const val FIVE_MINUTES: Long = 5 * MINUTE
+const val NOTIFICATION_REQUEST_CODE = 1
 
 class SessionViewModel @Inject constructor(
     context: Context,
