@@ -2,8 +2,8 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 // System.getenv("HOME") may not work on Mac and Windows
@@ -71,21 +71,15 @@ dependencies {
     implementation(AndroidX.appCompat)
     implementation(AndroidX.core.ktx)
     implementation(AndroidX.fragmentKtx)
-
     implementation(AndroidX.lifecycle.commonJava8)
     implementation(AndroidX.lifecycle.liveDataKtx)
     implementation(AndroidX.lifecycle.viewModelKtx)
-
     implementation(AndroidX.navigation.fragmentKtx)
     implementation(AndroidX.navigation.uiKtx)
-
     implementation(AndroidX.preferenceKtx)
-
     implementation(AndroidX.room.ktx)
     kapt(AndroidX.room.compiler)
-
     implementation(AndroidX.vectorDrawable)
-
     implementation(AndroidX.work.runtimeKtx) // WorkManager
 
     implementation(Google.dagger)
@@ -109,13 +103,6 @@ dependencies {
 
 afterEvaluate {
     tasks.withType<JavaCompile> {
-        options.isDeprecation = true
-        options.compilerArgs.addAll(
-            listOf(
-                "-Xlint:unchecked"
-//                , "-Xlint:deprecation",
-//                , "-Werror"
-            )
-        )
+        options.compilerArgs.addAll(listOf("-Xlint:unchecked", "-Xlint:deprecation"))
     }
 }
