@@ -244,15 +244,11 @@ class SessionViewModel @Inject constructor(
     }
 
     private fun updateMeditationStreak() {
-
         val lastSessionDate = preferences.getLong(KEY_LAST_SESSION, 0) // no session saved
-
         val midnight = midnight()
 
         if (lastSessionDate < midnight) { // no session saved for today
-
             val newStreak = _currentStreak.value!! + 1
-
             _currentStreak.value = newStreak
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -260,14 +256,9 @@ class SessionViewModel @Inject constructor(
 
                 preferences.edit(commit = true) {
                     putInt(KEY_STREAK_VALUE, newStreak)
-
                     putLong(KEY_LAST_SESSION, sessionBegin)
-
                     putLong(KEY_STREAK_EXPIRES, midnight(2))
-
-                    if (newStreak > longestStreak) {
-                        putInt(KEY_STREAK_LONGEST, newStreak)
-                    }
+                    if (newStreak > longestStreak) putInt(KEY_STREAK_LONGEST, newStreak)
                 }
             }
         }
