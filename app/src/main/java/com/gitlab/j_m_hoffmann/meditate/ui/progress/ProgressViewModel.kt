@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
-import com.gitlab.j_m_hoffmann.meditate.R.string.key_streak_value
 import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
@@ -35,7 +34,7 @@ class ProgressViewModel @Inject constructor(context: Context, repository: Sessio
     private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val _longestStreak = liveData {
-        emit(sharedPreferences.getInt(context.getString(key_streak_value), 0))
+        emit(sharedPreferences.getInt(context.getString(R.string.key_streak_longest), 0))
     }
 
     val longestStreak = Transformations.map(_longestStreak) { days ->
