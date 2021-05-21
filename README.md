@@ -8,7 +8,7 @@ The branch migrate_room contains a tested database migration.
 The branch sqldelight uses SqlDelight instead of Room, which enables testing the database directly on the JVM without instrumentation.
 
 ### Requirements
-Android Studio 3.6.3
+Android Studio 4.2.1
 
 ### Attribution
 The Logo was created by Henrik Lehmann
