@@ -98,7 +98,7 @@ dependencies {
 
     implementation(Kotlin.stdlib.jdk8)
 
-    androidTestImplementation("com.google.truth:truth:_")
+    androidTestImplementation("com.google.truth:truth:1.1.2")
     androidTestImplementation(AndroidX.archCore.testing)
     androidTestImplementation(AndroidX.test.espresso.core)
     androidTestImplementation(AndroidX.test.ext.junitKtx)
