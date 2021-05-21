@@ -8,8 +8,8 @@ plugins {
 
 // System.getenv("HOME") may not work on Mac and Windows
 val keystoreProperties = File(
-    "${System.getenv("HOME")}/android/keystore/binaural-beats-2/",
-    "keystore.properties"
+    "${System.getenv("HOME")}/Android/keystore/",
+    "meditate.properties"
 ).inputStream()
     .use {
         Properties().apply { load(it) }
