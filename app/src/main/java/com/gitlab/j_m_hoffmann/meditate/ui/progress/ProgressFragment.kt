@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.gitlab.j_m_hoffmann.meditate.databinding.ProgressFragmentBinding
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class ProgressFragment : DaggerFragment() {
+@AndroidEntryPoint
+class ProgressFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val progressViewModel by viewModels<ProgressViewModel> { viewModelFactory }
+    private val progressViewModel by viewModels<ProgressViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = ProgressFragmentBinding.inflate(inflater)

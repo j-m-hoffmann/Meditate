@@ -4,12 +4,13 @@ import com.gitlab.j_m_hoffmann.meditate.repository.DefaultRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import dagger.Binds
 import dagger.Module
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@Module(includes = [DbModule::class])
+@InstallIn(SingletonComponent::class)
+@Module
 abstract class RepositoryModule {
 
-    @Singleton
     @Binds
     abstract fun repository(repository: DefaultRepository): SessionRepository
 }

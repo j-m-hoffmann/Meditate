@@ -9,10 +9,16 @@ import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.DateFormat
 import javax.inject.Inject
 
-class ProgressViewModel @Inject constructor(context: Context, repository: SessionRepository) : ViewModel() {
+@HiltViewModel
+class ProgressViewModel @Inject constructor(
+    @ApplicationContext context: Context,
+    repository: SessionRepository
+) : ViewModel() {
 
     val countSessions = liveData { emit(repository.countSessions()) }
 

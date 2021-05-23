@@ -1,12 +1,11 @@
 package com.gitlab.j_m_hoffmann.meditate
 
+import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gitlab.j_m_hoffmann.meditate.di.DaggerApplicationComponent
 import com.gitlab.j_m_hoffmann.meditate.worker.StreakResetWorker
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,11 +13,8 @@ import java.util.concurrent.TimeUnit.HOURS
 
 const val STREAK_RESET_WORKER = "com.gitlab.j_m_hoffmann.meditate.streak_reset_worker"
 
-open class MeditateApplication : DaggerApplication() {
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerApplicationComponent.factory().create(applicationContext)
-    }
+@HiltAndroidApp
+open class MeditateApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

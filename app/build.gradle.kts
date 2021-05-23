@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
 }
@@ -82,13 +83,9 @@ dependencies {
     implementation(AndroidX.vectorDrawable)
     implementation(AndroidX.work.runtimeKtx) // WorkManager
 
-    implementation(Google.dagger)
-    implementation(Google.dagger.android)
-    implementation(Google.dagger.android.support)
-    kapt(Google.dagger.compiler)
-    kapt(Google.dagger.android.processor)
-
     implementation(Google.android.material)
+    implementation(Google.dagger.hilt.android)
+    kapt(Google.dagger.hilt.compiler)
 
     implementation(Kotlin.stdlib.jdk8)
 

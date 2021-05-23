@@ -24,6 +24,8 @@ import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,8 +39,9 @@ const val DEFAULT_DELAY = 30 * SECOND
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val NOTIFICATION_REQUEST_CODE = 1
 
+@HiltViewModel
 class SessionViewModel @Inject constructor(
-    context: Context,
+    @ApplicationContext context: Context,
     private val repository: SessionRepository
 ) : ViewModel() {
 
