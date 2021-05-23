@@ -58,7 +58,7 @@ android {
         }
     }
     compileOptions {
-//        isCoreLibraryDesugaringEnabled = true
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -66,7 +66,7 @@ android {
 }
 
 dependencies {
-//    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.1")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 //    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(AndroidX.appCompat)
     implementation(AndroidX.core.ktx)

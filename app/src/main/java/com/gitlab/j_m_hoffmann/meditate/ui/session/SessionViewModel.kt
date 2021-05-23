@@ -24,10 +24,13 @@ import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
-import com.gitlab.j_m_hoffmann.meditate.util.midnight
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 
 const val DEFAULT_DELAY = 30 * SECOND
@@ -57,13 +60,16 @@ class SessionViewModel @Inject constructor(
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
+    private val zoneId = ZoneId.systemDefault()
+    private val zoneOffset = OffsetDateTime.now(zoneId).offset
+
     //region Variables
 
     private var delayTimer: CountDownTimer? = null
 
     private var sessionLength = preferences.getLong(KEY_SESSION_LENGTH, FIVE_MINUTES)
 
-    private var sessionBegin = 0L
+    private var sessionBegin = LocalDateTime.now(zoneId)
 
     private var sessionTimer: CountDownTimer? = null
 
@@ -152,18 +158,17 @@ class SessionViewModel @Inject constructor(
     }
 
     fun saveAndReset() {
+        val duration = sessionLength - timeRemaining.value!!
         updateMeditationStreak()
 
-        CoroutineScope(Dispatchers.Default).launch {
-            repository.insert(
-                Session(sessionBegin, sessionLength - timeRemaining.value!!)
-            )
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.insert(Session(sessionBegin.toEpochSecond(zoneOffset), duration))
         }
         resetSession()
     }
 
     fun startSession() {
-        sessionBegin = System.currentTimeMillis()
+        sessionBegin = LocalDateTime.now(zoneId)
 
         _state.value = InProgress
 
@@ -244,10 +249,11 @@ class SessionViewModel @Inject constructor(
     }
 
     private fun updateMeditationStreak() {
-        val lastSessionDate = preferences.getLong(KEY_LAST_SESSION, 0) // no session saved
-        val midnight = midnight()
+        val midnight = LocalDate.now(zoneId).atStartOfDay()
+        val lastSessionEpochSecond = preferences.getLong(KEY_LAST_SESSION, 0) // no session saved
+        val lastSessionDate = LocalDateTime.ofEpochSecond(lastSessionEpochSecond, 0, zoneOffset)
 
-        if (lastSessionDate < midnight) { // no session saved for today
+        if (lastSessionDate.isBefore(midnight)) {
             val newStreak = _currentStreak.value!! + 1
             _currentStreak.value = newStreak
 
@@ -256,8 +262,8 @@ class SessionViewModel @Inject constructor(
 
                 preferences.edit(commit = true) {
                     putInt(KEY_STREAK_VALUE, newStreak)
-                    putLong(KEY_LAST_SESSION, sessionBegin)
-                    putLong(KEY_STREAK_EXPIRES, midnight(2))
+                    putLong(KEY_LAST_SESSION, sessionBegin.toEpochSecond(zoneOffset))
+                    putLong(KEY_STREAK_EXPIRES, midnight.plusDays(2).toEpochSecond(zoneOffset))
                     if (newStreak > longestStreak) putInt(KEY_STREAK_LONGEST, newStreak)
                 }
             }
