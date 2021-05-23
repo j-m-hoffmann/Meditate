@@ -42,6 +42,8 @@ class SessionViewModel @Inject constructor(
     private val repository: SessionRepository
 ) : ViewModel() {
 
+    //region Values
+
     private val KEY_STREAK_EXPIRES = context.getString(R.string.key_streak_expires)
     private val KEY_STREAK_VALUE = context.getString(R.string.key_streak_value)
     private val KEY_LAST_SESSION = context.getString(R.string.key_last_session)
@@ -62,6 +64,8 @@ class SessionViewModel @Inject constructor(
 
     private val zoneId = ZoneId.systemDefault()
     private val zoneOffset = OffsetDateTime.now(zoneId).offset
+
+    //endregion
 
     //region Variables
 
