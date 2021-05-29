@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
-import com.gitlab.j_m_hoffmann.meditate.extensions.locale
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.text.DateFormat
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle.MEDIUM
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +36,14 @@ class ProgressViewModel @Inject constructor(
     val lastSessionDate = Transformations.map(_lastSessionDate) { date ->
         when (date) {
             0L -> ""
-            else -> DateFormat.getDateInstance(DateFormat.FULL, context.locale()).format(date)
+            else -> {
+                val zoneOffset = OffsetDateTime.now(ZoneId.systemDefault()).offset
+
+                LocalDateTime
+                    .ofEpochSecond(date, 0, zoneOffset)
+                    .toLocalDate()
+                    .format(DateTimeFormatter.ofLocalizedDate(MEDIUM))
+            }
         }
     }
 
