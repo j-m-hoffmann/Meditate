@@ -14,14 +14,10 @@ class ProgressFragment : Fragment() {
 
     private val progressViewModel by viewModels<ProgressViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = ProgressFragmentBinding.inflate(inflater)
-
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            viewModel = progressViewModel
-        }
-
-        return binding.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        ProgressFragmentBinding.inflate(inflater)
+            .apply {
+                lifecycleOwner = viewLifecycleOwner
+                viewModel = progressViewModel
+            }.root
 }

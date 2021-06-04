@@ -14,14 +14,9 @@ class SessionFragment : Fragment() {
 
     private val sessionViewModel by viewModels<SessionViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = SessionFragmentBinding.inflate(inflater)
-
-        binding.apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        SessionFragmentBinding.inflate(inflater).apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sessionViewModel
-        }
-
-        return binding.root
-    }
+        }.root
 }

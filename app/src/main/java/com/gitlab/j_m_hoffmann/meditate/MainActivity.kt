@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import com.gitlab.j_m_hoffmann.meditate.R.string.default_theme
-import com.gitlab.j_m_hoffmann.meditate.R.string.key_theme
 import com.gitlab.j_m_hoffmann.meditate.databinding.ActivityMainBinding
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
@@ -32,9 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.navBar.setupWithNavController(findNavController(R.id.nav_host_fragment))
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        val nightMode = preferences.getString(getString(key_theme), getString(default_theme))
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .getString(getString(R.string.key_theme), getString(R.string.default_theme))
+            ?.let { AppCompatDelegate.setDefaultNightMode(it.toInt()) }
 
         sessionViewModel.state.observe(this) {
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
