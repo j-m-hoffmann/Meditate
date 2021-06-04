@@ -8,13 +8,9 @@ plugins {
 }
 
 // System.getenv("HOME") may not work on Mac and Windows
-val keystoreProperties = File(
-    "${System.getenv("HOME")}/Android/keystore/",
-    "meditate.properties"
-).inputStream()
-    .use { fileStream ->
-        Properties().apply { load(fileStream) }
-    }
+val keystoreProperties = Properties().apply {
+    load(File("${System.getenv("HOME")}/Android/keystore/meditate.properties").inputStream())
+}
 
 android {
     compileSdkVersion(30)
