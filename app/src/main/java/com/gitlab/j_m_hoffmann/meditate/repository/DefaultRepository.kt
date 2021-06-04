@@ -4,7 +4,7 @@ import com.gitlab.j_m_hoffmann.meditate.repository.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 import javax.inject.Inject
 
-class DefaultRepository @Inject constructor(val dao: Dao) : SessionRepository {
+class DefaultRepository @Inject constructor(private val dao: Dao) : SessionRepository {
 
     override suspend fun insert(session: Session) = dao.insert(session)
 
