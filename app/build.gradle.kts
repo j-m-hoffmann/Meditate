@@ -19,8 +19,8 @@ android {
         applicationId = "com.gitlab.j_m_hoffmann.meditate"
         minSdkVersion(21)
         targetSdkVersion(30)
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 10
+        versionName = "1.0.10"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         kapt {
