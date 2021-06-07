@@ -66,35 +66,36 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
-//    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.core.ktx)
-    implementation(AndroidX.fragmentKtx)
-    implementation(AndroidX.lifecycle.commonJava8)
-    implementation(AndroidX.lifecycle.liveDataKtx)
-    implementation(AndroidX.lifecycle.viewModelKtx)
-    implementation(AndroidX.navigation.fragmentKtx)
-    implementation(AndroidX.navigation.uiKtx)
-    implementation(AndroidX.preferenceKtx)
-    implementation(AndroidX.room.ktx)
-    kapt(AndroidX.room.compiler)
-    implementation(AndroidX.vectorDrawable)
-    implementation(AndroidX.work.runtimeKtx) // WorkManager
-
-    implementation(Google.android.material)
-    implementation(Google.dagger.hilt.android)
-    kapt(Google.dagger.hilt.compiler)
-
-    implementation(Kotlin.stdlib.jdk8)
-
+    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.2")
+    androidTestImplementation("androidx.test:core-ktx:1.3.0")
+    androidTestImplementation("androidx.test:rules:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.3.0")
     androidTestImplementation("com.google.truth:truth:1.1.2")
-    androidTestImplementation(AndroidX.archCore.testing)
-    androidTestImplementation(AndroidX.test.espresso.core)
-    androidTestImplementation(AndroidX.test.ext.junitKtx)
-    androidTestImplementation(AndroidX.test.rules)
-    androidTestImplementation(AndroidX.test.runner)
-    testImplementation(Testing.junit4)
+
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+
+    implementation("androidx.appcompat:appcompat:1.3.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("androidx.fragment:fragment-ktx:1.3.4")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation("androidx.preference:preference-ktx:1.1.1")
+    implementation("androidx.room:room-ktx:2.3.0")
+    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
+    implementation("androidx.work:work-runtime-ktx:2.5.0")
+    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.google.dagger:hilt-android:2.36")
+    implementation(kotlin("stdlib-jdk8"))
+
+    kapt("androidx.room:room-compiler:2.3.0")
+    kapt("com.google.dagger:hilt-compiler:2.36")
+
+    testImplementation("junit:junit:4.13.2")
 }
 
 afterEvaluate {
