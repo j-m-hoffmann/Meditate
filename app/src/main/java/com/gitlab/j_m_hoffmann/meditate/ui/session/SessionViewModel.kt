@@ -133,7 +133,7 @@ class SessionViewModel @Inject constructor(
         _timeRemaining.value = sessionLength
     }
 
-    fun endSession() {
+    fun abortSession() {
         alarmManager?.cancel(sessionEndedIntent)
         cancelDelayTimer()
         cancelSessionTimer()
@@ -168,8 +168,9 @@ class SessionViewModel @Inject constructor(
         _timeRemaining.value = sessionLength
     }
 
-    fun saveAndReset() {
-        val duration = sessionLength - timeRemaining.value!!
+    fun abortAndSave() = saveAndReset(sessionLength - timeRemaining.value!!)
+
+    fun saveAndReset(duration: Long) {
         updateMeditationStreak()
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -216,7 +217,7 @@ class SessionViewModel @Inject constructor(
 
             override fun onFinish() {
                 cancelSessionTimer()
-                saveAndReset()
+                saveAndReset(sessionLength)
             }
         }
 

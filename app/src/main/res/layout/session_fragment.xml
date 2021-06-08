@@ -95,11 +95,11 @@
 
         <!-- visible when session in progress -->
         <Button
-            android:id="@+id/end_session"
+            android:id="@+id/abort_session"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
-            android:onClick="@{() -> viewModel.endSession()}"
+            android:onClick="@{() -> viewModel.abortSession()}"
             android:text="@string/end"
             android:visibility="@{viewModel.state == State.InProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +117,7 @@
             android:visibility="@{viewModel.state == State.InProgress ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/end_session"
+            app:layout_constraintStart_toEndOf="@+id/abort_session"
             tools:visibility="invisible" />
 
         <!-- visible when session aborted -->
@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/navbar_height_plus_default_spacing"
-            android:onClick="@{() -> viewModel.saveAndReset()}"
+            android:onClick="@{() -> viewModel.abortAndSave()}"
             android:text="@string/save"
             android:visibility="@{viewModel.state == State.Aborted ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
