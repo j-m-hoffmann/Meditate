@@ -129,10 +129,10 @@ class SessionViewModel @Inject constructor(
 
     fun abortSession() {
         alarmManager?.cancel(sessionEndedIntent)
-        cancelDelayTimer()
         cancelSessionTimer()
 
         if (_delayTimeRemaining.value!! > 0L) { // If session did not begin
+            cancelDelayTimer()
             resetSession()
         } else {
             _state.value = Aborted // Enables saving or discarding the session
@@ -150,7 +150,7 @@ class SessionViewModel @Inject constructor(
             _sessionPaused.value = true
             alarmManager?.cancel(sessionEndedIntent)
             cancelSessionTimer()
-            cancelDelayTimer()
+            delayTimer?.run { cancelDelayTimer() }
         } else {
             _sessionPaused.value = false
             startTimers(_timeRemaining.value!!, _delayTimeRemaining.value!!)
@@ -190,6 +190,7 @@ class SessionViewModel @Inject constructor(
     private fun cancelDelayTimer() {
         delayTimer?.cancel()
         _delayTimeVisible.value = false
+        delayTimer = null
     }
 
     private fun cancelSessionTimer() {
