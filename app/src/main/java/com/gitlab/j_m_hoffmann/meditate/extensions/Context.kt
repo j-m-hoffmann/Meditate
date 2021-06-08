@@ -27,12 +27,12 @@ inline fun <reified AWP : AppWidgetProvider> Context.updateWidget() {
         val ids = widgetManager.getAppWidgetIds(componentName)
 
         if (ids.isNotEmpty()) {
-            val updateIntent = Intent(this, AWP::class.java).apply {
+            Intent(this, AWP::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+            }.also {
+                sendBroadcast(it)
             }
-
-            this.sendBroadcast(updateIntent)
         }
     }
 }

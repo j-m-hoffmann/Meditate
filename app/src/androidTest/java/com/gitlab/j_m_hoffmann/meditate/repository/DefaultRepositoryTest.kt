@@ -58,7 +58,6 @@ class DefaultRepositoryTest {
         assertThat(countSessions).isEqualTo(3)
     }
 
-
     @Test
     fun durationAverageReturnsZeroWhenRepositoryIsEmpty() = runBlocking {
         val durationAverage = repository.durationAverage()
@@ -67,7 +66,6 @@ class DefaultRepositoryTest {
     }
 
     @Test
-
     fun durationAverageReturnsTheCorrectAverage() = runBlocking {
         insertSessions()
 
@@ -114,7 +112,6 @@ class DefaultRepositoryTest {
 
         assertThat(lastSessionDate).isEqualTo(0)
     }
-
 
     @Test
     fun lastSessionDateReturnsTheLatestSession() = runBlocking {
