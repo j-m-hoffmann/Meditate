@@ -1,6 +1,7 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.session
 
 import android.app.AlarmManager
+import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -9,13 +10,15 @@ import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
+import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
+import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
@@ -24,6 +27,7 @@ import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
+import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -43,7 +47,7 @@ const val NOTIFICATION_REQUEST_CODE = 1
 class SessionViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val repository: SessionRepository
-) : ViewModel() {
+) : AndroidViewModel(context as Application) {
 
     //region Values
 
@@ -274,6 +278,7 @@ class SessionViewModel @Inject constructor(
                     if (newStreak > longestStreak) putInt(KEY_STREAK_LONGEST, newStreak)
                 }
             }
+            getApplication<MeditateApplication>().updateWidget<StreakWidget>()
         }
     }
     //endregion

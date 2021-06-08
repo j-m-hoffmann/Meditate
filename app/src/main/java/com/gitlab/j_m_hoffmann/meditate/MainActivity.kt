@@ -9,12 +9,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.databinding.ActivityMainBinding
-import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Aborted
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
-import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 Ended -> {
                     binding.navBar.visibility = View.VISIBLE
-                    applicationContext.updateWidget<StreakWidget>()
                 }
                 InProgress -> {
                     binding.navBar.visibility = View.GONE
