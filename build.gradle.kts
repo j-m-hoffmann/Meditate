@@ -6,13 +6,13 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlinVersion: String by project
-    val daggerVersion: String by project
+    val versionKotlin: String by project
+    val versionDagger: String by project
 
     dependencies {
         classpath("com.android.tools.build:gradle:4.2.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:$daggerVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$versionKotlin")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:$versionDagger")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

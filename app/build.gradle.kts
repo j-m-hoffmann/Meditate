@@ -89,11 +89,11 @@ dependencies {
     implementation("androidx.vectordrawable:vectordrawable:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.5.0")
     implementation("com.google.android.material:material:1.3.0")
-    implementation("com.google.dagger:hilt-android:2.36")
+    implementation("com.google.dagger:hilt-android:$versionDagger")
     implementation(kotlin("stdlib-jdk8"))
 
     kapt("androidx.room:room-compiler:2.3.0")
-    kapt("com.google.dagger:hilt-compiler:2.36")
+    kapt("com.google.dagger:hilt-compiler:$versionDagger")
 
     testImplementation("junit:junit:4.13.2")
 }
