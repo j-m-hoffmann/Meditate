@@ -199,7 +199,9 @@ class SessionViewModel @Inject constructor(
 
     private fun startTimers(duration: Long, delay: Long) {
 
-        sessionTimer = object : CountDownTimer(duration, SECOND) {
+        val durationWithOffset = duration + SECOND
+
+        sessionTimer = object : CountDownTimer(durationWithOffset, SECOND) {
 
             override fun onTick(millisUntilFinished: Long) {
                 if (millisUntilFinished >= SECOND) {
@@ -216,6 +218,7 @@ class SessionViewModel @Inject constructor(
         }
 
         fun startSessionTimer(duration: Long) {
+            sessionTimer?.start()
             alarmManager?.let {
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
                     it,
@@ -224,14 +227,12 @@ class SessionViewModel @Inject constructor(
                     sessionEndedIntent
                 )
             }
-            sessionTimer?.start()
         }
 
         if (delay > 0L) {
-            _delayTimeRemaining.value = delay
-            _delayTimeVisible.value = true
+            val delayWithOffset = delay + SECOND
 
-            delayTimer = object : CountDownTimer(delay, SECOND) {
+            delayTimer = object : CountDownTimer(delayWithOffset, SECOND) {
 
                 override fun onTick(millisUntilFinished: Long) {
                     if (millisUntilFinished >= SECOND) {
@@ -244,13 +245,15 @@ class SessionViewModel @Inject constructor(
                 override fun onFinish() {
                     _delayTimeRemaining.value = 0
                     cancelDelayTimer()
-                    startSessionTimer(duration)
+                    startSessionTimer(durationWithOffset)
                 }
             }
 
+            _delayTimeRemaining.value = delayWithOffset
             delayTimer?.start()
+            _delayTimeVisible.value = true
         } else {
-            startSessionTimer(duration)
+            startSessionTimer(durationWithOffset)
         }
     }
 
