@@ -8,12 +8,12 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
-import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
@@ -39,7 +39,6 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import javax.inject.Inject
 
-const val DEFAULT_DELAY = 30 * SECOND
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val NOTIFICATION_REQUEST_CODE = 1
 
@@ -50,13 +49,6 @@ class SessionViewModel @Inject constructor(
 ) : AndroidViewModel(context as Application) {
 
     //region Values
-
-    private val KEY_STREAK_EXPIRES = context.getString(R.string.key_streak_expires)
-    private val KEY_STREAK_VALUE = context.getString(R.string.key_streak_value)
-    private val KEY_LAST_SESSION = context.getString(R.string.key_last_session)
-    private val KEY_SESSION_DELAY = context.getString(R.string.key_session_delay)
-    private val KEY_SESSION_LENGTH = context.getString(R.string.key_session_length)
-    private val KEY_STREAK_LONGEST = context.getString(R.string.key_streak_longest)
 
     private val alarmManager = context.getSystemService<AlarmManager>()
 
@@ -78,7 +70,9 @@ class SessionViewModel @Inject constructor(
 
     private var delayTimer: CountDownTimer? = null
 
-    private var sessionLength = preferences.getLong(KEY_SESSION_LENGTH, FIVE_MINUTES)
+    private var lastSessionEpochSecond = 0L
+
+    private var sessionLength = repository.sessionLength
 
     private var sessionBegin = LocalDateTime.now(zoneId)
 
@@ -108,7 +102,7 @@ class SessionViewModel @Inject constructor(
         get() = _sessionPaused
     private val _sessionPaused = MutableLiveData(false)
 
-    private val _currentStreak = MutableLiveData(preferences.getInt(KEY_STREAK_VALUE, 0))
+    private val _currentStreak = MutableLiveData(repository.currentStreak)
 
     val currentStreak = Transformations.map(_currentStreak) { days ->
         days.toPlural(R.plurals.days_of_meditation, R.string.empty, context)
@@ -182,13 +176,13 @@ class SessionViewModel @Inject constructor(
     fun startSession() {
         sessionBegin = LocalDateTime.now(zoneId)
 
+        viewModelScope.launch(Dispatchers.IO) { lastSessionEpochSecond = repository.lastSessionDate() }
+
         _state.value = InProgress
 
-        preferences.edit { putLong(KEY_SESSION_LENGTH, sessionLength) }
+        repository.sessionLength = sessionLength
 
-        val sessionDelay = preferences.getString(KEY_SESSION_DELAY, null)?.toLong() ?: DEFAULT_DELAY
-
-        startTimers(sessionLength, sessionDelay)
+        startTimers(sessionLength, repository.sessionDelay)
     }
     //endregion
 
@@ -262,7 +256,6 @@ class SessionViewModel @Inject constructor(
 
     private fun updateMeditationStreak() {
         val midnight = LocalDate.now(zoneId).atStartOfDay()
-        val lastSessionEpochSecond = preferences.getLong(KEY_LAST_SESSION, 0) // no session saved
         val lastSessionDate = LocalDateTime.ofEpochSecond(lastSessionEpochSecond, 0, zoneOffset)
 
         if (lastSessionDate.isBefore(midnight)) {
@@ -270,14 +263,7 @@ class SessionViewModel @Inject constructor(
             _currentStreak.value = newStreak
 
             CoroutineScope(Dispatchers.IO).launch {
-                val longestStreak = preferences.getInt(KEY_STREAK_LONGEST, 0)
-
-                preferences.edit(commit = true) {
-                    putInt(KEY_STREAK_VALUE, newStreak)
-                    putLong(KEY_LAST_SESSION, sessionBegin.toEpochSecond(zoneOffset))
-                    putLong(KEY_STREAK_EXPIRES, midnight.plusDays(2).toEpochSecond(zoneOffset))
-                    if (newStreak > longestStreak) putInt(KEY_STREAK_LONGEST, newStreak)
-                }
+                repository.updateStreak(newStreak, midnight.plusDays(2).toEpochSecond(zoneOffset))
             }
             getApplication<MeditateApplication>().updateWidget<StreakWidget>()
         }

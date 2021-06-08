@@ -14,5 +14,15 @@ interface SessionRepository {
     suspend fun durationTotal(): Long
 
     suspend fun lastSessionDate(): Long
+
+    fun updateStreak(days: Int, expiryEpochSecond: Long)
+
+    val currentStreak: Int
+
+    var longestStreak: Int
+
+    val sessionDelay: Long
+
+    var sessionLength: Long
 }
 
