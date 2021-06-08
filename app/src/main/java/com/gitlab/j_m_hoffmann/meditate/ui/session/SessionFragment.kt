@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.gitlab.j_m_hoffmann.meditate.databinding.SessionFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SessionFragment : Fragment() {
 
-    private val sessionViewModel by viewModels<SessionViewModel>()
+    private val sessionViewModel by activityViewModels<SessionViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         SessionFragmentBinding.inflate(inflater).apply {
