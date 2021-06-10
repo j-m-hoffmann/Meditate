@@ -10,9 +10,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.databinding.ActivityMainBinding
 import com.gitlab.j_m_hoffmann.meditate.ui.session.SessionViewModel
-import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Aborted
-import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
-import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
+import com.gitlab.j_m_hoffmann.meditate.ui.session.Session.Aborted
+import com.gitlab.j_m_hoffmann.meditate.ui.session.Session.Ended
+import com.gitlab.j_m_hoffmann.meditate.ui.session.Session.Started
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             .getString(getString(R.string.key_theme), getString(R.string.default_theme))
             ?.let { AppCompatDelegate.setDefaultNightMode(it.toInt()) }
 
-        sessionViewModel.state.observe(this) {
+        sessionViewModel.session.observe(this) {
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when (it) {
                 Aborted -> {
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 Ended -> {
                     binding.navBar.visibility = View.VISIBLE
                 }
-                InProgress -> {
+                Started -> {
                     binding.navBar.visibility = View.GONE
                     Snackbar.make(binding.navBar, R.string.concentrate, Snackbar.LENGTH_LONG).show()
                 }

@@ -16,9 +16,9 @@ import androidx.lifecycle.viewModelScope
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
-import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Aborted
-import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
-import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
+import com.gitlab.j_m_hoffmann.meditate.ui.session.Session.Aborted
+import com.gitlab.j_m_hoffmann.meditate.ui.session.Session.Ended
+import com.gitlab.j_m_hoffmann.meditate.ui.session.Session.Started
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -86,9 +86,9 @@ class SessionViewModel @Inject constructor(
         get() = _delayTimeVisible
     private val _delayTimeVisible = MutableLiveData(false)
 
-    val state: LiveData<State>
-        get() = _state
-    private val _state = MutableLiveData(Ended)
+    val session: LiveData<com.gitlab.j_m_hoffmann.meditate.ui.session.Session>
+        get() = _session
+    private val _session = MutableLiveData(Ended)
 
     val sessionPaused: LiveData<Boolean>
         get() = _sessionPaused
@@ -125,7 +125,7 @@ class SessionViewModel @Inject constructor(
             cancelDelayTimer()
             resetSession()
         } else {
-            _state.value = Aborted // Enables saving or discarding the session
+            _session.value = Aborted // Enables saving or discarding the session
         }
     }
 
@@ -165,7 +165,7 @@ class SessionViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) { lastSessionEpochSecond = repository.lastSessionDate() }
 
-        _state.value = InProgress
+        _session.value = Started
 
         repository.sessionLength = sessionLength
 
@@ -187,7 +187,7 @@ class SessionViewModel @Inject constructor(
     }
 
     private fun resetSession() {
-        _state.value = Ended
+        _session.value = Ended
         _timeRemaining.value = sessionLength
     }
 

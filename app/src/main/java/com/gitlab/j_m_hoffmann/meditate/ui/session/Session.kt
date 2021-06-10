@@ -1,7 +1,7 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.session
 
-enum class State {
+enum class Session {
     Aborted,
     Ended,
-    InProgress,
+    Started,
 }
