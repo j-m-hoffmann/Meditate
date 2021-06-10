@@ -14,7 +14,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
 import com.gitlab.j_m_hoffmann.meditate.R
 import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
@@ -58,8 +57,6 @@ class SessionViewModel @Inject constructor(
         Intent(context, SessionEndedReceiver::class.java),
         PendingIntent.FLAG_UPDATE_CURRENT
     )
-
-    private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val zoneId = ZoneId.systemDefault()
     private val zoneOffset = OffsetDateTime.now(zoneId).offset

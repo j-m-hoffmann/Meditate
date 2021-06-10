@@ -65,6 +65,8 @@ android {
     kotlinOptions { jvmTarget = "1.8" }
 }
 
+val versionDagger: String by project
+
 dependencies {
     androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.1.2")
