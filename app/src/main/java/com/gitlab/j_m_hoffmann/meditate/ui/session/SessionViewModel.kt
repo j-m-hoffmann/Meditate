@@ -1,7 +1,6 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.session
 
 import android.app.AlarmManager
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -9,11 +8,10 @@ import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.getSystemService
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
@@ -22,7 +20,6 @@ import com.gitlab.j_m_hoffmann.meditate.ui.session.State.Ended
 import com.gitlab.j_m_hoffmann.meditate.ui.session.State.InProgress
 import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.util.SECOND
-import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -41,7 +38,7 @@ const val NOTIFICATION_REQUEST_CODE = 1
 class SessionViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val repository: SessionRepository
-) : AndroidViewModel(context as Application) {
+) : ViewModel() {
 
     //region Values
 
@@ -260,7 +257,6 @@ class SessionViewModel @Inject constructor(
             CoroutineScope(Dispatchers.IO).launch {
                 repository.updateStreak(newStreak, midnight.plusDays(2).toEpochSecond(zoneOffset))
             }
-            getApplication<MeditateApplication>().updateWidget<StreakWidget>()
         }
     }
     //endregion

@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
 import com.gitlab.j_m_hoffmann.meditate.ui.session.FIVE_MINUTES
+import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -42,6 +44,7 @@ class DefaultRepository @Inject constructor(
         if (days > longestStreak) {
             longestStreak = days
         }
+        context.updateWidget<StreakWidget>()
     }
 
     private val KEY_STREAK_LONGEST = "key_streak_longest"
