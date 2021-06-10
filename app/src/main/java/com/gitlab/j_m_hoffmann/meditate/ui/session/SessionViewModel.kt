@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.view.View
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LiveData
@@ -34,6 +35,7 @@ import javax.inject.Inject
 const val FIVE_MINUTES: Long = 5 * MINUTE
 const val NOTIFICATION_REQUEST_CODE = 1
 
+@Suppress("UNUSED_PARAMETER")
 @HiltViewModel
 class SessionViewModel @Inject constructor(
     @ApplicationContext context: Context,
@@ -104,7 +106,7 @@ class SessionViewModel @Inject constructor(
 
     //region PublicFunctions
 
-    fun decrementDuration() {
+    fun decrementDuration(view: View) {
         sessionLength -= FIVE_MINUTES
 
         if (sessionLength <= FIVE_MINUTES) {
@@ -115,7 +117,7 @@ class SessionViewModel @Inject constructor(
         _timeRemaining.value = sessionLength
     }
 
-    fun abortSession() {
+    fun abortSession(view: View) {
         alarmManager?.cancel(sessionEndedIntent)
         cancelSessionTimer()
 
@@ -127,13 +129,15 @@ class SessionViewModel @Inject constructor(
         }
     }
 
-    fun incrementDuration() {
+    fun discardSession(view: View) = resetSession()
+
+    fun incrementDuration(view: View) {
         sessionLength += FIVE_MINUTES
         _decrementEnabled.value = true
         _timeRemaining.value = sessionLength
     }
 
-    fun pauseOrResumeSession() {
+    fun pauseOrResumeSession(view: View) {
         if (sessionPaused.value == false) {
             _sessionPaused.value = true
             alarmManager?.cancel(sessionEndedIntent)
@@ -145,12 +149,7 @@ class SessionViewModel @Inject constructor(
         }
     }
 
-    fun resetSession() {
-        _state.value = Ended
-        _timeRemaining.value = sessionLength
-    }
-
-    fun abortAndSave() = saveAndReset(sessionLength - timeRemaining.value!!)
+    fun abortAndSave(view: View) = saveAndReset(sessionLength - timeRemaining.value!!)
 
     fun saveAndReset(duration: Long) {
         updateMeditationStreak()
@@ -161,7 +160,7 @@ class SessionViewModel @Inject constructor(
         resetSession()
     }
 
-    fun startSession() {
+    fun startSession(view: View) {
         sessionBegin = LocalDateTime.now(zoneId)
 
         viewModelScope.launch(Dispatchers.IO) { lastSessionEpochSecond = repository.lastSessionDate() }
@@ -185,6 +184,11 @@ class SessionViewModel @Inject constructor(
     private fun cancelSessionTimer() {
         sessionTimer?.cancel()
         sessionTimer = null
+    }
+
+    private fun resetSession() {
+        _state.value = Ended
+        _timeRemaining.value = sessionLength
     }
 
     private fun startTimers(duration: Long, delay: Long) {
