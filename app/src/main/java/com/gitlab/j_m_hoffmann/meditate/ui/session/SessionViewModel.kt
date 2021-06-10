@@ -12,11 +12,7 @@ import androidx.core.content.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.gitlab.j_m_hoffmann.meditate.MeditateApplication
-import com.gitlab.j_m_hoffmann.meditate.R
-import com.gitlab.j_m_hoffmann.meditate.extensions.toPlural
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.receiver.SessionEndedReceiver
 import com.gitlab.j_m_hoffmann.meditate.repository.SessionRepository
@@ -99,11 +95,9 @@ class SessionViewModel @Inject constructor(
         get() = _sessionPaused
     private val _sessionPaused = MutableLiveData(false)
 
+    val currentStreak: LiveData<Int>
+        get() = _currentStreak
     private val _currentStreak = MutableLiveData(repository.currentStreak)
-
-    val currentStreak = Transformations.map(_currentStreak) { days ->
-        days.toPlural(R.plurals.days_of_meditation, R.string.empty, context)
-    }
 
     val timeRemaining: LiveData<Long>
         get() = _timeRemaining
