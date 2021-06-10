@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_double"
-            android:text='@{viewModel.currentStreak > 0 ? @plurals/days_of_meditation(viewModel.currentStreak, viewModel.currentStreak) : "" }'
+            android:text='@{viewModel.currentStreak > 0 ? @plurals/days_of_meditation(viewModel.currentStreak) : "" }'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/time_remaining"

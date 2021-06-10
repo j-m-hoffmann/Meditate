@@ -14,11 +14,11 @@
 
     <!-- PLURALS -->
     <plurals name="days">
-        <item quantity="one">%d Tag</item>
+        <item quantity="one">Ein Tag</item>
         <item quantity="other">%d Tage</item>
     </plurals>
     <plurals name="days_of_meditation">
-        <item quantity="one">%d Tag meditiert</item>
+        <item quantity="one">Einen Tag meditiert</item>
         <item quantity="other">%d Tage meditiert</item>
     </plurals>
 

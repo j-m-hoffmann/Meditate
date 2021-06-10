@@ -29,11 +29,11 @@
 
     <!-- PLURALS -->
     <plurals name="days">
-        <item quantity="one">%d day</item>
+        <item quantity="one">One day</item>
         <item quantity="other">%d days</item>
     </plurals>
     <plurals name="days_of_meditation">
-        <item quantity="one">%d day of meditation</item>
+        <item quantity="one">One day of meditation</item>
         <item quantity="other">%d days of meditation</item>
     </plurals>
 
