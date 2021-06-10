@@ -170,7 +170,8 @@ class SessionViewModel @Inject constructor(
 
         repository.sessionLength = sessionLength
 
-        startTimers(sessionLength, repository.sessionDelay)
+        val startOffset = SECOND
+        startTimers(sessionLength + startOffset, repository.sessionDelay + startOffset)
     }
     //endregion
 
@@ -188,9 +189,7 @@ class SessionViewModel @Inject constructor(
 
     private fun startTimers(duration: Long, delay: Long) {
 
-        val durationWithOffset = duration + SECOND
-
-        sessionTimer = object : CountDownTimer(durationWithOffset, SECOND) {
+        sessionTimer = object : CountDownTimer(duration, SECOND) {
 
             override fun onTick(millisUntilFinished: Long) {
                 if (millisUntilFinished >= SECOND) {
@@ -219,9 +218,7 @@ class SessionViewModel @Inject constructor(
         }
 
         if (delay > 0L) {
-            val delayWithOffset = delay + SECOND
-
-            delayTimer = object : CountDownTimer(delayWithOffset, SECOND) {
+            delayTimer = object : CountDownTimer(delay, SECOND) {
 
                 override fun onTick(millisUntilFinished: Long) {
                     if (millisUntilFinished >= SECOND) {
@@ -234,15 +231,15 @@ class SessionViewModel @Inject constructor(
                 override fun onFinish() {
                     _delayTimeRemaining.value = 0
                     cancelDelayTimer()
-                    startSessionTimer(durationWithOffset)
+                    startSessionTimer(duration)
                 }
             }
 
-            _delayTimeRemaining.value = delayWithOffset
+            _delayTimeRemaining.value = delay
             delayTimer?.start()
             _delayTimeVisible.value = true
         } else {
-            startSessionTimer(durationWithOffset)
+            startSessionTimer(duration)
         }
     }
 
