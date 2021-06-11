@@ -8,6 +8,7 @@
     <string name="default_widget_color" translatable="false">#ffffff</string>
 
     <!-- KEYS -->
+    <string name="key_dnd" translatable="false">key_dnd</string>
     <string name="key_session_delay" translatable="false">key_session_delay</string>
     <string name="key_streak_expires" translatable="false">key_streak_expires</string>
     <string name="key_streak_value" translatable="false">key_streak_value</string>
@@ -64,6 +65,10 @@
     <string name="color_light_grey">Light grey</string>
     <string name="color_dark_grey">Dark grey</string>
     <string name="color_black">Black</string>
+
+    <string name="dnd_off">Off</string>
+    <string name="dnd_on">During session</string>
+    <string name="dnd_title">Do not disturb</string>
 
     <!-- SESSION -->
     <string name="minus" translatable="false">-</string>

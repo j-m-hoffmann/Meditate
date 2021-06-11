@@ -25,4 +25,9 @@
         app:title="@string/widget_text_color"
         app:useSimpleSummaryProvider="true" />
 
+    <SwitchPreference
+        app:key="@string/key_dnd"
+        app:summaryOff="@string/dnd_off"
+        app:summaryOn="@string/dnd_on"
+        app:title="@string/dnd_title" />
 </PreferenceScreen>

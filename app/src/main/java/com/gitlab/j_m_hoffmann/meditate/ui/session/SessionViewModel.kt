@@ -1,9 +1,12 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.session
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.os.Build
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.View
@@ -44,7 +47,17 @@ class SessionViewModel @Inject constructor(
 
     //region Values
 
+    private val audioManager = context.getSystemService<AudioManager>() as AudioManager
+
     private val alarmManager = context.getSystemService<AlarmManager>()
+
+    private val isAllowedToMute = if (Build.VERSION.SDK_INT >= 23) {
+        context.getSystemService<NotificationManager>()!!.isNotificationPolicyAccessGranted
+    } else {
+        true
+    }
+
+    private val ringerModeBeforeSession = audioManager.ringerMode
 
     private val sessionEndedIntent = PendingIntent.getBroadcast(
         context,
@@ -169,6 +182,10 @@ class SessionViewModel @Inject constructor(
 
         repository.sessionLength = sessionLength
 
+        if (repository.doNotDisturb && isAllowedToMute) {
+            audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
+        }
+
         val startOffset = SECOND
         startTimers(sessionLength + startOffset, repository.sessionDelay + startOffset)
     }
@@ -189,6 +206,10 @@ class SessionViewModel @Inject constructor(
     private fun resetSession() {
         _session.value = Ended
         _timeRemaining.value = sessionLength
+
+        if (repository.doNotDisturb && isAllowedToMute) {
+            audioManager.ringerMode = ringerModeBeforeSession
+        }
     }
 
     private fun startTimers(duration: Long, delay: Long) {

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.gitlab.j_m_hoffmann.meditate.R
+import com.gitlab.j_m_hoffmann.meditate.R.string
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
@@ -35,6 +36,9 @@ class DefaultRepository @Inject constructor(
 
     override val currentStreak: Int
         get() = preferences.getInt(KEY_STREAK_VALUE, 0)
+
+    override val doNotDisturb: Boolean
+        get() = preferences.getBoolean(context.getString(string.key_dnd), false)
 
     override fun updateStreak(days: Int, expiryEpochSecond: Long) {
         preferences.edit(commit = true) {

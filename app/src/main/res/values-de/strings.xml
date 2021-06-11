@@ -50,6 +50,10 @@
     <string name="color_dark_grey">Dunkles Grau</string>
     <string name="color_black">Schwarz</string>
 
+    <string name="dnd_off">Aus</string>
+    <string name="dnd_on">Während der Sitzung </string>
+    <string name="dnd_title">Bitte nicht stören</string>
+
     <!-- SESSION  -->
     <string name="meditate">Meditieren</string>
 

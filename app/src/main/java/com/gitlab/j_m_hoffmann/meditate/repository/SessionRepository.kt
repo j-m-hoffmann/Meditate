@@ -19,6 +19,8 @@ interface SessionRepository {
 
     val currentStreak: Int
 
+    val doNotDisturb: Boolean
+
     var longestStreak: Int
 
     val sessionDelay: Long
