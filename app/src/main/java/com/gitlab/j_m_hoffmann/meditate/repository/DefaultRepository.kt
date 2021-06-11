@@ -8,10 +8,12 @@ import com.gitlab.j_m_hoffmann.meditate.R.string
 import com.gitlab.j_m_hoffmann.meditate.extensions.updateWidget
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Dao
 import com.gitlab.j_m_hoffmann.meditate.repository.db.Session
-import com.gitlab.j_m_hoffmann.meditate.ui.session.FIVE_MINUTES
+import com.gitlab.j_m_hoffmann.meditate.util.MINUTE
 import com.gitlab.j_m_hoffmann.meditate.widget.StreakWidget
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+
+const val DEFAULT_SESSION_LENGTH: Long = 15 * MINUTE
 
 class DefaultRepository @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -65,6 +67,6 @@ class DefaultRepository @Inject constructor(
 
     private val KEY_SESSION_LENGTH = "key_session_length"
     override var sessionLength: Long
-        get() = preferences.getLong(KEY_SESSION_LENGTH, FIVE_MINUTES)
+        get() = preferences.getLong(KEY_SESSION_LENGTH, DEFAULT_SESSION_LENGTH)
         set(value) = preferences.edit { putLong(KEY_SESSION_LENGTH, value) }
 }
