@@ -1,7 +1,7 @@
 # Meditate
 Reimplementation of ideas from the App Meditation Assistant by Trevor Slocum in Kotlin using Architecture Components, Material Design and Dependency Injection.
 
-Dependency Injection is done via Koin in the koin branch and Dagger in the other branches.
+Dependency Injection is achieved with Hilt and Koin in the koin branch.
 
 The branch migrate_room contains a tested database migration.
 
