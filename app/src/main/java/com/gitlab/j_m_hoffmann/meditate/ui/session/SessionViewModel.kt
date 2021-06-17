@@ -1,6 +1,5 @@
 package com.gitlab.j_m_hoffmann.meditate.ui.session
 
-import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -8,9 +7,7 @@ import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
 import android.os.CountDownTimer
-import android.os.SystemClock
 import android.view.View
-import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -48,8 +45,6 @@ class SessionViewModel @Inject constructor(
     //region Values
 
     private val audioManager = context.getSystemService<AudioManager>() as AudioManager
-
-    private val alarmManager = context.getSystemService<AlarmManager>()
 
     private val isAllowedToMute = if (Build.VERSION.SDK_INT >= 23) {
         context.getSystemService<NotificationManager>()!!.isNotificationPolicyAccessGranted
@@ -133,7 +128,6 @@ class SessionViewModel @Inject constructor(
     }
 
     fun abortSession(view: View) {
-        alarmManager?.cancel(sessionEndedIntent)
         cancelSessionTimer()
 
         if (_delayTimeRemaining.value!! > 0L) { // If session did not begin
@@ -155,7 +149,6 @@ class SessionViewModel @Inject constructor(
     fun pauseOrResumeSession(view: View) {
         if (sessionPaused.value == false) {
             _sessionPaused.value = true
-            alarmManager?.cancel(sessionEndedIntent)
             cancelSessionTimer()
             delayTimer?.run { cancelDelayTimer() }
         } else {
@@ -238,18 +231,6 @@ class SessionViewModel @Inject constructor(
             }
         }
 
-        fun startSessionTimer(duration: Long) {
-            sessionTimer?.start()
-            alarmManager?.let {
-                AlarmManagerCompat.setExactAndAllowWhileIdle(
-                    it,
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + duration,
-                    sessionEndedIntent
-                )
-            }
-        }
-
         if (delay > 0L) {
             delayTimer = object : CountDownTimer(delay, SECOND) {
 
@@ -264,7 +245,7 @@ class SessionViewModel @Inject constructor(
                 override fun onFinish() {
                     _delayTimeRemaining.value = 0
                     cancelDelayTimer()
-                    startSessionTimer(duration)
+                    sessionTimer?.start()
                 }
             }
 
@@ -272,7 +253,7 @@ class SessionViewModel @Inject constructor(
             delayTimer?.start()
             _delayTimeVisible.value = true
         } else {
-            startSessionTimer(duration)
+            sessionTimer?.start()
         }
     }
 
