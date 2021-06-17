@@ -77,6 +77,8 @@ class SessionViewModel @Inject constructor(
 
     private var lastSessionEpochSecond = 0L
 
+    private var muted = false
+
     private var sessionLength = repository.sessionLength
 
     private var sessionBegin = LocalDateTime.now(zoneId)
@@ -136,13 +138,13 @@ class SessionViewModel @Inject constructor(
 
         if (_delayTimeRemaining.value!! > 0L) { // If session did not begin
             cancelDelayTimer()
-            resetSession()
+            resetSession(finished = false)
         } else {
             _session.value = Aborted // Enables saving or discarding the session
         }
     }
 
-    fun discardSession(view: View) = resetSession()
+    fun discardSession(view: View) = resetSession(finished = false)
 
     fun incrementDuration(view: View) {
         sessionLength += FIVE_MINUTES
@@ -170,7 +172,9 @@ class SessionViewModel @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
             repository.insert(Session(sessionBegin.toEpochSecond(zoneOffset), duration))
         }
-        resetSession()
+
+        val finished = duration == sessionLength
+        resetSession(finished)
     }
 
     fun startSession(view: View) {
@@ -184,6 +188,7 @@ class SessionViewModel @Inject constructor(
 
         if (repository.doNotDisturb && isAllowedToMute) {
             audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
+            muted = true
         }
 
         val startOffset = SECOND
@@ -203,13 +208,16 @@ class SessionViewModel @Inject constructor(
         sessionTimer = null
     }
 
-    private fun resetSession() {
+    private fun resetSession(finished: Boolean) {
+        if (muted) {
+            audioManager.ringerMode = ringerModeBeforeSession
+            muted = false
+        }
+
         _session.value = Ended
         _timeRemaining.value = sessionLength
 
-        if (repository.doNotDisturb && isAllowedToMute) {
-            audioManager.ringerMode = ringerModeBeforeSession
-        }
+        if (finished) sessionEndedIntent.send()
     }
 
     private fun startTimers(duration: Long, delay: Long) {
