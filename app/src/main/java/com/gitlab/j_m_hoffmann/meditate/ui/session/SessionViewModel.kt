@@ -184,7 +184,7 @@ class SessionViewModel @Inject constructor(
             muted = true
         }
 
-        val startOffset = SECOND
+        val startOffset = 100L
         startTimers(sessionLength + startOffset, repository.sessionDelay + startOffset)
     }
     //endregion
